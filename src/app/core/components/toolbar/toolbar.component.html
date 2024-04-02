@@ -1,0 +1,34 @@
+<mat-toolbar class=".bg-darken-gray expanded">
+  <div fxHide.gt-sm>
+    <button mat-icon-button (click)="openMenu.emit()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <div fxFlex fxLayoutAlign.lt-md="center" fxLayoutAlign.gt-sm="space-between">
+    <div class="logo" [routerLink]="['/home']"></div>
+
+    <mat-nav-list fxLayout="row" fxHide.lt-md>
+      <mat-list-item *ngFor="let item of menu" [routerLink]="[item.url]">
+        <mat-icon class="pr-2">{{item.icon}}</mat-icon>
+        <a> {{item.name}} </a>
+      </mat-list-item>
+
+      <button mat-button [matMenuTriggerFor]="settingsMenu" matTooltip="Ajustes">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <mat-menu #settingsMenu="matMenu">
+        <button mat-menu-item *ngFor="let setting of ajustes" [routerLink]="[setting.url]">
+          <mat-icon>{{setting.icon}}</mat-icon> {{setting.name}}
+        </button>
+        <a class="link-manual-usuario" href="https://drive.google.com/file/d/18zSUngStWyDIYNkyF0Ey7W-GPMofvcE0/view"
+          target="_blank" mat-menu-item>
+          <mat-icon>import_contacts</mat-icon> Manual de Usuario
+        </a>
+        <button mat-menu-item>
+          <mat-icon>exit_to_app</mat-icon> Cerrar Sesión
+        </button>
+      </mat-menu>
+    </mat-nav-list>
+  </div>
+</mat-toolbar>

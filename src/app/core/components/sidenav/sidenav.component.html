@@ -1,0 +1,23 @@
+<section fxLayout="column">
+
+  <div class="primary">
+    <div class="mb-1 px-3 py-5" fxLayoutAlign="center">
+      <button mat-fab color="primary" class="mat-elevation-z5 photo-button" matTooltip="Mi Cuenta" routerLink="/cuenta"
+        (click)="onToggle()"></button>
+    </div>
+    <h2 class="mat-h2 ml-4 saludo">Hola {{nombre}}! </h2>
+  </div>
+  <mat-divider></mat-divider>
+
+  <mat-nav-list fxFlex fxLayout="column">
+    <a mat-list-item (click)="onToggle()" [routerLink]="[item.url]" *ngFor="let item of menu">
+      <mat-icon>{{item.icon}}</mat-icon> <span class="nav-caption">{{item.name}}</span>
+    </a>
+    <div fxFlex></div>
+    <mat-divider></mat-divider>
+    <a mat-list-item>
+      <mat-icon>exit_to_app</mat-icon> <span class="nav-caption">Cerrar Sesión</span>
+    </a>
+  </mat-nav-list>
+
+</section>

@@ -1,1 +1,48 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "./assets/css/vendor/bootstrap-grid-min.css";
+@import "./assets/css/estilos-paginas.css";
+
+:root {
+  --darken-orange: #ff3400;
+  --light-orange: #ff601d;
+  --deep-blue: #2d4d69;
+  --darken-blue: #314251;
+  --light-gray: #b9bfc4;
+  --darken-gray: #838787;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+mat-sidenav-container,
+mat-sidenav-content,
+mat-sidenav {
+  min-height: 100vh;
+}
+
+mat-sidenav.gt-sm {
+  width: 50vw;
+}
+
+mat-sidenav.lt-sm {
+  width: 80vw;
+}
+
+app-toolbar {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 2;
+}
+
+tr.mat-row:hover {
+  background-color: #eee;
+}
