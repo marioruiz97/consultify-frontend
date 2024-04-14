@@ -7,6 +7,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatCardModule} from '@angular/material/card';
+
+
+
 
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 
@@ -21,7 +28,11 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule
   ],
   exports: [
     MatToolbarModule,
@@ -29,7 +40,11 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatMenuModule
+    MatMenuModule,
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCardModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' },

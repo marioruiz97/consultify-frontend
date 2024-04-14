@@ -1,0 +1,55 @@
+<div fxLayout="row" class="contenedor">
+  <section fxFlex class="blanco">
+    <div fxLayout="column">
+      <div class="logo"></div>
+      <div class="mx-auto redes">
+        <h2>Visita nuestras redes sociales</h2>
+        <div class="text-center">
+          <a mat-icon-button [href]="enlace.url" [target]="enlace.target" *ngFor="let enlace of redes"
+            [matTooltip]="enlace.nombre">
+            <mat-icon [class]="enlace.nombre"><fa-icon [icon]="enlace.faIcon"></fa-icon></mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section fxFlex="60" class="formulario">
+    <mat-card class="m-5 p-5">
+      <mat-card-header class="mx-auto mb-5">
+        <mat-card-title>Iniciar Sesión</mat-card-title>
+      </mat-card-header>
+      <form (ngSubmit)="iniciarSesion()" [formGroup]="loginForm" fxLayout="column">
+
+        <!-- nombre de usuario o username-->
+        <mat-form-field appearance="outline" class="mb-4">
+          <mat-label>Nombre de Usuario </mat-label>
+          <input type="text" matInput placeholder="Ej. MarioRuiz97" formControlName="username">
+          <mat-hint>Ingese el nombre de usuario o correo con que inicia sesión</mat-hint>
+          <mat-error>Ingrese un nombre de usuario válido</mat-error>
+        </mat-form-field>
+
+        <!-- contraseña -->
+        <mat-form-field appearance="outline" class="mb-4">
+          <mat-label>Contraseña</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="contrasena">
+          <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-hint>Ingrese su contraseña</mat-hint>
+          <mat-error>Contraseña Obligatoria</mat-error>
+        </mat-form-field>
+
+
+
+        <a href="" fxFlexAlign="end">recuperar contraseña</a>
+        <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid">Iniciar Sesion</button>
+      </form>
+    </mat-card>
+
+
+
+
+
+  </section>
+</div>

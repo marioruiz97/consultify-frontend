@@ -1,0 +1,29 @@
+.contenedor {
+  min-height: 100vh;
+  background-color: var(--darken-orange);
+}
+
+.blanco {
+  background-color: #fff;
+}
+
+.logo {
+  min-height: 50vh;
+  background-image: url("/assets/img/brand-logo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.1);
+}
+
+.mat-icon {
+  transform: scale(1.25);
+}
+
+
+.Facebook {
+  color: #0866ff;
+}
+
+.Instagram {
+  color: #fc015e;
+}

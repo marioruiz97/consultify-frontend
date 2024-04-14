@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { Observable, lastValueFrom } from 'rxjs';
+import { AuthRequest } from '../model/auth-request.model';
 
 export interface Options {
   headers?: HttpHeaders;
@@ -8,6 +9,7 @@ export interface Options {
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {
+
   private API_ENDPOINT = "environment.endpoint";
 
   constructor(protected httpClient: HttpClient) { }
@@ -17,6 +19,11 @@ export class HttpService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     };
   }
+
+  loginRequest(authRequest: AuthRequest) {
+    throw new Error("Method not implemented.");
+  }
+
 
   postRequest<T, R>(path: string, data: T): Promise<R> {
     return lastValueFrom(this.httpClient

@@ -1,12 +1,10 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav [ngClass]="($isHandset) ? 'lt-sm' : 'gt-sm'" role="navigation" mode="push">
-    <app-sidenav (closeSidenav)="sidenav.close()" [menu]="menu"></app-sidenav>
+    <app-sidenav (closeSidenav)="sidenav.close()" [menu]="menu" *ngIf="enSesion"></app-sidenav>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-toolbar (openMenu)="sidenav.toggle()" [menu]="menu"></app-toolbar>
-    <main class="mt-5">
-      <router-outlet></router-outlet>
-    </main>
+    <app-toolbar (openMenu)="sidenav.toggle()" [menu]="menu" *ngIf="enSesion"></app-toolbar>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

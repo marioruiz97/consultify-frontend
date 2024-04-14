@@ -32,7 +32,7 @@ export class ManejadorError implements ErrorHandler {
       path: window.location.href,
       mensaje,
     };
-
+    console.log(respuesta);
   }
 
   public obtenerErrorHttpCode(httpCode: number): string {
