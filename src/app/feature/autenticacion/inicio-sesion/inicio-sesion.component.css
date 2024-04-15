@@ -19,11 +19,14 @@
   transform: scale(1.25);
 }
 
-
 .Facebook {
   color: #0866ff;
 }
 
 .Instagram {
   color: #fc015e;
+}
+
+mat-card {
+  max-width: 90%;
 }

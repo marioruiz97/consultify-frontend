@@ -13,17 +13,17 @@
       </div>
     </div>
   </section>
-  <section fxFlex="60" class="formulario">
-    <mat-card class="m-5 p-5">
+  <section fxFlex="60" class="formulario my-auto">
+    <mat-card class="m-auto p-4">
       <mat-card-header class="mx-auto mb-5">
-        <mat-card-title>Iniciar Sesión</mat-card-title>
+        <mat-card-title class="mat-h1">Iniciar Sesión</mat-card-title>
       </mat-card-header>
       <form (ngSubmit)="iniciarSesion()" [formGroup]="loginForm" fxLayout="column">
 
-        <!-- nombre de usuario o username-->
+        <!-- nombre de usuario o correo-->
         <mat-form-field appearance="outline" class="mb-4">
           <mat-label>Nombre de Usuario </mat-label>
-          <input type="text" matInput placeholder="Ej. MarioRuiz97" formControlName="username">
+          <input type="text" matInput placeholder="Ej. MarioRuiz97" formControlName="nombreUsuario">
           <mat-hint>Ingese el nombre de usuario o correo con que inicia sesión</mat-hint>
           <mat-error>Ingrese un nombre de usuario válido</mat-error>
         </mat-form-field>
@@ -42,8 +42,8 @@
 
 
 
-        <a href="" fxFlexAlign="end">recuperar contraseña</a>
-        <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid">Iniciar Sesion</button>
+        <a [routerLink]="['/recuperar']" fxFlexAlign="end" class="mb-3">recuperar contraseña</a>
+        <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid" class="py-4">Iniciar Sesion</button>
       </form>
     </mat-card>
 

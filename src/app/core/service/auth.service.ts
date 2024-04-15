@@ -5,6 +5,7 @@ import { TokenInfo } from "../model/token-info.model";
 import { UsuarioSesion } from "../model/usuario-sesion.model";
 import { AuthRequest } from "../model/auth-request.model";
 import { HttpService } from "./http.service";
+import { MockHttpService } from "./mock.http.service";
 
 
 @Injectable({ providedIn: 'root' })
@@ -15,7 +16,7 @@ export class AuthService {
   private $estaAutenticado: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
-  constructor(private router: Router, private httpService: HttpService) {
+  constructor(private router: Router, private httpService: MockHttpService) {
     this.token = null;
     this.usuarioSesion = null;
     this.verificarSesion();
@@ -47,11 +48,16 @@ export class AuthService {
   }
 
   iniciarSesion(authRequest: AuthRequest) {
-    this.httpService.loginRequest(authRequest);
-    this.usuarioSesion = new UsuarioSesion(1, authRequest.nombreUsuario, "correo@correo.com", "pepito", "perez");
-    this.token = new TokenInfo(`${this.usuarioSesion.nombre} ${this.usuarioSesion.apellido}`, "un jwt desde el backend");
-    sessionStorage.setItem('token', this.token.jwt);
-    this.$estaAutenticado.next(true);
+    const usuario: UsuarioSesion = this.httpService.loginRequest(authRequest); // servicio mock
+    if (usuario) {
+      this.usuarioSesion = usuario;
+      this.token = new TokenInfo(`${this.usuarioSesion.nombre} ${this.usuarioSesion.apellido}`, "un jwt desde el backend");
+      sessionStorage.setItem('token', this.token.jwt);
+      this.$estaAutenticado.next(true);
+      this.router.navigate(['/home'])
+    } else {
+      console.log("Verifica los datos de inicio de sesion");
+    }
   }
 
   cerrarSesion() {

@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faFacebookF, faInstagram, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { AuthRequest } from 'src/app/core/model/auth-request.model';
+import { AuthService } from 'src/app/core/service/auth.service';
 import { EnlaceExterno } from 'src/app/shared/model/enlace-externo.model';
 
 @Component({
@@ -12,23 +14,25 @@ import { EnlaceExterno } from 'src/app/shared/model/enlace-externo.model';
 export class InicioSesionComponent {
 
   redes: EnlaceExterno[] = [
-    { nombre: "Facebook", faIcon: faFacebookF, url: "https://facebook.com", target: "_blank" },
-    { nombre: "Twitter", faIcon: faXTwitter, url: "https://twitter.com", target: "_blank" },
-    { nombre: "Instagram", faIcon: faInstagram, url: "https://instagram.com", target: "_blank" },
+    { nombre: "Facebook", faIcon: faFacebookF, url: "https://www.facebook.com/ASISGE", target: "_blank" },
+    { nombre: "Twitter", faIcon: faXTwitter, url: "https://twitter.com/asisgesa", target: "_blank" },
+    { nombre: "Instagram", faIcon: faInstagram, url: "https://www.instagram.com/asisges.a.s", target: "_blank" },
   ]
 
   loginForm: FormGroup;
   hide: boolean = true;
 
-  constructor() {
+  constructor(private authService: AuthService) {
     this.loginForm = new FormGroup({
-      username: new FormControl('', [Validators.required, Validators.maxLength(64), Validators.minLength(4)]),
+      nombreUsuario: new FormControl('', [Validators.required, Validators.maxLength(64), Validators.minLength(4)]),
       contrasena: new FormControl('', [Validators.required, Validators.maxLength(14), Validators.minLength(8)]),
     })
   }
 
   iniciarSesion() {
-    console.log("iniciando sesion", this.loginForm.getRawValue())
+    const authRequest: AuthRequest = this.loginForm.value as AuthRequest;
+    console.log("iniciando sesion", authRequest)
+    this.authService.iniciarSesion(authRequest);
   }
 
 }
