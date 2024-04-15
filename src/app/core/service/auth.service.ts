@@ -35,8 +35,8 @@ export class AuthService {
       return false;
 
     } else {
-      if (!this.token) this.token = new TokenInfo("usuario", atob(sesionActiva));
-      if (!this.usuarioSesion) this.usuarioSesion = this.obtenerUsuarioDesdeToken(this.token);
+      //if (!this.token) this.token = new TokenInfo("usuario", atob(sesionActiva));
+      //if (!this.usuarioSesion) this.usuarioSesion = this.obtenerUsuarioDesdeToken(this.token);
       this.$estaAutenticado.next(true);
       return true;
     }

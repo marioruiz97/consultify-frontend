@@ -1,0 +1,23 @@
+.no-style {
+  list-style-type: none;
+  padding: 0;
+}
+
+.enlace-externo,
+.enlace-externo * {
+  text-decoration: none;
+  color: inherit;
+  text-align: left;
+}
+
+.enlace-externo:hover {
+  font-weight: 500;
+}
+
+.seccion {
+  padding-top: 1em;
+}
+
+.seccion:hover {
+  background-color: #f5f6f7;
+}

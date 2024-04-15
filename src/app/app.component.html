@@ -6,5 +6,6 @@
   <mat-sidenav-content>
     <app-toolbar (openMenu)="sidenav.toggle()" [menu]="menu" *ngIf="enSesion"></app-toolbar>
     <router-outlet></router-outlet>
+    <app-footer *ngIf="enSesion"></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -10,7 +10,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+
 
 
 
@@ -32,7 +34,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatDividerModule
   ],
   exports: [
     MatToolbarModule,
@@ -44,7 +47,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatDividerModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' },
