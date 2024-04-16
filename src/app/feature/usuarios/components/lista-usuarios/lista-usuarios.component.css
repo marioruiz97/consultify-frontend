@@ -1,0 +1,10 @@
+header {
+  min-height: 45vh;
+  background-image: url("/assets/img/lists-background.jpg");
+  background-position: 50% 60%;
+}
+
+.list-button mat-form-field,
+.list-button button {
+  min-width: 30%;
+}

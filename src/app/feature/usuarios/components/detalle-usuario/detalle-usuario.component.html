@@ -1,0 +1,46 @@
+<section>
+  <style>
+    .property{
+      font-weight: 500;
+    }
+  </style>
+  <h2 matDialogTitle>Ver detalles del usuario</h2>
+
+  <mat-dialog-content fxFill fxLayoutAlign.gt-sm="space-evenly" fxLayoutGap="2em" fxLayout.lt-sm="column">
+    <div class="mb-4">
+      <div mat-subheader>Información Personal</div>
+      <mat-list dense>
+        <mat-list-item *ngFor="let usuario of info">
+          <mat-icon mat-list-icon>label_important</mat-icon>
+          <span class="property">{{usuario.property}}</span>
+          {{usuario.data}}
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+      <div class="mt-2" fxLayoutAlign="center">
+        <button mat-button color="warn" (click)="cambiarEstado()">
+          {{data.estado ? 'Inactivar' : 'Activar'}} Usuario
+        </button>
+      </div>
+    </div>
+
+    <!-- <mat-divider></mat-divider> -->
+    <div>
+      <div mat-subheader>Clientes</div>
+      <mat-list dense>
+        <mat-list-item *ngIf="!clientes">No hay clientes asociados. <br/> Vuelve y agrega clientes para verlos aquí</mat-list-item>
+        <!-- <mat-list-item *ngFor="let cliente of clientes">
+          <mat-icon mat-list-icon>label</mat-icon>
+          <div mat-line><span class="property">Id Cliente:</span> {{cliente.idCliente}}</div>
+          <div mat-line><span class="property">Identificación:</span> {{cliente.identificacion}}</div>
+          <div mat-line><span class="property">Nombre Comercial:</span> {{cliente.nombreComercial}}</div>
+          <mat-divider></mat-divider>
+        </mat-list-item> -->
+      </mat-list>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions class="mt-4" fxLayoutAlign="center">
+    <button mat-button (click)="closeModal()" color="primary">Volver</button>
+  </mat-dialog-actions>
+</section>

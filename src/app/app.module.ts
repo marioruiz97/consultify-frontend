@@ -9,6 +9,7 @@ import { CoreModule } from './core/core.module';
 import { AutenticacionModule } from './feature/autenticacion/autenticacion.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { UsuariosModule } from './feature/usuarios/usuarios.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SharedModule,
     CoreModule,
     AutenticacionModule,
+    UsuariosModule,
     HttpClientModule,
     FontAwesomeModule
   ],
