@@ -1,25 +1,25 @@
 <footer class="mt-5" fxLayout="column">
   <mat-divider></mat-divider>
 
-  <section fxLayout="column" fxFlexAlign.lt-md="center" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
-    <mat-list dense>
-      <h3 class="m-0 mt-3 pb-1">Proyectos</h3>
-      <mat-list-item *ngFor="let item of proyectos">
-        <a [routerLink]="[item.url]">{{item.name}}</a>
+  <section fxLayout="column" fxFlexAlign.lt-md="center" fxLayout.gt-sm="row">
+    <mat-list dense fxFlex class="mx-2 seccion">
+      <h3 class="m-0 mt-3 pb-1 text-center">Proyectos</h3>
+      <mat-list-item *ngFor="let item of proyectos" [routerLink]="[item.url]">
+        {{item.name}}
       </mat-list-item>
     </mat-list>
 
-    <mat-list dense>
-      <h3 class="m-0 mt-3 pb-1">Módulos</h3>
-      <mat-list-item *ngFor="let item of modulos">
-        <a [routerLink]="[item.url]">{{item.name}}</a>
+    <mat-list dense fxFlex class="mx-2 seccion">
+      <h3 class="m-0 mt-3 pb-1 text-center">Módulos</h3>
+      <mat-list-item *ngFor="let item of modulos" [routerLink]="[item.url]">
+        {{item.name}}
       </mat-list-item>
     </mat-list>
 
-    <mat-list dense>
-      <h3 class="m-0 mt-3 pb-1"> Ponte en Contacto</h3>
-      <mat-list-item *ngFor="let item of contacto">
-        <a [routerLink]="[item.url]">{{item.name}}</a>
+    <mat-list dense fxFlex class="mx-2 seccion">
+      <h3 class="m-0 mt-3 pb-1 text-center"> Ponte en Contacto</h3>
+      <mat-list-item *ngFor="let item of contacto" [routerLink]="[item.url]">
+        {{item.name}}
       </mat-list-item>
       <mat-list-item>
         <a href="https://firebasestorage.googleapis.com/v0/b/proyectos-asisge.appspot.com/o/Manual%20de%20usuario%20Asisge.pdf?alt=media&token=18fd2fc7-d375-4aaf-98b5-787855a5ef84"
@@ -29,7 +29,7 @@
   </section>
 
   <div class="footer-row credits mt-2" fxLayoutAlign="center center">
-    <p>
+    <p class="mat-h3">
       &copy; Hecho para <a href="https://www.asisge.com/" target="_blank"> Asisge SAS </a> - 2024
     </p>
   </div>
