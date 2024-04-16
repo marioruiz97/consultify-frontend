@@ -1,0 +1,120 @@
+<mat-toolbar class="mb-4">
+  <h2>Mi Cuenta</h2>
+</mat-toolbar>
+
+
+<section fxLayout fxLayout.lt-sm="column">
+  <mat-card class="mat-elevation-z5 m-2" fxFlex>
+    <mat-card-header>
+      <mat-card-title>Datos personales </mat-card-title>
+      <span fxFlex></span>
+      <button mat-button color="primary" matTooltip="Editar información personal" (click)="toggleEdit()">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </mat-card-header>
+    <mat-card-content>
+      <form autocomplete="off" class="p-2" [formGroup]="accountForm" (ngSubmit)="guardarDatosPersonales()"
+        fxLayout="column">
+        <div class="foto my-2"></div>
+        <mat-form-field>
+          <mat-label>Tipo Documento</mat-label>
+          <input matInput type="text" formControlName="tipoDocumento">
+          <mat-icon matPrefix class="mat-18" [inline]="habilitarCampos">article</mat-icon>
+          <mat-hint *ngIf="habilitarCampos">Este dato no se puede modificar</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>N° de Identificación</mat-label>
+          <input matInput type="text" formControlName="identificacion">
+          <mat-icon matPrefix class="mat-18" [inline]="habilitarCampos">credit_card</mat-icon>
+          <mat-hint *ngIf="habilitarCampos">Este dato no se puede modificar</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Nombres</mat-label>
+          <input matInput type="text" formControlName="nombre">
+          <mat-icon matPrefix class="mat-18" [inline]="habilitarCampos">face</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Apellidos</mat-label>
+          <input matInput type="text" formControlName="apellido">
+          <mat-icon matPrefix class="mat-18" [inline]="habilitarCampos">face</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Nombre de Usuario</mat-label>
+          <input matInput type="text" formControlName="nombreUsuario">
+          <mat-icon matPrefix class="mat-18" [inline]="habilitarCampos">badge</mat-icon>
+          <mat-hint *ngIf="habilitarCampos">Este dato no se puede modificar</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Correo</mat-label>
+          <input matInput type="email" formControlName="correo">
+          <mat-icon matPrefix class="mat-18" [inline]="habilitarCampos">mail</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Telefono Móvil</mat-label>
+          <input matInput type="number" formControlName="celular">
+          <mat-icon matPrefix class="mat-18" [inline]="habilitarCampos">phonelink_ring</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Direccion</mat-label>
+          <input matInput type="text" formControlName="direccion">
+          <mat-icon matPrefix class="mat-18" [inline]="habilitarCampos">home</mat-icon>
+        </mat-form-field>
+
+        <p class="caption itallic text-center my-3 text-red" *ngIf="habilitarCampos && !accountForm.valid">
+          Verifica los campos del formulario
+        </p>
+
+        <div *ngIf="habilitarCampos" fxLayoutAlign.gt-sm="end">
+          <button type="button" mat-raised-button color="warn" (click)="toggleEdit()"> Cancelar </button>
+          <button type="submit" mat-raised-button color="primary" class="ml-5" [disabled]="!accountForm.valid">
+            Guardar cambios
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <aside fxFlex aria-label="opciones" fxLayout="column">
+    <mat-card class="mat-elevation-z5 m-2">
+      <mat-card-header>
+        <mat-card-title>Contactos de emergencia</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        contenido
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="mat-elevation-z5 m-2">
+      <mat-card-header>
+        <mat-card-title>Opciones</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <button mat-button [routerLink]="['/home']">
+              <mat-icon>dashboard</mat-icon>
+              <span class="pl-2">Ir a la página principal</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item>
+            <button mat-button (click)="abrirModalContrasena()" color="warn">
+              <mat-icon>lock_reset</mat-icon>
+              <span class="pl-2">Cambiar contraseña</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item>
+            <button mat-button (click)="desactivarCuenta()" color="warn">
+              <mat-icon>person_remove</mat-icon>
+              <span class="pl-2">Desactivar cuenta</span>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </aside>
+</section>

@@ -1,0 +1,19 @@
+<section>
+  <h1 matDialogTitle>{{data.title}}</h1>
+
+  <mat-dialog-content>
+    <p [innerHtml]="data.message"></p>
+    <mat-list dense *ngIf="data.errors.length > 0">
+      <mat-list-item *ngFor="let item of data.errors">
+        {{item}}
+      </mat-list-item>
+    </mat-list>
+  </mat-dialog-content>
+
+  <mat-dialog-actions fxLayoutAlign="end">
+    <button mat-button *ngIf="data.confirm" [matDialogClose]="true" color="accent">{{data.confirm}}</button>
+    <button mat-button *ngIf="!data.confirm" [matDialogClose]="true" color="accent">Sí</button>
+
+    <button mat-button *ngIf="data.showCancel" [matDialogClose]="false">Cancelar</button>
+  </mat-dialog-actions>
+</section>

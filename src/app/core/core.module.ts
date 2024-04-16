@@ -6,11 +6,12 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { RouterModule } from '@angular/router';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 
 
 @NgModule({
-  declarations: [SidenavComponent, ToolbarComponent, FooterComponent],
+  declarations: [SidenavComponent, ToolbarComponent, FooterComponent, ConfirmDialogComponent],
   imports: [
     CommonModule,
     RouterModule,
