@@ -26,6 +26,9 @@ export class AuthService {
     return this.$estaAutenticado;
   }
 
+  obtenerUsuarioSesion(): UsuarioSesion | null {
+    return this.usuarioSesion;
+  }
 
   verificarSesion(): boolean {
     // verifica si hay token o sessionStorage
@@ -44,7 +47,7 @@ export class AuthService {
 
   private obtenerUsuarioDesdeToken(token: TokenInfo): UsuarioSesion {
     const payload = JSON.parse(atob(token.jwt.split('.')[1]));
-    return new UsuarioSesion(payload.usuario_id, "username", payload.correo, payload.nombre, payload.apellido);
+    return new UsuarioSesion(payload.usuario_id, payload.identificacion, "username", payload.correo, payload.nombre, payload.apellido);
   }
 
   iniciarSesion(authRequest: AuthRequest) {

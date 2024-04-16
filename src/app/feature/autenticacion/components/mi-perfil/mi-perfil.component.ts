@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/core/service/auth.service';
 import { DIALOG_CONFIG } from 'src/app/shared/app.constants';
 import { CuentaService } from '../../service/cuenta.service';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
+import { UsuarioSesion } from 'src/app/core/model/usuario-sesion.model';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -16,7 +17,8 @@ export class MiPerfilComponent {
 
   accountForm: FormGroup;
   habilitarCampos = false;
-  identificacion: any;
+  private usuarioSesion: UsuarioSesion | null
+  private identificacion: string;
 
   constructor(
     private matDialog: MatDialog,
@@ -24,6 +26,16 @@ export class MiPerfilComponent {
     private authService: AuthService
   ) {
     this.accountForm = this.initForm();
+    if (this.authService.verificarSesion()) {
+      this.usuarioSesion = this.authService.obtenerUsuarioSesion();
+      if (!this.usuarioSesion) this.authService.cerrarSesion();
+      this.identificacion = this.usuarioSesion ? this.usuarioSesion.identificacion : "";
+
+    } else {
+      this.usuarioSesion = null;
+      this.identificacion = "";
+      this.authService.cerrarSesion()
+    }
   }
 
 
@@ -38,16 +50,16 @@ export class MiPerfilComponent {
   }
 
   cargarInformacionPersonal() {
-
+    if (this.usuarioSesion) {
+      this.setForm(this.usuarioSesion);
+    }
   }
 
   initForm() {
     return new FormGroup({
-      nombre: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(40)]),
-      apellido: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(30)]),
-      direccion: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(50)]),
-      telefonoFijo: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(12), Validators.pattern('(^$|[0-9]*)')]),
-      celular: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(12), Validators.pattern('(^$|[0-9]*)')]),
+      nombres: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(40)]),
+      apellidos: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(30)]),
+      telefono: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(12), Validators.pattern('(^$|[0-9]*)')]),
       nombreUsuario: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(64)]),
       correo: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email, Validators.maxLength(64)]),
       identificacion: new FormControl({ value: '', disabled: true }),
@@ -56,17 +68,15 @@ export class MiPerfilComponent {
   }
 
   setForm(perfil: any) {
-    const usuario = perfil.usuario;
-    const contacto = usuario.contacto;
+    const usuario = perfil;
     this.accountForm.setValue({
-      nombre: usuario.nombre,
-      apellido: usuario.apellido,
-      direccion: contacto.direccion,
-      telefonoFijo: contacto.telefonoFijo,
-      celular: contacto.celular,
+      nombres: usuario.nombre,
+      apellidos: usuario.apellido,
+      telefono: usuario.telefono ? usuario.telefono : "3015465076",
       nombreUsuario: usuario.nombreUsuario,
       correo: usuario.correo,
-      identificacion: usuario.identificacion
+      identificacion: this.identificacion,
+      tipoDocumento: "Cédula de ciudadanía"
     });
   }
 
@@ -80,12 +90,12 @@ export class MiPerfilComponent {
   }
 
   habilitarCamposFormulario() {
-    const controls = ['nombre', 'apellido', 'direccion', 'telefonoFijo', 'celular', 'correo'];
+    const controls = ['nombres', 'apellidos', 'telefono', 'correo'];
     controls.forEach(control => this.accountForm.controls[control].enable());
   }
 
   deshabilitarCamposFormulario() {
-    const controls = ['nombre', 'apellido', 'direccion', 'telefonoFijo', 'celular', 'correo'];
+    const controls = ['nombres', 'apellidos', 'telefono', 'correo'];
     controls.forEach(control => this.accountForm.controls[control].disable());
   }
 
@@ -93,16 +103,15 @@ export class MiPerfilComponent {
   guardarDatosPersonales() {
     const form = this.accountForm.value;
     const perfil: any = {
-      nombre: form.nombre,
-      apellido: form.apellido,
-      direccion: form.direccion,
-      telefonoFijo: form.telefonoFijo,
-      celular: form.celular,
+      nombres: form.nombres,
+      apellidos: form.apellidos,
+      telefono: form.telefono,
       nombreUsuario: form.nombreUsuario,
       correo: form.correo,
       identificacion: form.identificacion
     };
     this.toggleEdit();
+    this.cuentaService.editarInformacionBasica(perfil);
   }
 
 
@@ -111,7 +120,7 @@ export class MiPerfilComponent {
     /* this.matDialog.open(CambiarContrasenaComponent, { data: { identificacion: this.identificacion } }); */
   }
 
-  verificarCuenta() {
+  cambiarCorreo() {
     alert('se enviará un correo electrónico para verificar la cuenta')
   }
 

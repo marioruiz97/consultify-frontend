@@ -13,9 +13,9 @@ export interface UsuarioQuemado {
 export class MockHttpService {
 
   private usuariosQuemados: UsuarioQuemado[] = [
-    { authRequest: { nombreUsuario: 'admin1', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 1, nombreUsuario: 'admin1', nombre: 'Mario', apellido: 'Ruiz', correo: 'marioRuiz@gmail.com' } },
-    { authRequest: { nombreUsuario: 'cliente1@gmail.com', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 2, nombreUsuario: 'cliente1', nombre: 'carlos', apellido: 'ramses', correo: 'cliente1@gmail.com' } },
-    { authRequest: { nombreUsuario: 'asesor1', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 3, nombreUsuario: 'asesor1', nombre: 'Juan', apellido: 'Patino', correo: 'juanPatino@gmail.com' } }
+    { authRequest: { nombreUsuario: 'admin1', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 1, identificacion:'1017251545', nombreUsuario: 'admin1', nombre: 'Mario', apellido: 'Ruiz', correo: 'marioRuiz@gmail.com' } },
+    { authRequest: { nombreUsuario: 'cliente1@gmail.com', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 2, identificacion:'1017214122', nombreUsuario: 'cliente1', nombre: 'carlos', apellido: 'ramses', correo: 'cliente1@gmail.com' } },
+    { authRequest: { nombreUsuario: 'asesor1', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 3, identificacion:'1017223908', nombreUsuario: 'asesor1', nombre: 'Juan', apellido: 'Patino', correo: 'juanPatino@gmail.com' } }
   ];
 
   constructor() { }
