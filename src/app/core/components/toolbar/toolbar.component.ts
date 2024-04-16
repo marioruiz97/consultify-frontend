@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NavItem } from '../../model/nav-item';
 
 @Component({
@@ -6,7 +6,7 @@ import { NavItem } from '../../model/nav-item';
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css'],
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent {
 
   @Input() menu!: NavItem[];
 
@@ -20,5 +20,4 @@ export class ToolbarComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void { }
 }

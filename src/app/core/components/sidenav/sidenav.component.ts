@@ -1,12 +1,12 @@
 import { NavItem } from '../../model/nav-item';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css'],
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent {
 
   @Output() closeSidenav = new EventEmitter();
 
@@ -16,7 +16,6 @@ export class SidenavComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void { }
 
   onToggle(): void {
     this.closeSidenav.emit();
