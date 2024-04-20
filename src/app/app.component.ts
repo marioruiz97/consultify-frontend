@@ -4,6 +4,7 @@ import { NavItem } from './core/model/nav-item';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { AuthService } from './core/service/auth.service';
+import { MENU_NAVEGACION } from './shared/app.constants';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +17,7 @@ export class AppComponent {
   $isHandset: Observable<boolean>;
   enSesion: boolean = false;
 
-  public menu: NavItem[] = [
-    { url: '/tipo-citas', name: 'lorem', icon: 'next_week' },
-    { url: '/veterinarios', name: 'ipsum', icon: 'assignment_ind' },
-    { url: '/responsables', name: 'lorem', icon: 'people' },
-    { url: '/citas', name: 'ipsum', icon: 'book_online' },
-  ];
+  public menu: NavItem[] = MENU_NAVEGACION;
 
 
   constructor(

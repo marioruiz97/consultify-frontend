@@ -6,6 +6,7 @@ import { UsuarioSesion } from "../model/usuario-sesion.model";
 import { AuthRequest } from "../model/auth-request.model";
 import { HttpService } from "./http.service";
 import { MockHttpService } from "./mock.http.service";
+import { AppConstants as rutas } from "src/app/shared/app.constants";
 
 
 @Injectable({ providedIn: 'root' })
@@ -57,7 +58,7 @@ export class AuthService {
       this.token = new TokenInfo(`${this.usuarioSesion.nombre} ${this.usuarioSesion.apellido}`, "un jwt desde el backend");
       sessionStorage.setItem('token', this.token.jwt);
       this.$estaAutenticado.next(true);
-      this.router.navigate(['/home'])
+      this.router.navigate([rutas.RUTA_HOME])
     } else {
       console.log("Verifica los datos de inicio de sesion");
     }

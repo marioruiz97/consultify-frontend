@@ -1,12 +1,21 @@
 import { MatDialogConfig } from '@angular/material/dialog';
+import { NavItem } from '../core/model/nav-item';
 
 export class AppConstants {
-  public static readonly PATH_TIPO_CITA = 'tipo-citas';
-  public static readonly PATH_RESPONSABLE = 'responsables';
-  public static readonly PATH_MASCOTA = 'mascotas';
-  public static readonly PATH_VETERINARIO = 'veterinarios';
-  public static readonly PATH_CITA = 'citas';
+  public static readonly RUTA_HOME = 'home';
+  public static readonly RUTA_LOGIN = 'login';
+  public static readonly RUTA_RECUPERAR = 'recuperar';
+  public static readonly RUTA_CUENTA = 'cuenta';
+  public static readonly RUTA_USUARIOS = 'usuarios';
+  public static readonly RUTA_CLIENTES = 'clientes';
 }
+
+export const MENU_NAVEGACION: NavItem[] = [
+  { url: '/tipo-citas', name: 'lorem', icon: 'next_week' },
+  { url: '/veterinarios', name: 'ipsum', icon: 'assignment_ind' },
+  { url: AppConstants.RUTA_USUARIOS, name: 'Usuarios', icon: 'people' },
+  { url: '/citas', name: 'ipsum', icon: 'book_online' },
+];
 
 export const DIALOG_CONFIG: MatDialogConfig = {
   disableClose: true,

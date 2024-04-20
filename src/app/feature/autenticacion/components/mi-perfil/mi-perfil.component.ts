@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/core/service/auth.service';
-import { DIALOG_CONFIG } from 'src/app/shared/app.constants';
+import { AppConstants, DIALOG_CONFIG } from 'src/app/shared/app.constants';
 import { CuentaService } from '../../service/cuenta.service';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
 import { UsuarioSesion } from 'src/app/core/model/usuario-sesion.model';
@@ -17,6 +17,7 @@ export class MiPerfilComponent {
 
   accountForm: FormGroup;
   habilitarCampos = false;
+  rutaHome = AppConstants.RUTA_HOME;
   private usuarioSesion: UsuarioSesion | null
   private identificacion: string;
 

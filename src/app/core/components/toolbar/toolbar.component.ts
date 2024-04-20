@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NavItem } from '../../model/nav-item';
+import { AppConstants } from 'src/app/shared/app.constants';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,6 +10,7 @@ import { NavItem } from '../../model/nav-item';
 export class ToolbarComponent {
 
   @Input() menu!: NavItem[];
+  rutaHome = AppConstants.RUTA_HOME;
 
   ajustes: NavItem[] = [
     { name: 'Mi cuenta', url: '/cuenta', icon: 'account_circle' },
