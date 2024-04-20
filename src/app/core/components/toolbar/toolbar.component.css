@@ -5,9 +5,11 @@
 .logo {
   cursor: pointer;
   background-image: url("/assets/img/brand-logo.png");
-  background-size: cover;
-  height: 50px;
-  width: 110px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  height: 60px;
+  width: 175px;
 }
 
 /*
