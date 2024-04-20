@@ -17,7 +17,7 @@ export class AuthService {
   private $estaAutenticado: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
-  constructor(private router: Router, private httpService: MockHttpService) {
+  constructor(private router: Router, private httpService: HttpService) {
     this.token = null;
     this.usuarioSesion = null;
     this.verificarSesion();
@@ -46,22 +46,32 @@ export class AuthService {
     }
   }
 
-  private obtenerUsuarioDesdeToken(token: TokenInfo): UsuarioSesion {
-    const payload = JSON.parse(atob(token.jwt.split('.')[1]));
-    return new UsuarioSesion(payload.usuario_id, payload.identificacion, "username", payload.correo, payload.nombre, payload.apellido);
-  }
 
   iniciarSesion(authRequest: AuthRequest) {
-    const usuario: UsuarioSesion = this.httpService.loginRequest(authRequest); // servicio mock
-    if (usuario) {
-      this.usuarioSesion = usuario;
-      this.token = new TokenInfo(`${this.usuarioSesion.nombre} ${this.usuarioSesion.apellido}`, "un jwt desde el backend");
-      sessionStorage.setItem('token', this.token.jwt);
-      this.$estaAutenticado.next(true);
-      this.router.navigate([rutas.RUTA_HOME])
-    } else {
-      console.log("Verifica los datos de inicio de sesion");
-    }
+    this.httpService.loginRequest(authRequest)
+      .then(res => {
+        if (res) {
+          this.configurarSesion(res.jwt);
+          this.$estaAutenticado.next(true);
+          this.router.navigate([rutas.RUTA_HOME])
+        }
+      })
+      .catch(err => {
+        console.log('falló el inicio de sesion', err);
+        this.cerrarSesion();
+      });
+  }
+
+  private configurarSesion(jwt: string) {
+    this.token = new TokenInfo(jwt);
+    this.usuarioSesion = this.obtenerUsuarioDesdeToken(jwt);
+    sessionStorage.removeItem('token');
+    sessionStorage.setItem('token', jwt);
+  }
+
+  private obtenerUsuarioDesdeToken(token: string): UsuarioSesion {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return new UsuarioSesion(payload.idUsuario, payload.identificacion, payload.nombreUsuario, payload.correo, payload.nombreCompleto, payload.rol);
   }
 
   cerrarSesion() {
@@ -71,7 +81,7 @@ export class AuthService {
     this.$estaAutenticado.next(false);
     sessionStorage.clear();
     sessionStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.router.navigate([rutas.RUTA_LOGIN]);
   }
 
   recuperarContrasena() {

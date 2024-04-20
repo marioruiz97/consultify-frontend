@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NavItem } from '../../model/nav-item';
 import { AppConstants } from 'src/app/shared/app.constants';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -20,6 +21,10 @@ export class ToolbarComponent {
 
   @Output() openMenu = new EventEmitter();
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
+
+  cerrarSesion() {
+    this.authService.cerrarSesion();
+  }
 
 }

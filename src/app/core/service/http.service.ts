@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, provideHttpClient } from '@angular/common/http';
 import { Observable, lastValueFrom } from 'rxjs';
 import { AuthRequest } from '../model/auth-request.model';
+import { AppConstants } from 'src/app/shared/app.constants';
 
 export interface Options {
   headers?: HttpHeaders;
@@ -10,7 +11,8 @@ export interface Options {
 @Injectable({ providedIn: 'root' })
 export class HttpService {
 
-  private API_ENDPOINT = "environment.endpoint";
+  private API_ENDPOINT = "http://localhost:8080";
+  private LOGIN_PATH = `auth/${AppConstants.RUTA_LOGIN}`;
 
   constructor(protected httpClient: HttpClient) { }
 
@@ -20,8 +22,8 @@ export class HttpService {
     };
   }
 
-  loginRequest(authRequest: AuthRequest) {
-    throw new Error("Method not implemented.");
+  loginRequest(authRequest: AuthRequest): Promise<any> {
+    return lastValueFrom(this.httpClient.post(`${this.API_ENDPOINT}/${this.LOGIN_PATH}`, authRequest, this.createDefaultOptions()))
   }
 
 

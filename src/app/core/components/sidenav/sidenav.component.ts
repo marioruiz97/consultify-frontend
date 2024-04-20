@@ -1,5 +1,6 @@
 import { NavItem } from '../../model/nav-item';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -14,10 +15,14 @@ export class SidenavComponent {
 
   nombre: string = "Mario";
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
 
   onToggle(): void {
     this.closeSidenav.emit();
+  }
+
+  cerrarSesion() {
+    this.authService.cerrarSesion();
   }
 }
