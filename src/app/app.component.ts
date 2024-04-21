@@ -1,7 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { NavItem } from './core/model/nav-item';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { AuthService } from './core/service/auth.service';
 import { MENU_NAVEGACION } from './shared/app.constants';
@@ -11,11 +11,12 @@ import { MENU_NAVEGACION } from './shared/app.constants';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
 
   title = 'consultify-front';
   $isHandset: Observable<boolean>;
   enSesion: boolean = false;
+  private suscripciones: Subscription[] = [];
 
   public menu: NavItem[] = MENU_NAVEGACION;
 
@@ -31,7 +32,12 @@ export class AppComponent {
         map((result) => result.matches),
         tap(() => this.changeDetectorRef.detectChanges())
       );
-    this.authService.estaAutenticado.subscribe(estaAutenticado => this.enSesion = estaAutenticado);
+    this.suscripciones.push(this.authService.estaAutenticado.subscribe(estaAutenticado => this.enSesion = estaAutenticado));
     this.authService.verificarSesion();
+  }
+
+
+  ngOnDestroy(): void {
+    this.suscripciones.forEach(suscripcion => suscripcion.unsubscribe());
   }
 }

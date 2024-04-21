@@ -1,15 +1,15 @@
+import { Rol } from "src/app/core/model/usuario-sesion.model";
+import { TipoDocumento } from "./tipo-documento.model";
 
 export interface UsuarioLista {
-  idUsuario?: number;
+  idUsuario: number;
   identificacion: string;
-  tipoDocumento: string;
-  nombre: string;
-  apellido1: string;
-  apellido2?: string;
+  tipoDocumento: TipoDocumento;
+  nombres: string;
+  apellidos: string;
   telefono: string;
   correo: string;
-  contrasena: string;
-  matchContrasena?: string;
   estado: boolean;
-  //roles: Role[];
+  rol: Rol;
+  creadoPor: string;
 }

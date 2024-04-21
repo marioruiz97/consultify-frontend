@@ -20,18 +20,18 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
 
   private listSub: Subscription[] = [];
 
-  displayedColumns = ['idUsuario', 'identificacion', 'nombres', 'apellidos', 'correo', 'telefono', 'estado', 'acciones'];
+  displayedColumns = ['nombres', 'apellidos', 'correo', 'telefono', 'rol', 'estado', 'acciones'];
   datasource = new MatTableDataSource<UsuarioLista>();
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort = new MatSort();
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private service: UsuarioService, private dialog: MatDialog, public auth: AuthService
+    private service: UsuarioService, private dialog: MatDialog, public authService: AuthService
   ) { }
 
   ngOnInit() {
-    this.fetch();
+    this.obtenerTodosUsuarios();
   }
 
   ngAfterViewInit() {
@@ -39,29 +39,24 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
     this.datasource.paginator = this.paginator;
   }
 
-  fetch() {
+  obtenerTodosUsuarios() {
     this.listSub.push(this.service.obtenerUsuarios().subscribe(list => this.datasource.data = list));
   }
 
-  doFilter() {
-    const filterString = document.getElementById("campo-filtro")?.textContent;
-    this.datasource.filter = filterString ? filterString.trim().toLocaleLowerCase() : "";
+  doFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.datasource.filter = filterValue.trim().toLowerCase();
   }
 
-  showDetails(usuario: UsuarioLista) {
-    if (usuario.apellido2 && usuario.apellido2 === '') { usuario.apellido2 = ''; }
+  mostrarDetalles(usuario: UsuarioLista) {
     const ref = this.dialog.open(DetalleUsuarioComponent, { ...DIALOG_CONFIG, data: usuario });
-    this.listSub.push(ref.afterClosed().subscribe(res => { if (res) { this.fetch(); } }));
+    this.listSub.push(ref.afterClosed().subscribe(res => { if (res) { this.obtenerTodosUsuarios(); } }));
   }
 
-  showClientes(usuario: UsuarioLista) {
-    if (usuario.apellido2 && usuario.apellido2 === '') { usuario.apellido2 = ''; }
-    this.dialog.open(DetalleUsuarioComponent, { ...DIALOG_CONFIG, data: usuario });
-  }
 
-  delete(id: string) {
+  desactivar(id: string) {
     this.listSub.push(this.service.delete(id).subscribe(res => {
-      if (res) { this.fetch(); }
+      if (res) { this.obtenerTodosUsuarios(); }
     }));
   }
 

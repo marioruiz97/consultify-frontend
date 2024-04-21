@@ -5,7 +5,6 @@ import { TokenInfo } from "../model/token-info.model";
 import { UsuarioSesion } from "../model/usuario-sesion.model";
 import { AuthRequest } from "../model/auth-request.model";
 import { HttpService } from "./http.service";
-import { MockHttpService } from "./mock.http.service";
 import { AppConstants as rutas } from "src/app/shared/app.constants";
 
 
@@ -32,15 +31,14 @@ export class AuthService {
   }
 
   verificarSesion(): boolean {
-    // verifica si hay token o sessionStorage
     const sesionActiva = sessionStorage.getItem('token');
     if (!sesionActiva) {
       this.cerrarSesion();
       return false;
 
     } else {
-      //if (!this.token) this.token = new TokenInfo("usuario", atob(sesionActiva));
-      //if (!this.usuarioSesion) this.usuarioSesion = this.obtenerUsuarioDesdeToken(this.token);
+      if (!this.token) this.token = new TokenInfo(sesionActiva);
+      if (!this.usuarioSesion) this.usuarioSesion = this.obtenerUsuarioDesdeToken(this.token.jwt);
       this.$estaAutenticado.next(true);
       return true;
     }

@@ -6,6 +6,7 @@ import { RecuperarContrasenaComponent } from './feature/autenticacion/components
 import { MiPerfilComponent } from './feature/autenticacion/components/mi-perfil/mi-perfil.component';
 import { ListaUsuariosComponent } from './feature/usuarios/components/lista-usuarios/lista-usuarios.component';
 import { FormularioUsuarioComponent } from './feature/usuarios/components/formulario-usuario/formulario-usuario.component';
+import { AppConstants as rutas } from './shared/app.constants';
 
 const routes: Routes = [
   { path: '', redirectTo: `/${rutas.RUTA_HOME}`, pathMatch: 'full' },
