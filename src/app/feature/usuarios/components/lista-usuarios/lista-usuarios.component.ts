@@ -9,6 +9,8 @@ import { UsuarioLista } from '../../model/usuario-lista.model';
 import { DetalleUsuarioComponent } from '../detalle-usuario/detalle-usuario.component';
 import { DIALOG_CONFIG } from 'src/app/shared/app.constants';
 import { UsuarioService } from '../../service/usuario.service';
+import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 
 
 @Component({
@@ -54,9 +56,17 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
 
-  desactivar(id: string) {
-    this.listSub.push(this.service.delete(id).subscribe(res => {
-      if (res) { this.obtenerTodosUsuarios(); }
+  desactivar(id: number) {
+    const data: ConfirmDialogData = {
+      title: "Desactivar la cuenta",
+      message: `¿Estás seguro de desactivar tu cuenta?`,
+      errors: [],
+      confirm: "Sí, deseo desactivar la cuenta",
+      showCancel: true
+    }
+    this.listSub.push(this.dialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(desactivado => {
+      if (desactivado) this.service.desactivar(id)
+        .then(res => { if (res) { this.obtenerTodosUsuarios(); } })
     }));
   }
 
