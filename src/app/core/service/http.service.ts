@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, provideHttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, lastValueFrom } from 'rxjs';
 import { AuthRequest } from '../model/auth-request.model';
 import { AppConstants } from 'src/app/shared/app.constants';
+import { AuthResponse } from '../model/auth-response.model';
 
 export interface Options {
   headers?: HttpHeaders;
@@ -22,8 +23,8 @@ export class HttpService {
     };
   }
 
-  loginRequest(authRequest: AuthRequest): Promise<any> {
-    return lastValueFrom(this.httpClient.post(`${this.API_ENDPOINT}/${this.LOGIN_PATH}`, authRequest, this.createDefaultOptions()))
+  loginRequest(authRequest: AuthRequest): Promise<AuthResponse> {
+    return lastValueFrom(this.httpClient.post<AuthResponse>(`${this.API_ENDPOINT}/${this.LOGIN_PATH}`, authRequest, this.createDefaultOptions()))
   }
 
 
