@@ -15,7 +15,7 @@ export class AppComponent implements OnDestroy {
 
   title = 'consultify-front';
   $isHandset: Observable<boolean>;
-  enSesion: boolean = false;
+  enSesion = false;
   private suscripciones: Subscription[] = [];
 
   public menu: NavItem[] = MENU_NAVEGACION;

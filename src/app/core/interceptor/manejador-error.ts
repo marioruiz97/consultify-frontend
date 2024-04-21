@@ -4,26 +4,25 @@ import { HTTP_ERRORES_CODIGO, ErrorHttp } from './http-codigo-error';
 
 @Injectable()
 export class ManejadorError implements ErrorHandler {
-  constructor() { }
 
   handleError(error: string | Error): void {
     const mensajeError = this.mensajePorDefecto(error);
     this.imprimirErrorConsola(mensajeError);
   }
 
-  private mensajePorDefecto(error: any): string {
+  private mensajePorDefecto(error: Error | string): string {
     if (error instanceof HttpErrorResponse) {
       if (!navigator.onLine) {
         return HTTP_ERRORES_CODIGO['NO_HAY_INTERNET'];
       }
       if (
-        error.hasOwnProperty('status') &&
-        !error.error.hasOwnProperty('mensaje')
+        'status' in error &&
+        !('mensaje' in error.error)
       ) {
         return this.obtenerErrorHttpCode(error.status);
       }
     }
-    return error;
+    return error.toString();
   }
 
   private imprimirErrorConsola(mensaje: string): void {
@@ -36,7 +35,7 @@ export class ManejadorError implements ErrorHandler {
   }
 
   public obtenerErrorHttpCode(httpCode: number): string {
-    if (HTTP_ERRORES_CODIGO.hasOwnProperty(httpCode)) {
+    if (httpCode in HTTP_ERRORES_CODIGO) {
       return HTTP_ERRORES_CODIGO['PETICION_FALLIDA'];
     }
     const code: keyof ErrorHttp = httpCode.toString();

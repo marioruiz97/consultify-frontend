@@ -13,7 +13,7 @@ export class SidenavComponent {
 
   @Input() menu!: NavItem[];
 
-  nombre: string = "Mario";
+  nombre = "Mario";
 
   constructor(private authService: AuthService) { }
 

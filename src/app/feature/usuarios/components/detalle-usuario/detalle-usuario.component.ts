@@ -39,7 +39,7 @@ export class DetalleUsuarioComponent {
     });
   }
 
-  closeModal(res: boolean = false) {
+  closeModal(res = false) {
     if (res) {
       this.dialogRef.close(true);
     } else {

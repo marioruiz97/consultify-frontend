@@ -22,7 +22,7 @@ export class InicioSesionComponent {
   ]
 
   loginForm: FormGroup;
-  hide: boolean = true;
+  hide = true;
 
   constructor(private authService: AuthService, private router: Router) {
     if (this.authService.estaAutenticado.value) this.router.navigate([AppConstants.RUTA_HOME]);

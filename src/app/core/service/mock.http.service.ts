@@ -18,7 +18,6 @@ export class MockHttpService {
     { authRequest: { nombreUsuario: 'asesor1', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 3, identificacion: '1017223908', nombreUsuario: 'asesor1', nombreCompleto: 'Juan Patino', rol: Rol.CLIENTE, correo: 'juanPatino@gmail.com' } }
   ];
 
-  constructor() { }
 
 
   loginRequest(authRequest: AuthRequest): UsuarioSesion {
