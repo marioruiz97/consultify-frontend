@@ -18,6 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 
@@ -47,7 +48,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatTableModule,
     MatSnackBarModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatToolbarModule,
@@ -66,7 +68,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatTableModule,
     MatSnackBarModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSlideToggleModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' },

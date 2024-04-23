@@ -3,6 +3,7 @@ import { Observable, lastValueFrom } from 'rxjs';
 import { UsuarioLista } from '../model/usuario-lista.model';
 import { HttpService } from 'src/app/core/service/http.service';
 import { AppConstants } from 'src/app/shared/app.constants';
+import { UsuarioEditar } from '../model/usuario-editar.model';
 import { UsuarioFormulario } from '../model/usuario-formulario.model';
 
 
@@ -26,8 +27,16 @@ export class UsuarioService {
     return this.httpService.getRequest(this.path);
   }
 
-  obtenerUsuarioPorId(id: number): Promise<UsuarioFormulario> {
+  obtenerUsuarioPorId(id: number): Promise<UsuarioEditar> {
     return lastValueFrom(this.httpService.getRequest(`${this.path}/${id}`));
+  }
+
+  editarUsuario(idUsuario: number, data: UsuarioFormulario): Promise<UsuarioEditar> {
+    return this.httpService.patchRequest(`${this.path}/${idUsuario}`, data);
+  }
+
+  crearUsuario(data: UsuarioFormulario): Promise<UsuarioEditar> {
+    return this.httpService.postRequest(this.path, data);
   }
 
 }

@@ -6,9 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../service/usuario.service';
 import { AppConstants as rutas } from 'src/app/shared/app.constants';
 import { UIService } from 'src/app/core/service/ui.service';
-import { UsuarioFormulario } from '../../model/usuario-formulario.model';
+import { UsuarioEditar } from '../../model/usuario-editar.model';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { RolMap } from 'src/app/core/model/usuario-sesion.model';
+import { UsuarioFormulario } from '../../model/usuario-formulario.model';
 
 @Component({
   selector: 'app-formulario-usuario',
@@ -73,12 +74,13 @@ export class FormularioUsuarioComponent implements OnDestroy {
       telefono: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('^(60[0-9]{7})$|^(3[0-9]{9})$')]),
       correo: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(64)]),
       nombreUsuario: new FormControl('', [Validators.required, Validators.maxLength(16), Validators.minLength(4)]),
-      activo: new FormControl(false),
-      rol: new FormControl(3, [Validators.required])
+      activo: new FormControl(),
+      rol: new FormControl('', [Validators.required]),
+      creadoPor: new FormControl()
     });
   }
 
-  private setForm(cuentaUsuario: UsuarioFormulario) {
+  private setForm(cuentaUsuario: UsuarioEditar) {
     const infoUsuario = cuentaUsuario.usuario;
     this.idUsuario = infoUsuario.idUsuario;
     this.$isEdit = true;
@@ -92,7 +94,8 @@ export class FormularioUsuarioComponent implements OnDestroy {
       correo: infoUsuario.correo,
       nombreUsuario: cuentaUsuario.nombreUsuario,
       activo: cuentaUsuario.activo,
-      rol: cuentaUsuario.rol
+      rol: cuentaUsuario.rol,
+      creadoPor: cuentaUsuario.creadoPor
     });
   }
 
@@ -121,8 +124,30 @@ export class FormularioUsuarioComponent implements OnDestroy {
     }));
   }
 
+  /**
+   * Método para determinar si se debe crear o actualizar un usuario.
+   * 2. valida que si el id del usuario y el currentUser son diferentes de null o undefined entonces se debe actualizar
+   * 3. si id es null y currentuser tambien entonces crea el usuario
+   */
   onSubmit() {
-    throw new Error('Method not implemented.');
+    const form: UsuarioFormulario = this.usuarioForm.value;
+    if (this.idUsuario && this.idUsuario !== 0 && this.$isEdit) {
+      this.ejecutarOperacion(this.usuarioService.editarUsuario(this.idUsuario, form));
+    } else {
+      this.ejecutarOperacion(this.usuarioService.crearUsuario(form));
+    }
+  }
+
+  private ejecutarOperacion(operacion: Promise<UsuarioEditar>) {
+    operacion.then(res => {
+      console.log('res ', res)
+      this.uiService.mostrarSnackBar("El usuario se ha guardado con exito", 4);
+      this.router.navigate([rutas.RUTA_USUARIOS]);
+    })
+      .catch(err => {
+        console.log('err ', err)
+        this.uiService.mostrarError(err);
+      });
   }
 
 

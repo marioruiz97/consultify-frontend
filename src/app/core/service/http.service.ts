@@ -46,6 +46,15 @@ export class HttpService {
       ))
   }
 
+  patchRequest<T, R>(path: string, data: T): Promise<R> {
+    return lastValueFrom(this.httpClient
+      .patch<R>(
+        `${this.API_ENDPOINT}/${path}`,
+        data,
+        this.createDefaultOptions()
+      ))
+  }
+
   getRequest<T>(path: string): Observable<T> {
     return this.httpClient.get<T>(
       `${this.API_ENDPOINT}/${path}`,
