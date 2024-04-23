@@ -1,0 +1,14 @@
+header {
+  min-height: 45vh;
+  max-height: 50vh;
+}
+
+header h1 {
+  margin: 0 auto;
+  padding: 2% 1%;
+  padding-top: 8%;
+  font-size: 2rem;
+  font-weight: 400 !important;
+  text-align: center;
+  letter-spacing: 0;
+}

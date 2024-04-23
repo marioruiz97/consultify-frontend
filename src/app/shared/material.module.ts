@@ -15,6 +15,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 
 
@@ -40,7 +44,10 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatDividerModule,
     MatDialogModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatExpansionModule
   ],
   exports: [
     MatToolbarModule,
@@ -56,7 +63,10 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatDividerModule,
     MatDialogModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatSnackBarModule,
+    MatSelectModule,
+    MatExpansionModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' },

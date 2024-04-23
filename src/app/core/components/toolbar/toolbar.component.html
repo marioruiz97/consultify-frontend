@@ -10,11 +10,10 @@
 
     <mat-nav-list fxLayout="row" fxHide.lt-md>
       <mat-list-item *ngFor="let item of menu" [routerLink]="[item.url]">
-        <mat-icon class="pr-2">{{item.icon}}</mat-icon>
-        <a> {{item.name}} </a>
+        <mat-icon class="pr-1">{{item.icon}}</mat-icon> <span>{{item.name}}</span>
       </mat-list-item>
 
-      <button mat-button [matMenuTriggerFor]="settingsMenu" matTooltip="Ajustes">
+      <button mat-icon-button [matMenuTriggerFor]="settingsMenu" matTooltip="Ajustes">
         <mat-icon>settings</mat-icon>
       </button>
       <mat-menu #settingsMenu="matMenu">

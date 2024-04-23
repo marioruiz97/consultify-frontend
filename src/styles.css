@@ -5,7 +5,7 @@
 
 :root {
   --darken-orange: #ff3400;
-  --light-orange: #ff601d;
+  --light-orange: #f17722;
   --deep-blue: #2d4d69;
   --darken-blue: #314251;
   --light-gray: #b9bfc4;
@@ -45,4 +45,11 @@ app-toolbar {
 
 tr.mat-row:hover {
   background-color: #eee;
+}
+
+p.invalid-form,
+div.invalid-form {
+  text-align: center !important;
+  color: var(--darken-orange);
+  font-weight: 400;
 }

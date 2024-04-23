@@ -16,18 +16,16 @@
   * ESTILOS DEL MENU
   */
 mat-list-item mat-icon,
-mat-list-item a {
+mat-list-item span {
   color: var(--light-orange);
-  font-weight: 200;
-
+  vertical-align: middle;
 }
 
-mat-list-item a {
-  text-decoration: none;
-  font-size: 1.2rem !important;
+mat-list-item {
+  min-width: fit-content;
 }
 
 mat-list-item:hover,
 mat-list-item:active {
-  border-bottom: 3px solid var(--darken-orange);
+  border-bottom: 2px solid var(--darken-orange);
 }

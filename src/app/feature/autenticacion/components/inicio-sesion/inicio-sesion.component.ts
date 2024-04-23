@@ -28,8 +28,8 @@ export class InicioSesionComponent {
     if (this.authService.estaAutenticado.value) this.router.navigate([AppConstants.RUTA_HOME]);
 
     this.loginForm = new FormGroup({
-      nombreUsuario: new FormControl('', [Validators.required, Validators.maxLength(64), Validators.minLength(4)]),
-      contrasena: new FormControl('', [Validators.required, Validators.maxLength(14), Validators.minLength(8)]),
+      nombreUsuario: new FormControl('', [Validators.required, Validators.maxLength(16), Validators.minLength(4)]),
+      contrasena: new FormControl('', [Validators.required, Validators.maxLength(16), Validators.minLength(8), Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,16}$')]),
     })
   }
 

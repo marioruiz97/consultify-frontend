@@ -19,5 +19,11 @@ export class UsuarioSesion {
 export enum Rol {
   ADMIN,
   ASESOR,
-  CLIENTE
+  CLIENTE,
 }
+
+export const RolMap = new Map([
+  ["ADMIN", "Administrador"],
+  ["ASESOR", "Asesor"],
+  ["CLIENTE", "Cliente"]
+]);
