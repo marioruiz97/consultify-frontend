@@ -35,7 +35,6 @@ export class InicioSesionComponent {
 
   iniciarSesion() {
     const authRequest: AuthRequest = this.loginForm.value as AuthRequest;
-    console.log("iniciando sesion", authRequest)
     this.authService.iniciarSesion(authRequest);
   }
 
