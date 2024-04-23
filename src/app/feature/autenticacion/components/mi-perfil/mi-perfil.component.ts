@@ -44,7 +44,6 @@ export class MiPerfilComponent {
   private cargarInformacionPersonal() {
     this.cuentaService.cargarMisDatos(this.idUsuario)
       .then(perfil => {
-        console.log(perfil)
         this.miPerfil = perfil;
         this.setForm(this.miPerfil);
       });
