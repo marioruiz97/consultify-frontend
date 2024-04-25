@@ -36,7 +36,7 @@
         </ng-container>
         <ng-container matColumnDef="rol">
           <th mat-header-cell *matHeaderCellDef fxHide.lt-md> Rol</th>
-          <td mat-cell *matCellDef="let doc" fxHide.lt-md>{{doc.rol}}</td>
+          <td mat-cell *matCellDef="let doc" fxHide.lt-md>{{mostrarRol(doc.rol)}}</td>
         </ng-container>
         <ng-container matColumnDef="estado">
           <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-md> Estado</th>

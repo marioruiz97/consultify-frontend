@@ -40,7 +40,8 @@ export class UIService {
       data: {
         title: "Alerta",
         message: alerta,
-        errors: []
+        errors: [],
+        confirm: 'Ok'
       }
     });
   }

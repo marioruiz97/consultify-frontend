@@ -71,7 +71,7 @@ export class FormularioUsuarioComponent implements OnDestroy {
       identificacion: new FormControl('', [Validators.required, Validators.min(99999), Validators.max(999999999999999)]),
       nombres: new FormControl('', [Validators.required, Validators.maxLength(64)]),
       apellidos: new FormControl('', [Validators.required, Validators.maxLength(64)]),
-      telefono: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('^(60[0-9]{7})$|^(3[0-9]{9})$')]),
+      telefono: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('^(60[0-9]{8})$|^(3[0-9]{9})$')]),
       correo: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(64)]),
       nombreUsuario: new FormControl('', [Validators.required, Validators.maxLength(16), Validators.minLength(4)]),
       activo: new FormControl(),

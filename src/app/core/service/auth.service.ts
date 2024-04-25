@@ -6,6 +6,8 @@ import { UsuarioSesion } from "../model/usuario-sesion.model";
 import { AuthRequest } from "../model/auth-request.model";
 import { HttpService } from "./http.service";
 import { AppConstants as rutas } from "src/app/shared/app.constants";
+import { UIService } from "./ui.service";
+import { HttpErrorResponse } from "@angular/common/http";
 
 
 @Injectable({ providedIn: 'root' })
@@ -16,7 +18,7 @@ export class AuthService {
   private $estaAutenticado: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
-  constructor(private router: Router, private httpService: HttpService) {
+  constructor(private router: Router, private httpService: HttpService, private uiService: UIService) {
     this.token = null;
     this.usuarioSesion = null;
     this.verificarSesion();
@@ -30,9 +32,14 @@ export class AuthService {
     return this.usuarioSesion;
   }
 
+  obtenerToken() {
+    if (this.verificarSesion()) return this.token;
+    return null;
+  }
+
   verificarSesion(): boolean {
     const sesionActiva = sessionStorage.getItem('token');
-    if (!sesionActiva) {
+    if (!sesionActiva || (sesionActiva.valueOf() !== this.token?.jwt)) {
       this.cerrarSesion();
       return false;
 
@@ -56,7 +63,8 @@ export class AuthService {
       })
       .catch(err => {
         console.log('falló el inicio de sesion', err);
-        this.cerrarSesion();
+        this.uiService.mostrarError(err);
+        this.limpiarDatosSesion();
       });
   }
 
@@ -67,13 +75,7 @@ export class AuthService {
     sessionStorage.setItem('token', jwt);
   }
 
-  private obtenerUsuarioDesdeToken(token: string): UsuarioSesion {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return new UsuarioSesion(payload.idUsuario, payload.identificacion, payload.nombreUsuario, payload.correo, payload.nombreCompleto, payload.rol);
-  }
-
-  cerrarSesion() {
-    // this.uiService.showSnackBar('Se ha cerrado sesión', 3)
+  private limpiarDatosSesion() {
     this.token = null;
     this.usuarioSesion = null;
     this.$estaAutenticado.next(false);
@@ -82,15 +84,27 @@ export class AuthService {
     this.router.navigate([rutas.RUTA_LOGIN]);
   }
 
+  private obtenerUsuarioDesdeToken(token: string): UsuarioSesion {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return new UsuarioSesion(payload.idUsuario, payload.identificacion, payload.nombreUsuario, payload.correo, payload.nombreCompleto, payload.rol);
+  }
+
+  sesionExpirada(error: HttpErrorResponse | null) {
+    if (error != null) this.uiService.mostrarError(error);
+    else this.uiService.mostrarConfirmDialog({ title: 'La sesión ha expirado!', message: 'Ingresa al sistema nuevamente', errors: [], confirm: 'Ok', showCancel: false })
+    this.limpiarDatosSesion();
+  }
+
+  cerrarSesion() {
+    this.uiService.mostrarSnackBar('Se ha cerrado sesión', 3)
+    this.limpiarDatosSesion();
+  }
+
   recuperarContrasena() {
     // TODO document why this method 'recuperarContrasena' is empty
 
 
   }
 
-  sesionExpirada() {
-    // this.uiService.showConfirm({ title: 'La sesión ha expirado!', message: 'Ingresa al sistema nuevamente', confirm: 'Ok' })
-    this.cerrarSesion();
-  }
 
 }

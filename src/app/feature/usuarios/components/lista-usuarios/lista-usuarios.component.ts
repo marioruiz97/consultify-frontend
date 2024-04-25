@@ -11,6 +11,7 @@ import { DIALOG_CONFIG } from 'src/app/shared/app.constants';
 import { UsuarioService } from '../../service/usuario.service';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
+import { RolMap } from 'src/app/core/model/usuario-sesion.model';
 
 
 @Component({
@@ -55,6 +56,9 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
     this.listSub.push(ref.afterClosed().subscribe(res => { if (res) { this.obtenerTodosUsuarios(); } }));
   }
 
+  mostrarRol(rol: string) {
+    return RolMap.get(rol);
+  }
 
   desactivar(id: number) {
     const data: ConfirmDialogData = {

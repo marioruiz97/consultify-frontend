@@ -13,9 +13,9 @@ export interface UsuarioQuemado {
 export class MockHttpService {
 
   private usuariosQuemados: UsuarioQuemado[] = [
-    { authRequest: { nombreUsuario: 'admin1', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 1, identificacion: '1017251545', nombreUsuario: 'admin1', nombreCompleto: 'Mario Ruiz', rol: Rol.ADMIN, correo: 'marioRuiz@gmail.com' } },
-    { authRequest: { nombreUsuario: 'cliente1@gmail.com', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 2, identificacion: '1017214122', nombreUsuario: 'cliente1', nombreCompleto: 'carlos ramses', rol: Rol.ASESOR, correo: 'cliente1@gmail.com' } },
-    { authRequest: { nombreUsuario: 'asesor1', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 3, identificacion: '1017223908', nombreUsuario: 'asesor1', nombreCompleto: 'Juan Patino', rol: Rol.CLIENTE, correo: 'juanPatino@gmail.com' } }
+    { authRequest: { nombreUsuario: 'admin1', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 1, identificacion: '1017251545', nombreUsuario: 'admin1', nombreCompleto: 'Mario Ruiz', rol: Rol.ROLE_ADMIN, correo: 'marioRuiz@gmail.com' } },
+    { authRequest: { nombreUsuario: 'cliente1@gmail.com', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 2, identificacion: '1017214122', nombreUsuario: 'cliente1', nombreCompleto: 'carlos ramses', rol: Rol.ROLE_ASESOR, correo: 'cliente1@gmail.com' } },
+    { authRequest: { nombreUsuario: 'asesor1', contrasena: 'contra1234' }, infoUsuario: { idUsuario: 3, identificacion: '1017223908', nombreUsuario: 'asesor1', nombreCompleto: 'Juan Patino', rol: Rol.ROLE_CLIENTE, correo: 'juanPatino@gmail.com' } }
   ];
 
 

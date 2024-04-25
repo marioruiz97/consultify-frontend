@@ -65,7 +65,7 @@
               <mat-label>Teléfono de contacto</mat-label>
               <input matInput type="tel" placeholder="Ej. 3015465076" formControlName="telefono">
               <mat-hint>Ingrese preferiblemente teléfono celular</mat-hint>
-              <mat-error>Ingrese un teléfono válido de hasta 11 caracteres</mat-error>
+              <mat-error>Ingrese un teléfono válido de hasta 10 caracteres (Actual: {{usuarioForm.value.telefono.length}})</mat-error>
             </mat-form-field>
           </div>
         </mat-expansion-panel>

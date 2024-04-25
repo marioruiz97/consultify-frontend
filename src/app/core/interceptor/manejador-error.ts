@@ -42,3 +42,5 @@ export class ManejadorError implements ErrorHandler {
     return HTTP_ERRORES_CODIGO[code];
   }
 }
+
+export const ErrorHandlerProvider = { provide: ErrorHandler, useClass: ManejadorError };

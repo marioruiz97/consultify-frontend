@@ -53,7 +53,7 @@ export class MiPerfilComponent {
     return new FormGroup({
       nombres: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(64)]),
       apellidos: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(64)]),
-      telefono: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(10), Validators.pattern('^(60[0-9]{7})$|^(3[0-9]{9})$')]),
+      telefono: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(10), Validators.pattern('^(60[0-9]{8})$|^(3[0-9]{9})$')]),
       nombreUsuario: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(16), Validators.minLength(4)]),
       correo: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email, Validators.maxLength(64)]),
       identificacion: new FormControl({ value: '', disabled: true }),

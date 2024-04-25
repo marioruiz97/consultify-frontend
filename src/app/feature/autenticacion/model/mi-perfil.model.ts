@@ -18,6 +18,6 @@ export class MiPerfil {
     this.correo = correo ?? "";
     this.identificacion = identificacion ?? "";
     this.tipoDocumento = tipoDocumento ?? "";
-    this.rol = rol ?? Rol.CLIENTE;
+    this.rol = rol ?? Rol.ROLE_CLIENTE;
   }
 }
