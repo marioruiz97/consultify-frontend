@@ -7,6 +7,7 @@ export interface UsuarioLista {
   tipoDocumento: TipoDocumento;
   nombres: string;
   apellidos: string;
+  nombreUsuario: string;
   telefono: string;
   correo: string;
   estado: boolean;

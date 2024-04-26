@@ -4,7 +4,7 @@ import { TipoDocumentoMap } from '../../model/tipo-documento.model';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuarioService } from '../../service/usuario.service';
-import { AppConstants as rutas } from 'src/app/shared/app.constants';
+import { AppConstants, AppConstants as rutas } from 'src/app/shared/app.constants';
 import { UIService } from 'src/app/core/service/ui.service';
 import { UsuarioEditar } from '../../model/usuario-editar.model';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
@@ -71,7 +71,7 @@ export class FormularioUsuarioComponent implements OnDestroy {
       identificacion: new FormControl('', [Validators.required, Validators.min(99999), Validators.max(999999999999999)]),
       nombres: new FormControl('', [Validators.required, Validators.maxLength(64)]),
       apellidos: new FormControl('', [Validators.required, Validators.maxLength(64)]),
-      telefono: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern('^(60[0-9]{8})$|^(3[0-9]{9})$')]),
+      telefono: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern(AppConstants.PATRON_TELEFONO)]),
       correo: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(64)]),
       nombreUsuario: new FormControl('', [Validators.required, Validators.maxLength(16), Validators.minLength(4)]),
       activo: new FormControl(),

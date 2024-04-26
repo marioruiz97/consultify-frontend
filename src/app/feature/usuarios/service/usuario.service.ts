@@ -19,8 +19,9 @@ export class UsuarioService {
     return this.httpService.deleteRequest<boolean>(`${this.path}/${id}`)
   }
 
-  cambiarEstado(idUsuario: number | undefined, estado: boolean): Observable<any> {
-    throw new Error('Method not implemented.');
+  cambiarEstado(idUsuario: number, activo: boolean): Promise<boolean> {
+    const data = { idUsuario, activo };
+    return this.httpService.patchRequest<{ idUsuario: number, activo: boolean }, boolean>(`${this.path}/estado/${idUsuario}`, data);
   }
 
   obtenerUsuarios(): Observable<UsuarioLista[]> {

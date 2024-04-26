@@ -11,15 +11,16 @@ export class CuentaService {
 
   constructor(private httpService: HttpService) { }
 
-
   cargarMisDatos(idUsuario: number): Promise<MiPerfil> {
     return lastValueFrom(this.httpService.getRequest<MiPerfil>(`${this.path}/${idUsuario}`));
   }
+
   editarInformacionBasica(perfil: any) {
     throw new Error('Method not implemented.');
   }
-  desactivarCuenta(identificacion: any) {
-    throw new Error('Method not implemented.');
+
+  desactivarCuenta(idUsuario: number): Promise<boolean> {
+    return this.httpService.deleteRequest<boolean>(`${this.path}/${idUsuario}`);
   }
 
 }

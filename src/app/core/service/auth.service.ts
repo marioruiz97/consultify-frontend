@@ -21,6 +21,7 @@ export class AuthService {
   constructor(private router: Router, private httpService: HttpService, private uiService: UIService) {
     this.token = null;
     this.usuarioSesion = null;
+    this.verificarSesion();
   }
 
   get estaAutenticado() {
@@ -32,13 +33,12 @@ export class AuthService {
   }
 
   obtenerToken() {
-    if (this.verificarSesion()) return this.token;
-    return null;
+    return this.token;
   }
 
   verificarSesion(): boolean {
     const sesionActiva = sessionStorage.getItem('token');
-    if (!sesionActiva || (sesionActiva.valueOf() !== this.token?.jwt)) {
+    if (!sesionActiva || (this.token && sesionActiva.valueOf() !== this.token?.jwt)) {
       return false;
 
     } else {
@@ -60,7 +60,6 @@ export class AuthService {
         }
       })
       .catch(err => {
-        console.log('falló el inicio de sesion', err);
         if (!err.error) err.error = { status: '401', error: 'Falló el inicio de sesión', message: 'Por favor revisa el usuario/contraseña' }
         this.uiService.mostrarError(err);
         this.limpiarDatosSesion();

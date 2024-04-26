@@ -29,7 +29,7 @@ export class InicioSesionComponent {
 
     this.loginForm = new FormGroup({
       nombreUsuario: new FormControl('', [Validators.required, Validators.maxLength(64), Validators.minLength(4)]),
-      contrasena: new FormControl('', [Validators.required, Validators.maxLength(16), Validators.minLength(8), Validators.pattern('^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,16}$')]),
+      contrasena: new FormControl('', [Validators.required, Validators.maxLength(16), Validators.minLength(8), Validators.pattern(AppConstants.PATRON_CONTRASENA)]),
     })
   }
 

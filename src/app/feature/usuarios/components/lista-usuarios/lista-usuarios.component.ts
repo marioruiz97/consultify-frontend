@@ -12,6 +12,7 @@ import { UsuarioService } from '../../service/usuario.service';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { RolMap } from 'src/app/core/model/usuario-sesion.model';
+import { UIService } from 'src/app/core/service/ui.service';
 
 
 @Component({
@@ -23,14 +24,14 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
 
   private listSub: Subscription[] = [];
 
-  displayedColumns = ['nombres', 'apellidos', 'correo', 'telefono', 'rol', 'estado', 'acciones'];
+  displayedColumns = ['nombres', 'apellidos', 'nombreUsuario', 'correo', 'telefono', 'rol', 'estado', 'acciones'];
   datasource = new MatTableDataSource<UsuarioLista>();
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private service: UsuarioService, private dialog: MatDialog, public authService: AuthService
+    private service: UsuarioService, private dialog: MatDialog, public authService: AuthService, private uiService: UIService
   ) { }
 
   ngOnInit() {
@@ -60,17 +61,46 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
     return RolMap.get(rol);
   }
 
-  desactivar(id: number) {
+  cambiarEstado(activar: boolean, id: number, nombreUsuario: string) {
+    if (activar) this.activar(id, nombreUsuario);
+    else this.desactivar(id, nombreUsuario);
+  }
+
+  private desactivar(id: number, nombreUsuario: string) {
     const data: ConfirmDialogData = {
       title: "Desactivar la cuenta",
-      message: `¿Estás seguro de desactivar tu cuenta?`,
+      message: `¿Estás seguro de desactivar la cuenta?`,
       errors: [],
       confirm: "Sí, deseo desactivar la cuenta",
       showCancel: true
     }
     this.listSub.push(this.dialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(desactivado => {
       if (desactivado) this.service.desactivar(id)
-        .then(res => { if (res) { this.obtenerTodosUsuarios(); } })
+        .then(res => {
+          if (!res) {
+            this.uiService.mostrarAlerta(`El usuario ${nombreUsuario} ha sido desactivado con éxito`);
+            this.obtenerTodosUsuarios();
+          }
+        })
+    }));
+  }
+
+  private activar(id: number, nombreUsuario: string) {
+    const data: ConfirmDialogData = {
+      title: "Activar la cuenta",
+      message: `¿Estás seguro de activar la cuenta?`,
+      errors: [],
+      confirm: "Sí, deseo activar la cuenta",
+      showCancel: true
+    }
+    this.listSub.push(this.dialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(activado => {
+      if (activado) this.service.cambiarEstado(id, true)
+        .then(res => {
+          if (res) {
+            this.uiService.mostrarAlerta(`El usuario ${nombreUsuario} ha sido activado con éxito`);
+            this.obtenerTodosUsuarios();
+          }
+        })
     }));
   }
 

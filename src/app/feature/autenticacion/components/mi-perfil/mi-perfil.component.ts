@@ -8,6 +8,8 @@ import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/c
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { MiPerfil } from '../../model/mi-perfil.model';
 import { TipoDocumentoMap } from 'src/app/feature/usuarios/model/tipo-documento.model';
+import { RolMap } from 'src/app/core/model/usuario-sesion.model';
+import { UIService } from 'src/app/core/service/ui.service';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -27,7 +29,8 @@ export class MiPerfilComponent {
   constructor(
     private matDialog: MatDialog,
     private cuentaService: CuentaService,
-    private authService: AuthService
+    private authService: AuthService,
+    private uiService: UIService
   ) {
     this.accountForm = this.initForm();
     if (this.authService.verificarSesion()) {
@@ -53,7 +56,7 @@ export class MiPerfilComponent {
     return new FormGroup({
       nombres: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(64)]),
       apellidos: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(64)]),
-      telefono: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(10), Validators.pattern('^(60[0-9]{8})$|^(3[0-9]{9})$')]),
+      telefono: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(10), Validators.pattern(AppConstants.PATRON_TELEFONO)]),
       nombreUsuario: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.maxLength(16), Validators.minLength(4)]),
       correo: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email, Validators.maxLength(64)]),
       identificacion: new FormControl({ value: '', disabled: true }),
@@ -71,12 +74,16 @@ export class MiPerfilComponent {
       correo: perfil.correo,
       identificacion: perfil.identificacion,
       tipoDocumento: TipoDocumentoMap.get(perfil.tipoDocumento),
-      rol: perfil.rol
+      rol: this.mostrarRol(perfil.rol.toString())
     });
   }
 
   private formatearTelefono(telefono: string) {
     return telefono ? "+57 " + telefono.replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3") : "";
+  }
+
+  private mostrarRol(rol: string) {
+    return RolMap.get(rol);
   }
 
   toggleEdit() {
@@ -91,11 +98,13 @@ export class MiPerfilComponent {
   private habilitarCamposFormulario() {
     const controls = ['nombres', 'apellidos', 'telefono', 'correo', 'nombreUsuario'];
     controls.forEach(control => this.accountForm.controls[control].enable());
+    this.accountForm.controls['telefono'].setValue(this.miPerfil.telefono);
   }
 
   private deshabilitarCamposFormulario() {
     const controls = ['nombres', 'apellidos', 'telefono', 'correo', 'nombreUsuario'];
     controls.forEach(control => this.accountForm.controls[control].disable());
+    this.accountForm.controls['telefono'].setValue(this.formatearTelefono(this.miPerfil.telefono));
   }
 
 
@@ -134,7 +143,13 @@ export class MiPerfilComponent {
       showCancel: true
     }
     this.matDialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(desactivado => {
-      if (desactivado) this.cuentaService.desactivarCuenta(this.idUsuario);
+      if (desactivado) this.cuentaService.desactivarCuenta(this.idUsuario)
+        .then(res => {
+          if (!res) {
+            this.uiService.mostrarAlerta(`El usuario ${this.miPerfil.nombreUsuario} ha sido desactivado con éxito <br/> <span class='caption itallic'>Se va a cerrar la sesión</span>`);
+            setTimeout(() => this.authService.cerrarSesion(), 500);
+          }
+        });
     });
   }
 

@@ -2,6 +2,7 @@ import { MatDialogConfig } from '@angular/material/dialog';
 import { NavItem } from '../core/model/nav-item';
 
 export class AppConstants {
+  // RUTAS
   public static readonly RUTA_HOME = 'home';
   public static readonly RUTA_LOGIN = 'login';
   public static readonly RUTA_RECUPERAR = 'recuperar';
@@ -11,6 +12,10 @@ export class AppConstants {
   public static readonly RUTA_PROYECTOS = 'proyectos';
   public static readonly RUTA_CONTACTO = '';
   public static readonly RUTA_ACERCA = '';
+
+  // PATRONES
+  public static readonly PATRON_CONTRASENA = '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}';
+  public static readonly PATRON_TELEFONO = '^(60[0-9]{8})$|^(3[0-9]{9})$';
 }
 
 export const MENU_NAVEGACION: NavItem[] = [
