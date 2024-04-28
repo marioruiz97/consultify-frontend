@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/core/service/auth.service';
-import { AppConstants, DIALOG_CONFIG } from 'src/app/shared/app.constants';
+import { AppConstants, DIALOG_CONFIG, customConfig } from 'src/app/shared/app.constants';
 import { CuentaService } from '../../service/cuenta.service';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
@@ -10,6 +10,7 @@ import { MiPerfil } from '../../model/mi-perfil.model';
 import { TipoDocumentoMap } from 'src/app/feature/usuarios/model/tipo-documento.model';
 import { RolMap } from 'src/app/core/model/usuario-sesion.model';
 import { UIService } from 'src/app/core/service/ui.service';
+import { CambiarContrasenaComponent } from '../cambiar-contrasena/cambiar-contrasena.component';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -18,7 +19,7 @@ import { UIService } from 'src/app/core/service/ui.service';
 })
 export class MiPerfilComponent {
 
-  rutaHome = AppConstants.RUTA_HOME;
+  rutaHome = `/${AppConstants.RUTA_HOME}`;
 
   accountForm: FormGroup;
   habilitarCampos = false;
@@ -39,7 +40,7 @@ export class MiPerfilComponent {
       else this.idUsuario = usuarioSesion.idUsuario;
       this.cargarInformacionPersonal();
     } else {
-      this.authService.cerrarSesion()
+      this.authService.cerrarSesion();
     }
   }
 
@@ -121,13 +122,23 @@ export class MiPerfilComponent {
       rol: this.miPerfil.rol
     };
     this.toggleEdit();
-    this.cuentaService.editarInformacionBasica(perfil);
+    this.cuentaService.editarInformacionBasica(this.idUsuario, perfil)
+      .then(res => {
+        this.uiService.mostrarSnackBar('La información personal ha sido actualizada!', 4);
+        this.miPerfil = res;
+        this.setForm(res);
+      })
+      .catch(err => {
+        this.uiService.mostrarError(err);
+        this.setForm(this.miPerfil);
+      });
   }
 
 
 
   abrirModalContrasena() {
-    /* this.matDialog.open(CambiarContrasenaComponent, { data: { identificacion: this.identificacion } }); */
+    const config = customConfig('50vw', '50vh');
+    this.matDialog.open(CambiarContrasenaComponent, { data: { idUsuario: this.idUsuario, correo: this.miPerfil.correo }, ...config });
   }
 
   cambiarCorreo() {

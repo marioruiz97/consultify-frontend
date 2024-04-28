@@ -1,15 +1,15 @@
-<mat-toolbar class="mb-4 mt-5">
-  <h2>Mi Cuenta</h2>
-</mat-toolbar>
+<div class="mb-4 mt-5 banner"></div>
 
 
-<section fxLayout fxLayout.lt-sm="column">
-
-  <aside aria-label="info-basica" fxLayout="column" fxFlex class="px-5">
-    <div class="foto my-2 mx-auto"></div>
-    <mat-card class="mat-elevation-z5 m-2">
-      <mat-card-header>
-        <mat-card-title>Datos personales </mat-card-title>
+<div fxLayout fxLayoutAlign="start center" fxLayoutAlign.lt-md="center center" class="titulo my-3 px-md-5">
+  <div class="foto px-2"></div>
+  <h2 class="px-2">Mi Cuenta</h2>
+</div>
+<section fxLayout fxLayout.lt-md="column">
+  <aside aria-label="info-basica" fxLayout="column" fxFlex.gt-sm="65" class="px-md-5">
+    <mat-card class="mat-elevation-z16 m-2">
+      <mat-card-header class="mb-2">
+        <mat-card-title class="title">Datos personales </mat-card-title>
         <span fxFlex></span>
         <button mat-button color="primary" matTooltip="Editar información personal" (click)="toggleEdit()">
           <mat-icon>edit</mat-icon>
@@ -67,7 +67,7 @@
 
           <mat-form-field>
             <mat-label>Teléfono Contacto</mat-label>
-            <input matInput type="text" formControlName="telefono" >
+            <input matInput type="text" formControlName="telefono">
             <mat-icon matPrefix class="mat-18" [inline]="habilitarCampos">phonelink_ring</mat-icon>
           </mat-form-field>
 
@@ -86,8 +86,8 @@
     </mat-card>
   </aside>
 
-  <aside fxFlex aria-label="opciones" fxLayout="column" class="px-5">
-    <mat-card class="mat-elevation-z5 m-2">
+  <aside fxFlex aria-label="opciones" fxLayout="column" class="pr-md-5">
+    <mat-card class="mat-elevation-z16 my-2">
       <mat-card-header>
         <mat-card-title>Últimas Notificaciones</mat-card-title>
       </mat-card-header>
@@ -95,7 +95,7 @@
         No hay notificaciones
       </mat-card-content>
     </mat-card>
-    <mat-card class="mat-elevation-z5 m-2">
+    <mat-card class="mat-elevation-z16 my-2">
       <mat-card-header>
         <mat-card-title>Opciones</mat-card-title>
       </mat-card-header>

@@ -46,7 +46,7 @@ export class HttpService {
       ))
   }
 
-  patchRequest<T, R>(path: string, data: T): Promise<R> {
+  patchRequest<T, R = T>(path: string, data: T): Promise<R> {
     return lastValueFrom(this.httpClient
       .patch<R>(
         `${this.API_ENDPOINT}/${path}`,

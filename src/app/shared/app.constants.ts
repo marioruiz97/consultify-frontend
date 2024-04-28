@@ -14,7 +14,7 @@ export class AppConstants {
   public static readonly RUTA_ACERCA = '';
 
   // PATRONES
-  public static readonly PATRON_CONTRASENA = '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,}';
+  public static readonly PATRON_CONTRASENA = '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,16}';
   public static readonly PATRON_TELEFONO = '^(60[0-9]{8})$|^(3[0-9]{9})$';
 }
 

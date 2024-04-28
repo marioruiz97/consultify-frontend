@@ -1,3 +1,25 @@
+.banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* transform: translate(-50%, -50%); */
+  width: 100%;
+  height: 30%;
+  background-color: var(--light-orange); /* Color de fondo deseado */
+  padding: 25px;
+  text-align: center;
+  z-index: -1; /* Para que esté detrás de las cajas de información */
+}
+
+.titulo h2 {
+  color: #fff;
+  font-size: 1.75em;
+}
+
+mat-card-title.title {
+  border-bottom: 2px solid var(--deep-blue);
+}
+
 div.foto {
   width: 100px;
   height: 100px;
@@ -5,6 +27,7 @@ div.foto {
   background-image: url('src/assets/img/user-icon.png');
   background-position: center;
   background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .text-red {
