@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from 'src/app/core/service/auth.service';
@@ -11,13 +11,15 @@ import { TipoDocumentoMap } from 'src/app/feature/usuarios/model/tipo-documento.
 import { RolMap } from 'src/app/core/model/usuario-sesion.model';
 import { UIService } from 'src/app/core/service/ui.service';
 import { CambiarContrasenaComponent } from '../cambiar-contrasena/cambiar-contrasena.component';
+import { CambiarCorreoComponent } from '../cambiar-correo/cambiar-correo.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-mi-perfil',
   templateUrl: './mi-perfil.component.html',
   styleUrls: ['./mi-perfil.component.css']
 })
-export class MiPerfilComponent {
+export class MiPerfilComponent implements OnDestroy {
 
   rutaHome = `/${AppConstants.RUTA_HOME}`;
 
@@ -26,6 +28,7 @@ export class MiPerfilComponent {
 
   private miPerfil = new MiPerfil();
   private idUsuario = 0;
+  private suscripciones: Subscription[] = [];
 
   constructor(
     private matDialog: MatDialog,
@@ -137,12 +140,23 @@ export class MiPerfilComponent {
 
 
   abrirModalContrasena() {
-    const config = customConfig('50vw', '50vh');
-    this.matDialog.open(CambiarContrasenaComponent, { data: { idUsuario: this.idUsuario, correo: this.miPerfil.correo }, ...config });
+    this.matDialog.open(CambiarContrasenaComponent, {
+      data: { idUsuario: this.idUsuario, correo: this.miPerfil.correo },
+      ...customConfig('66vw')
+    });
   }
 
   cambiarCorreo() {
-    alert('se enviará un correo electrónico para verificar la cuenta')
+    const dialogRef = this.matDialog.open(CambiarCorreoComponent, {
+      data: { idUsuario: this.idUsuario, correoActual: this.miPerfil.correo },
+      ...customConfig('50vw')
+    });
+    this.suscripciones.push(
+      dialogRef.afterClosed().subscribe(nuevoCorreo => {
+        if (nuevoCorreo && nuevoCorreo !== "") this.miPerfil.correo = nuevoCorreo;
+        this.setForm(this.miPerfil);
+      })
+    )
   }
 
   desactivarCuenta() {
@@ -153,15 +167,21 @@ export class MiPerfilComponent {
       confirm: "Sí, deseo desactivar la cuenta",
       showCancel: true
     }
-    this.matDialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(desactivado => {
-      if (desactivado) this.cuentaService.desactivarCuenta(this.idUsuario)
-        .then(res => {
-          if (!res) {
-            this.uiService.mostrarAlerta(`El usuario ${this.miPerfil.nombreUsuario} ha sido desactivado con éxito <br/> <span class='caption itallic'>Se va a cerrar la sesión</span>`);
-            setTimeout(() => this.authService.cerrarSesion(), 500);
-          }
-        });
-    });
+    this.suscripciones.push(
+      this.matDialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(desactivado => {
+        if (desactivado) this.cuentaService.desactivarCuenta(this.idUsuario)
+          .then(res => {
+            if (!res) {
+              this.uiService.mostrarAlerta(`El usuario ${this.miPerfil.nombreUsuario} ha sido desactivado con éxito <br/> <span class='caption itallic'>Se va a cerrar la sesión</span>`);
+              setTimeout(() => this.authService.cerrarSesion(), 500);
+            }
+          });
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.suscripciones.forEach(sus => sus.unsubscribe());
   }
 
 }

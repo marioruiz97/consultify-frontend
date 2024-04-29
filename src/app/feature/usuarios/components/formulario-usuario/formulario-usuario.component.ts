@@ -151,6 +151,6 @@ export class FormularioUsuarioComponent implements OnDestroy {
 
 
   ngOnDestroy(): void {
-    if (this.suscripciones) { this.suscripciones.forEach(sub => sub.unsubscribe()); }
+    this.suscripciones.forEach(sub => sub.unsubscribe());
   }
 }

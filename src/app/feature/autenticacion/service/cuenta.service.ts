@@ -10,6 +10,7 @@ export class CuentaService {
 
   private path = AppConstants.RUTA_CUENTA;
   private pathContrasena = this.path + '/contrasena';
+  private pathCorreo = this.path + '/correo';
 
   constructor(private httpService: HttpService) { }
 
@@ -23,6 +24,10 @@ export class CuentaService {
 
   cambiarContrasena(idUsuario: number, cambioContrasena: CambioContrasena): Promise<boolean> {
     return this.httpService.patchRequest<CambioContrasena, boolean>(`${this.pathContrasena}/${idUsuario}`, cambioContrasena);
+  }
+
+  cambiarCorreo(idUsuario: number, data: { idUsuario: number; correoActual: string; correoNuevo: string; }) {
+    return this.httpService.patchRequest<unknown, MiPerfil>(`${this.pathCorreo}/${idUsuario}`, data);
   }
 
   desactivarCuenta(idUsuario: number): Promise<boolean> {

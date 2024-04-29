@@ -105,7 +105,7 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngOnDestroy() {
-    if (this.listSub) { this.listSub.forEach(sub => sub.unsubscribe()); }
+    this.listSub.forEach(sub => sub.unsubscribe());
   }
 
 

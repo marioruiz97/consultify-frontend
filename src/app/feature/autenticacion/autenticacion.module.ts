@@ -8,11 +8,18 @@ import { RecuperarContrasenaComponent } from './components/recuperar-contrasena/
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { CuentaService } from './service/cuenta.service';
 import { CambiarContrasenaComponent } from './components/cambiar-contrasena/cambiar-contrasena.component';
+import { CambiarCorreoComponent } from './components/cambiar-correo/cambiar-correo.component';
 
 
 
 @NgModule({
-  declarations: [InicioSesionComponent, RecuperarContrasenaComponent, MiPerfilComponent, CambiarContrasenaComponent],
+  declarations: [
+    InicioSesionComponent,
+    RecuperarContrasenaComponent,
+    MiPerfilComponent,
+    CambiarContrasenaComponent,
+    CambiarCorreoComponent
+  ],
   imports: [
     CommonModule,
     SharedModule,
