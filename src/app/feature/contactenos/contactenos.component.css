@@ -1,0 +1,33 @@
+/*
+* estilos a los textos
+*/
+h3 {
+  font-size: 1.75rem;
+  font-weight: 800;
+}
+h4 {
+  font-weight: 500;
+}
+.contacto-title {
+  color: var(--darken-orange);
+}
+.info-empresa {
+  background-color: var(--darken-orange);
+}
+.info-empresa * {
+  color: #fff !important;
+}
+
+
+/*
+* estilos al formulario
+*/
+mat-form-field {
+  min-width: 90%;
+}
+
+.form-contacto button {
+  color: var(--darken-orange);
+  font-weight: 500;
+  font-size: 1rem;
+}

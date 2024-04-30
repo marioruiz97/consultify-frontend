@@ -10,8 +10,8 @@ export class AppConstants {
   public static readonly RUTA_USUARIOS = 'usuarios';
   public static readonly RUTA_CLIENTES = 'clientes';
   public static readonly RUTA_PROYECTOS = 'proyectos';
-  public static readonly RUTA_CONTACTO = '';
-  public static readonly RUTA_ACERCA = '';
+  public static readonly RUTA_CONTACTO = 'contactenos';
+  public static readonly RUTA_ACERCA = 'acerca';
 
   // PATRONES
   public static readonly PATRON_CONTRASENA = '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,16}';

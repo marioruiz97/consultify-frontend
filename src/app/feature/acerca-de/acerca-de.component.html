@@ -1,0 +1,65 @@
+<section>
+
+  <div class="about-header px-3 mb-5" fxLayoutAlign="start center">
+    <h1>Acerca de nostros.</h1>
+  </div>
+
+
+  <div class="about-content mb-5" fxLayout="row wrap" fxFlexAlign="stretch">
+    <div class="historia-caption" fxFlex="50" fxFlex.lt-sm="100" fxFlexOrder.lt-sm="1" fxLayout="column"
+      fxLayoutAlign="center center">
+      <h3>Quienes Somos</h3>
+      <p>
+        Somos un equipo especializado, que desde el año 2008 se ha dedicado a la asesoría en la implementación,
+        mejoramiento, seguimiento y adecuación de Sistemas de Gestión para cualquier tipo de
+        Organización, manejando una metodología de acompañamiento, dejando a su disposición una serie de herramientas
+        para mejorar los sistemas productivos de su empresa.
+      </p>
+      <p>
+        Nos hace diferentes la Capacidad de adaptación, nos moldemos a las necesidades y preferencias de tu empresa para
+        brindarte un servicio
+        personalizado y único. La Simpleza, trabajamos pensando en tu comodidad, por eso diseñamos la manera de hacer
+        del modo más simple los
+        procesos más complejos. La Creatividad: buscamos el desarrollo empresarial emprendiendo nuestras actividades
+        desde la diversidad, el
+        dinamismo y la innovación, obteniendo los mejores resultados.
+      </p>
+    </div>
+    <div class="historia" fxFlex="50" fxFlex.lt-sm="100" fxFlexOrder.lt-sm="2"></div>
+    <div class="hacer" fxFlex="50" fxFlex.lt-sm="100" fxFlexOrder.lt-sm="4"></div>
+    <div class="hacer-caption" fxFlex="50" fxFlex.lt-sm="100" fxFlexOrder.lt-sm="3" fxLayout="column"
+      fxLayoutAlign="center center">
+      <h3>Que hacemos</h3>
+      <p>
+        Somos un equipo humano de profesionales especializados en la gestión empresarial, que apoyamos los procesos y la
+        transformación de las empresas Colombianas, buscando la optimización de los recursos estratégicos de las mismas,
+        moldeándonos a cada una de sus necesidades y personalizando de la mejor manera nuestros servicios.
+        Nos hemos transformado para solucionar de manera integral todas las necesidades de nuestros clientes a nivel
+        gerencial, comercial, estratégico, jurídico y de procesos, prestando servicios de manera simple y eficaz,
+        alcanzando juntos el éxito empresarial.
+      </p>
+      <p>
+        Ofrecemos diferentes servicios como Planeación Estratégica, Acompañamiento en la certificación de Sistemas de
+        Gestión de Calidad y Sistemas de Seguridad y Salud en el trabajo.
+        Ofrecemos el servicio de creación de baterías psicosocial y en la creación de perfiles para los miembros de su
+        organización.
+      </p>
+    </div>
+  </div>
+
+  <div class="about-team mt-4">
+    <h3 fxLayoutAlign="center">Equipo de Desarrollo</h3>
+    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-xs="25px">
+      <mat-card *ngFor="let person of equipo" class="mat-elevation-z8" fxFlex.lt-sm="100">
+        <mat-card-header fxLayoutAlign="center">
+          <mat-card-title>{{person.nombre}}</mat-card-title>
+          <mat-card-subtitle> {{person.cargo}} </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content fxLayoutAlign="center">
+          <button mat-fab [ngClass]="[person.class]">
+          </button>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</section>

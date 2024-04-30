@@ -8,15 +8,25 @@ import { ListaUsuariosComponent } from './feature/usuarios/components/lista-usua
 import { FormularioUsuarioComponent } from './feature/usuarios/components/formulario-usuario/formulario-usuario.component';
 import { AppConstants as rutas } from './shared/app.constants';
 import { AuthGuard } from './core/guard/auth.guard';
+import { AcercaDeComponent } from './feature/acerca-de/acerca-de.component';
+import { ContactenosComponent } from './feature/contactenos/contactenos.component';
 
 const routes: Routes = [
+  // módulos generales
   { path: '', redirectTo: `/${rutas.RUTA_HOME}`, pathMatch: 'full' },
   { path: rutas.RUTA_HOME, component: HomeComponent, canActivate: mapToCanActivate([AuthGuard]) },
+  { path: rutas.RUTA_ACERCA, component: AcercaDeComponent },
+  { path: rutas.RUTA_CONTACTO, component: ContactenosComponent },
+
+  // autenticacion y cuenta
   { path: rutas.RUTA_LOGIN, component: InicioSesionComponent },
   { path: rutas.RUTA_RECUPERAR, component: RecuperarContrasenaComponent },
   { path: rutas.RUTA_CUENTA, component: MiPerfilComponent },
+
+  // usuarios y clientes
   { path: rutas.RUTA_USUARIOS, component: ListaUsuariosComponent },
   { path: `${rutas.RUTA_USUARIOS}/:id`, component: FormularioUsuarioComponent }
+
 ];
 
 @NgModule({
