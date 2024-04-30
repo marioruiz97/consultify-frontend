@@ -1,0 +1,80 @@
+<div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
+
+  <header class="m-2" gdArea="header" fxLayoutAlign="center center">
+    <h1 fxFlex="50">{{ esEditar? 'Actualizar' : 'Crear'}} Cliente</h1>
+  </header>
+
+  <section gdArea="content" class="py-5 fondo-claro">
+    <form autocomplete="off" [formGroup]="clienteForm" (ngSubmit)="guardarCliente()" fxLayoutAlign="center">
+      <mat-card class="mat-elevation-z16 p-4" fxFlex="80" fxFlex.lt-sm="100">
+        <mat-card-content class="p-2" fxLayout="column">
+
+          <mat-form-field appearance="outline" class="form-input" fxFlex="30">
+            <mat-label>Código Asignado</mat-label>
+            <input matInput formControlName="idCliente">
+            <mat-hint>El código es autoasignado por el sistema</mat-hint>
+          </mat-form-field>
+
+          <div class="form-group my-3" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Tipo de Documento</mat-label>
+              <mat-select formControlName="tipoDocumento">
+                <mat-option [value]="tipo.key"
+                  *ngFor="let tipo of tiposDocumentos | keyvalue">{{tipo.value}}</mat-option>
+              </mat-select>
+              <mat-hint>Seleccione un tipo de documento</mat-hint>
+              <mat-error>El tipo de documento es obligatorio</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Identificacion</mat-label>
+              <input matInput formControlName="numeroIdentificacion">
+              <mat-hint>Ingrese la identificación del cliente (máximo 20 caracteres)</mat-hint>
+              <mat-error>Ingrese una identificación válida</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group my-3" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Razón Social</mat-label>
+              <input matInput formControlName="razonSocial">
+              <mat-hint>Ingrese la razón social</mat-hint>
+              <mat-error>La razón social es obligatoria</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Nombre Comercial</mat-label>
+              <input matInput formControlName="nombreComercial">
+              <mat-hint>Ingrese el nombre comercial del cliente o la misma razón social</mat-hint>
+              <mat-error>El nombre comercial es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <mat-divider class="mt-4"></mat-divider>
+          <h3 class="contact-header mt-2 mx-auto">Contactos</h3>
+          <button type="button" mat-mini-fab color="primary" (click)="agregarContacto()" fxFlexAlign="center">
+            <mat-icon>add</mat-icon>
+          </button>
+
+          <!--  <app-contacto-list  (eliminar)="deleteContacto($event)" (refrescar)="refrescarContactos()" (editar)="editarContacto($event)">
+          </app-contacto-list> -->
+        </mat-card-content>
+
+        <p class="invalid-form mt-4" *ngIf="clienteForm.invalid">**El formulario posee errores, verifica los campos.
+        </p>
+        <div class="invalid-form" *ngIf="clienteForm.invalid">
+          <h4>Campos con errores:</h4>
+          <ul style="list-style: none;">
+            <li *ngFor="let campo of mostrarErrores()">{{campo}}</li>
+          </ul>
+        </div>
+
+        <mat-card-actions class="form-action mt-4 mx-auto">
+          <button class="m-2 py-2 px-4" type="button" mat-raised-button (click)="volverAlListado()" color="warn">
+            <mat-icon>arrow_back</mat-icon>Regresar <span fxHide.lt-sm> al listado</span>
+          </button>
+          <button class="m-2 py-2 px-4" type="submit" mat-raised-button color="primary" [disabled]="!clienteForm.valid">
+            <mat-icon>save</mat-icon> Guardar Cliente
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </section>
+</div>

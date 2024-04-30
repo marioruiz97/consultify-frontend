@@ -4,7 +4,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/core/service/auth.service';
 import { UsuarioLista } from '../../model/usuario-lista.model';
 import { DetalleUsuarioComponent } from '../detalle-usuario/detalle-usuario.component';
 import { DIALOG_CONFIG } from 'src/app/shared/app.constants';
@@ -31,7 +30,7 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private service: UsuarioService, private dialog: MatDialog, public authService: AuthService, private uiService: UIService
+    private service: UsuarioService, private dialog: MatDialog, private uiService: UIService
   ) { }
 
   ngOnInit() {
@@ -43,7 +42,7 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
     this.datasource.paginator = this.paginator;
   }
 
-  obtenerTodosUsuarios() {
+  private obtenerTodosUsuarios() {
     this.listSub.push(this.service.obtenerUsuarios().subscribe(list => this.datasource.data = list));
   }
 

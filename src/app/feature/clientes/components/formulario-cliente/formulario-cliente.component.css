@@ -1,0 +1,24 @@
+@import "../../../../../assets/css/header-styles.css";
+
+header {
+  background-image: url("/assets/img/home-usuarios.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.form-input {
+  padding: 10px 5px;
+}
+
+.fondo-claro {
+  background-color: rgb(244, 238, 231);
+}
+
+app-contacto-list {
+  min-width: 90%;
+}
+
+.contact-header {
+  font-weight: 400;
+  font-size: 2rem;
+}

@@ -10,6 +10,8 @@ import { AppConstants as rutas } from './shared/app.constants';
 import { AuthGuard } from './core/guard/auth.guard';
 import { AcercaDeComponent } from './feature/acerca-de/acerca-de.component';
 import { ContactenosComponent } from './feature/contactenos/contactenos.component';
+import { ListaClientesComponent } from './feature/clientes/components/lista-clientes/lista-clientes.component';
+import { FormularioClienteComponent } from './feature/clientes/components/formulario-cliente/formulario-cliente.component';
 
 const routes: Routes = [
   // módulos generales
@@ -25,7 +27,9 @@ const routes: Routes = [
 
   // usuarios y clientes
   { path: rutas.RUTA_USUARIOS, component: ListaUsuariosComponent },
-  { path: `${rutas.RUTA_USUARIOS}/:id`, component: FormularioUsuarioComponent }
+  { path: `${rutas.RUTA_USUARIOS}/:id`, component: FormularioUsuarioComponent },
+  { path: rutas.RUTA_CLIENTES, component: ListaClientesComponent },
+  { path: `${rutas.RUTA_CLIENTES}/:id`, component: FormularioClienteComponent }
 
 ];
 

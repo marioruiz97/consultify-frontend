@@ -10,6 +10,7 @@ import { AutenticacionModule } from './feature/autenticacion/autenticacion.modul
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UsuariosModule } from './feature/usuarios/usuarios.module';
+import { ClientesModule } from './feature/clientes/clientes.module';
 
 @NgModule({
   declarations: [
@@ -20,11 +21,12 @@ import { UsuariosModule } from './feature/usuarios/usuarios.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
+    HttpClientModule,
+    FontAwesomeModule,
     CoreModule,
     AutenticacionModule,
     UsuariosModule,
-    HttpClientModule,
-    FontAwesomeModule
+    ClientesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
