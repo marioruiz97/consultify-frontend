@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NavItem } from '../../model/nav-item';
+import { AppConstants as rutas } from 'src/app/shared/app.constants';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,15 +11,20 @@ import { NavItem } from '../../model/nav-item';
 export class ToolbarComponent {
 
   @Input() menu!: NavItem[];
+  rutaHome = rutas.RUTA_HOME;
 
   ajustes: NavItem[] = [
-    { name: 'Mi cuenta', url: '/cuenta', icon: 'account_circle' },
-    { name: 'Acerca de', url: '/acerca', icon: 'account_tree' },
-    /* { name: 'Contacto', url: '/contacto', icon: 'contacts' } */
+    { name: 'Mi cuenta', url: rutas.RUTA_CUENTA, icon: 'account_circle' },
+    { name: 'Acerca de', url: rutas.RUTA_ACERCA, icon: 'account_tree' },
+    { name: 'Contacto', url: rutas.RUTA_CONTACTO, icon: 'contacts' }
   ];
 
   @Output() openMenu = new EventEmitter();
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
+
+  cerrarSesion() {
+    this.authService.cerrarSesion();
+  }
 
 }

@@ -1,0 +1,71 @@
+.about-header {
+  height: 90vh;
+  background-image: url("/assets/img/acerca-de.jpg");
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.about-header h1 {
+  font-size: 3.5rem;
+  font-weight: 500;
+}
+
+/*
+ * estilos contenido principal
+ */
+.about-content div {
+  padding: 15px 20px;
+}
+
+.historia,
+.hacer {
+  min-height: 50vh;
+  margin-bottom: 40px;
+  background-position: center;
+  background-size: cover;
+}
+
+.historia {
+  background-image: url("/assets/img/quienes-somos.jpg");
+}
+
+.hacer {
+  background-image: url("/assets/img/quienes-somos.jpg");
+}
+
+.historia-caption h3,
+.hacer-caption h3,
+.about-team h3 {
+  color: var(--darken-orange);
+  font-size: 2rem;
+  font-weight: 300;
+}
+
+/*
+* estilos cards
+*/
+mat-card,
+mat-card-header {
+  margin-bottom: 15px;
+}
+
+mat-card-title {
+  color: var(--darken-orange);
+}
+
+.mario-photo {
+  background-image: url("/assets/img/mario-ruiz.png");
+}
+
+.juliana-photo {
+  background-image: url("/assets/img/juliana-correa.jpeg");
+}
+
+.fab-icon {
+  width: 300px;
+  height: 300px;
+  cursor: default;
+  background-position: center;
+  background-size: cover;
+}

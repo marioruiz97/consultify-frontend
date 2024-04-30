@@ -1,12 +1,28 @@
 import { MatDialogConfig } from '@angular/material/dialog';
+import { NavItem } from '../core/model/nav-item';
 
 export class AppConstants {
-  public static readonly PATH_TIPO_CITA = 'tipo-citas';
-  public static readonly PATH_RESPONSABLE = 'responsables';
-  public static readonly PATH_MASCOTA = 'mascotas';
-  public static readonly PATH_VETERINARIO = 'veterinarios';
-  public static readonly PATH_CITA = 'citas';
+  // RUTAS
+  public static readonly RUTA_HOME = 'home';
+  public static readonly RUTA_LOGIN = 'login';
+  public static readonly RUTA_RECUPERAR = 'recuperar';
+  public static readonly RUTA_CUENTA = 'cuenta';
+  public static readonly RUTA_USUARIOS = 'usuarios';
+  public static readonly RUTA_CLIENTES = 'clientes';
+  public static readonly RUTA_PROYECTOS = 'proyectos';
+  public static readonly RUTA_CONTACTO = 'contactenos';
+  public static readonly RUTA_ACERCA = 'acerca';
+
+  // PATRONES
+  public static readonly PATRON_CONTRASENA = '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,16}';
+  public static readonly PATRON_TELEFONO = '^(60[0-9]{8})$|^(3[0-9]{9})$';
 }
+
+export const MENU_NAVEGACION: NavItem[] = [
+  { url: AppConstants.RUTA_USUARIOS, name: 'Usuarios', icon: 'people' },
+  { url: AppConstants.RUTA_CLIENTES, name: 'Empresas Clientes', icon: 'account_balance' },
+  { url: AppConstants.RUTA_PROYECTOS, name: 'Proyectos', icon: 'dashboard' },
+];
 
 export const DIALOG_CONFIG: MatDialogConfig = {
   disableClose: true,
@@ -22,7 +38,7 @@ export const DIALOG_CONFIG: MatDialogConfig = {
  * @param maxHeight
  * @returns un objeto de tipo @MatDialogConfig
  */
-export const customConfig = (minWidth: string, minHeight?: string, maxWidth: string = '100vw', maxHeight: string = '100vh') => {
+export const customConfig = (minWidth: string, minHeight?: string, maxWidth = '100vw', maxHeight = '100vh') => {
   const dialogConfig: MatDialogConfig = {
     disableClose: true,
     minWidth,

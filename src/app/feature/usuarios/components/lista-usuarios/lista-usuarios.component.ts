@@ -9,6 +9,10 @@ import { UsuarioLista } from '../../model/usuario-lista.model';
 import { DetalleUsuarioComponent } from '../detalle-usuario/detalle-usuario.component';
 import { DIALOG_CONFIG } from 'src/app/shared/app.constants';
 import { UsuarioService } from '../../service/usuario.service';
+import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
+import { RolMap } from 'src/app/core/model/usuario-sesion.model';
+import { UIService } from 'src/app/core/service/ui.service';
 
 
 @Component({
@@ -20,18 +24,18 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
 
   private listSub: Subscription[] = [];
 
-  displayedColumns = ['idUsuario', 'identificacion', 'nombres', 'apellidos', 'correo', 'telefono', 'estado', 'acciones'];
+  displayedColumns = ['nombres', 'apellidos', 'nombreUsuario', 'correo', 'telefono', 'rol', 'estado', 'acciones'];
   datasource = new MatTableDataSource<UsuarioLista>();
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort = new MatSort();
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private service: UsuarioService, private dialog: MatDialog, public auth: AuthService
+    private service: UsuarioService, private dialog: MatDialog, public authService: AuthService, private uiService: UIService
   ) { }
 
   ngOnInit() {
-    this.fetch();
+    this.obtenerTodosUsuarios();
   }
 
   ngAfterViewInit() {
@@ -39,34 +43,69 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
     this.datasource.paginator = this.paginator;
   }
 
-  fetch() {
+  obtenerTodosUsuarios() {
     this.listSub.push(this.service.obtenerUsuarios().subscribe(list => this.datasource.data = list));
   }
 
-  doFilter() {
-    const filterString = document.getElementById("campo-filtro")?.textContent;
-    this.datasource.filter = filterString ? filterString.trim().toLocaleLowerCase() : "";
+  doFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.datasource.filter = filterValue.trim().toLowerCase();
   }
 
-  showDetails(usuario: UsuarioLista) {
-    if (usuario.apellido2 && usuario.apellido2 === '') { usuario.apellido2 = ''; }
+  mostrarDetalles(usuario: UsuarioLista) {
     const ref = this.dialog.open(DetalleUsuarioComponent, { ...DIALOG_CONFIG, data: usuario });
-    this.listSub.push(ref.afterClosed().subscribe(res => { if (res) { this.fetch(); } }));
+    this.listSub.push(ref.afterClosed().subscribe(res => { if (res) { this.obtenerTodosUsuarios(); } }));
   }
 
-  showClientes(usuario: UsuarioLista) {
-    if (usuario.apellido2 && usuario.apellido2 === '') { usuario.apellido2 = ''; }
-    this.dialog.open(DetalleUsuarioComponent, { ...DIALOG_CONFIG, data: usuario });
+  mostrarRol(rol: string) {
+    return RolMap.get(rol);
   }
 
-  delete(id: string) {
-    this.listSub.push(this.service.delete(id).subscribe(res => {
-      if (res) { this.fetch(); }
+  cambiarEstado(activar: boolean, id: number, nombreUsuario: string) {
+    if (activar) this.activar(id, nombreUsuario);
+    else this.desactivar(id, nombreUsuario);
+  }
+
+  private desactivar(id: number, nombreUsuario: string) {
+    const data: ConfirmDialogData = {
+      title: "Desactivar la cuenta",
+      message: `¿Estás seguro de desactivar la cuenta?`,
+      errors: [],
+      confirm: "Sí, deseo desactivar la cuenta",
+      showCancel: true
+    }
+    this.listSub.push(this.dialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(desactivado => {
+      if (desactivado) this.service.desactivar(id)
+        .then(res => {
+          if (!res) {
+            this.uiService.mostrarAlerta(`El usuario ${nombreUsuario} ha sido desactivado con éxito`);
+            this.obtenerTodosUsuarios();
+          }
+        })
+    }));
+  }
+
+  private activar(id: number, nombreUsuario: string) {
+    const data: ConfirmDialogData = {
+      title: "Activar la cuenta",
+      message: `¿Estás seguro de activar la cuenta?`,
+      errors: [],
+      confirm: "Sí, deseo activar la cuenta",
+      showCancel: true
+    }
+    this.listSub.push(this.dialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(activado => {
+      if (activado) this.service.cambiarEstado(id, true)
+        .then(res => {
+          if (res) {
+            this.uiService.mostrarAlerta(`El usuario ${nombreUsuario} ha sido activado con éxito`);
+            this.obtenerTodosUsuarios();
+          }
+        })
     }));
   }
 
   ngOnDestroy() {
-    if (this.listSub) { this.listSub.forEach(sub => sub.unsubscribe()); }
+    this.listSub.forEach(sub => sub.unsubscribe());
   }
 
 

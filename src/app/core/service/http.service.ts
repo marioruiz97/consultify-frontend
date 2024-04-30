@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, provideHttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, lastValueFrom } from 'rxjs';
 import { AuthRequest } from '../model/auth-request.model';
+import { AppConstants } from 'src/app/shared/app.constants';
+import { AuthResponse } from '../model/auth-response.model';
 
 export interface Options {
   headers?: HttpHeaders;
@@ -10,7 +12,8 @@ export interface Options {
 @Injectable({ providedIn: 'root' })
 export class HttpService {
 
-  private API_ENDPOINT = "environment.endpoint";
+  private API_ENDPOINT = "http://localhost:8080";
+  private LOGIN_PATH = `auth/${AppConstants.RUTA_LOGIN}`;
 
   constructor(protected httpClient: HttpClient) { }
 
@@ -20,8 +23,8 @@ export class HttpService {
     };
   }
 
-  loginRequest(authRequest: AuthRequest) {
-    throw new Error("Method not implemented.");
+  loginRequest(authRequest: AuthRequest): Promise<AuthResponse> {
+    return lastValueFrom(this.httpClient.post<AuthResponse>(`${this.API_ENDPOINT}/${this.LOGIN_PATH}`, authRequest, this.createDefaultOptions()))
   }
 
 
@@ -37,6 +40,15 @@ export class HttpService {
   putRequest<T, R>(path: string, data: T): Promise<R> {
     return lastValueFrom(this.httpClient
       .put<R>(
+        `${this.API_ENDPOINT}/${path}`,
+        data,
+        this.createDefaultOptions()
+      ))
+  }
+
+  patchRequest<T, R = T>(path: string, data: T): Promise<R> {
+    return lastValueFrom(this.httpClient
+      .patch<R>(
         `${this.API_ENDPOINT}/${path}`,
         data,
         this.createDefaultOptions()

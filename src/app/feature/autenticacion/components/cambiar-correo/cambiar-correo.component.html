@@ -1,0 +1,26 @@
+<section>
+  <h1 matDialogTitle>Cambiar Correo Electrónico</h1>
+
+  <form [formGroup]="formulario" (ngSubmit)="cambiarCorreo()" autocomplete="off">
+    <mat-dialog-content class="mb-4" fxLayout>
+      <!-- nuevo correo -->
+      <mat-form-field fxFlex>
+        <mat-label>Nuevo Correo Electrónico </mat-label>
+        <input matInput formControlName="correoNuevo" autocomplete="off">
+        <mat-error *ngIf="!formulario.value.correoNuevo"> El correo electrónico es obligatorio. </mat-error>
+        <mat-error *ngIf="formulario.controls['correoNuevo'].errors?.['email']">
+          El correo no cumple con el formato válido
+        </mat-error>
+        <mat-hint> Ingrese el nuevo correo electrónico </mat-hint>
+      </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="center" class="py-3">
+      <button mat-button type="button" class="p-3" (click)="cerrarModal()" [matDialogClose]="false">Cancelar</button>
+      <button mat-button type="submit" class="p-3" color="primary" [disabled]="formulario.invalid"
+        [matDialogClose]="true">
+        Cambiar Correo
+      </button>
+    </mat-dialog-actions>
+  </form>
+</section>

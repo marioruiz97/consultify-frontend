@@ -1,0 +1,63 @@
+<section>
+  <h1 matDialogTitle>Cambiar Contraseña</h1>
+
+  <form [formGroup]="formulario" (ngSubmit)="cambiarContrasena()" autocomplete="off">
+    <mat-dialog-content fxLayout="column" class="mb-4">
+      <!-- Contrasena actual -->
+      <mat-form-field>
+        <mat-label>Contraseña Actual</mat-label>
+        <input matInput [type]="hideActual ? 'password' : 'text'" formControlName="contrasenaActual" autocomplete="off">
+        <button type="button" mat-icon-button matSuffix (click)="hideActual = !hideActual"
+          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideActual">
+          <mat-icon>{{hideActual ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="formulario.value.contrasenaActual.length < 8">
+          La contraseña debe tener mínimo 8 caracteres
+        </mat-error>
+        <mat-error *ngIf="!formulario.value.contrasenaActual">La contraseña es obligatoria</mat-error>
+        <mat-hint>
+          Ingrese nueva contraseña. Debe contener mínimo 1 Mayus, 1 Min, 1 Número y 1 Caracter especial
+        </mat-hint>
+      </mat-form-field>
+
+      <div fxLayout fxLayoutGap="20px">
+        <!-- Nueva contrasena -->
+        <mat-form-field fxFlex>
+          <mat-label>Nueva contraseña</mat-label>
+          <input matInput [type]="hideNueva ? 'password' : 'text'" formControlName="contrasena" autocomplete="off">
+          <button type="button" mat-icon-button matSuffix (click)="hideNueva = !hideNueva"
+            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideNueva">
+            <mat-icon>{{hideNueva ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="formulario.value.contrasena.length < 8">
+            La contraseña debe tener mínimo 8 caracteres
+          </mat-error>
+          <mat-error *ngIf="!formulario.value.contrasena">La contraseña es obligatoria</mat-error>
+          <mat-hint>
+            Ingrese nueva contraseña. Debe contener mínimo 1 Mayus, 1 Min, 1 Número y 1 Caracter especial
+          </mat-hint>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>Confirme contraseña</mat-label>
+          <input matInput [type]="hideNueva ? 'password' : 'text'" formControlName="confirmar" autocomplete="off">
+          <button type="button" mat-icon-button matSuffix (click)="hideNueva = !hideNueva"
+            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hideNueva">
+            <mat-icon>{{hideNueva ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="formulario.value.confirmar?.length < 8">
+            La contraseña debe tener mínimo 8 caracteres
+          </mat-error>
+          <mat-error *ngIf="!formulario.value.confirmar">La contraseña es obligatoria</mat-error>
+          <mat-hint>Repita nueva contraseña</mat-hint>
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="center" class="py-3">
+      <button mat-button type="button" class="p-3" (click)="cerrarModal()" [matDialogClose]="false">Cancelar</button>
+      <button mat-button type="submit" class="p-3" color="primary" [disabled]="formulario.invalid" [matDialogClose]="true">
+        Cambiar Contraseña
+      </button>
+    </mat-dialog-actions>
+  </form>
+</section>

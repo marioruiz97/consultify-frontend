@@ -7,11 +7,19 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { RecuperarContrasenaComponent } from './components/recuperar-contrasena/recuperar-contrasena.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { CuentaService } from './service/cuenta.service';
+import { CambiarContrasenaComponent } from './components/cambiar-contrasena/cambiar-contrasena.component';
+import { CambiarCorreoComponent } from './components/cambiar-correo/cambiar-correo.component';
 
 
 
 @NgModule({
-  declarations: [InicioSesionComponent, RecuperarContrasenaComponent, MiPerfilComponent],
+  declarations: [
+    InicioSesionComponent,
+    RecuperarContrasenaComponent,
+    MiPerfilComponent,
+    CambiarContrasenaComponent,
+    CambiarCorreoComponent
+  ],
   imports: [
     CommonModule,
     SharedModule,

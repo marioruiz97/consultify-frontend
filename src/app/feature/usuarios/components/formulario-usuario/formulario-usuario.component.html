@@ -1,1 +1,135 @@
-<p>formulario-usuario works!</p>
+<div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
+
+  <header class="m-2" gdArea="header" fxLayoutAlign="center center">
+    <h1 fxFlex="50">{{ isEdit? 'Actualizar' : 'Crear'}} Usuario</h1>
+  </header>
+
+  <section gdArea="content">
+    <form autocomplete="off" [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" fxLayoutAlign="center">
+      <mat-accordion displayMode="default" [multi]="true" fxFlex fxFlex.gt-xs="90">
+
+        <!-- expansion info personal-->
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Información Personal</mat-panel-title>
+            <mat-panel-description fxShow.gt-sm>Ingresa tu nombre y datos personales </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <!-- CÓDIGO-->
+          <div fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline" class="form-input" fxFlex="30">
+              <mat-label>Código Asignado</mat-label>
+              <input matInput formControlName="idUsuario" autocomplete="off">
+              <mat-hint>El código es autoasignado por el sistema</mat-hint>
+            </mat-form-field>
+          </div>
+          <!-- NOMBRES y APELLIDOS-->
+          <div fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Nombres</mat-label>
+              <input matInput placeholder="Ej. Mario Andres" formControlName="nombres">
+              <mat-hint>
+                Ingrese un nombre hasta 64 caracteres ({{usuarioForm.value.nombres.length}} caracteres/64 max)
+              </mat-hint>
+              <mat-error>El nombre es obligatorio</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Apellidos</mat-label>
+              <input matInput placeholder="Ej. Ruiz Bedoya" formControlName="apellidos">
+              <mat-hint>Ingrese un apellido hasta 64 caracteres</mat-hint>
+              <mat-error>El apellido es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+          <!-- TIPO DOC Y NUMERO DOCUMENTO-->
+          <div fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Tipo de Documento</mat-label>
+              <mat-select formControlName="tipoDocumento">
+                <mat-option [value]="tipo.key"
+                  *ngFor="let tipo of tiposDocumentos | keyvalue">{{tipo.value}}</mat-option>
+              </mat-select>
+              <mat-hint>Seleccione un tipo de documento</mat-hint>
+              <mat-error>El tipo de documento es obligatorio</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Número de identificación</mat-label>
+              <input matInput type="number" placeholder="Ej. 1017251545" formControlName="identificacion">
+              <mat-hint>Ingrese el número de identificación sin puntos</mat-hint>
+              <mat-error>El número de identificación debe tener entre 6 y 15 caracteres (Actual:
+                {{usuarioForm.value.identificacion?.length}}) </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout>
+            <!-- telefono contacto -->
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Teléfono de contacto</mat-label>
+              <input matInput type="tel" placeholder="Ej. 3015465076" formControlName="telefono">
+              <mat-hint>Ingrese preferiblemente teléfono celular</mat-hint>
+              <mat-error>Ingrese un teléfono válido de hasta 10 caracteres (Actual: {{usuarioForm.value.telefono.length}})</mat-error>
+            </mat-form-field>
+          </div>
+        </mat-expansion-panel>
+        <!-- fin primer panel -->
+
+        <!-- expansion info usuario-->
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>Información de la cuenta</mat-panel-title>
+            <mat-panel-description fxShow.gt-sm>Ingresa la información para usar el sistema </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div fxLayout>
+            <!-- correo electronico -->
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Correo electrónico</mat-label>
+              <input matInput type="email" placeholder="Ej. MarioRuiz@gmail.com" formControlName="correo"
+                autocomplete="off">
+              <mat-hint>Ingrese su correo para inicio de sesión y recuperación de contraseña</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout.lt-sm="column">
+            <!-- nombre usuario -->
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Nombre de usuario</mat-label>
+              <input matInput type="text" placeholder="Ej. Maruiz" formControlName="nombreUsuario" autocomplete="off">
+              <mat-hint>Ingrese su nombre de usuario para inicio de sesión y recuperación de contraseña</mat-hint>
+            </mat-form-field>
+            <!-- Rol del usuario -->
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Tipo de Usuario</mat-label>
+              <mat-select formControlName="rol">
+                <mat-option *ngFor="let rol of roles | keyvalue" [value]="rol.key">{{rol.value}}</mat-option>
+              </mat-select>
+              <mat-hint>Seleccione un tipo de usuario (rol de acceso)</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <mat-slide-toggle class="pl-sm-4 mt-3" color="primary" formControlName="activo">
+              <span>El usuario se encuentra {{usuarioForm.value.activo? 'Activo':'Inactivo'}} </span>
+            </mat-slide-toggle>
+          </div>
+
+          <!-- BOTONERA -->
+          <p class="invalid-form mt-4" *ngIf="usuarioForm.invalid">**El formulario posee errores, verifica los campos.
+          </p>
+          <div class="invalid-form" *ngIf="usuarioForm.invalid">
+            <h4>Campos con errores:</h4>
+            <ul style="list-style: none;">
+              <li *ngFor="let campo of mostrarErrores()">{{campo}}</li>
+            </ul>
+          </div>
+          <mat-action-row class="form-action" fxLayoutAlign.gt-sm="center center" fxLayout.lt-sm="column">
+            <button class="m-2" type="button" mat-raised-button (click)="volverAlListado()" color="warn">
+              <mat-icon>arrow_back</mat-icon>Regresar <span fxHide.lt-sm> a Usuarios</span>
+            </button>
+            <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!usuarioForm.valid">
+              <mat-icon>save</mat-icon> Registrar Usuario
+            </button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </form>
+  </section>
+</div>

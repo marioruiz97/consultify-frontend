@@ -1,9 +1,8 @@
 export class TokenInfo {
-  usuario: string;
+
   jwt: string;
 
-  constructor(usuario: string, jwt: string) {
-    this.usuario = usuario;
+  constructor(jwt: string) {
     this.jwt = jwt;
   }
 }
