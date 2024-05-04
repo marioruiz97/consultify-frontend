@@ -3,8 +3,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UIService } from 'src/app/core/service/ui.service';
 import { CuentaService } from '../../service/cuenta.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AppConstants as patron } from 'src/app/shared/app.constants';
-import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'app-cambiar-correo',
@@ -30,7 +28,7 @@ export class CambiarCorreoComponent implements OnInit {
     this.dialogRef.disableClose = true;
   }
 
-  cerrarModal(respuesta: string = "") {
+  cerrarModal(respuesta = "") {
     this.dialogRef.close(respuesta);
   }
 

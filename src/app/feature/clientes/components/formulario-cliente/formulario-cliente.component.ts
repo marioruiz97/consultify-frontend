@@ -8,6 +8,8 @@ import { TipoDocumentoMap } from 'src/app/feature/usuarios/model/tipo-documento.
 import { AppConstants } from 'src/app/shared/app.constants';
 import { ClienteService } from '../../service/cliente.service';
 import { Cliente } from '../../model/cliente.model';
+import { MatDialog } from '@angular/material/dialog';
+import { FormularioContactosComponent } from '../formulario-contactos/formulario-contactos.component';
 
 @Component({
   selector: 'app-formulario-cliente',
@@ -28,9 +30,11 @@ export class FormularioClienteComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute,
     private clienteService: ClienteService,
     private router: Router,
-    private uiService: UIService
+    private uiService: UIService,
+    private dialog: MatDialog
   ) {
     this.clienteForm = this.iniciarFormulario();
+    this.clienteService.setContactos([]);
 
     this.suscripciones.push(this.activatedRoute.paramMap.subscribe(params => {
       const id = params.get('id');
@@ -40,7 +44,10 @@ export class FormularioClienteComponent implements OnDestroy {
 
   private obtenerInfoCliente(idCliente: number) {
     this.clienteService.obtenerClientePorId(idCliente)
-      .then(res => this.setForm(res))
+      .then(res => {
+        this.clienteService.setContactos(res.contactos);
+        this.setForm(res);
+      })
       .catch(err => {
         this.suscripciones.push(
           this.uiService.mostrarError(err).afterClosed()
@@ -81,7 +88,7 @@ export class FormularioClienteComponent implements OnDestroy {
   }
 
   agregarContacto() {
-    throw new Error('Method not implemented.');
+    this.dialog.open(FormularioContactosComponent, { disableClose: true });
   }
 
   volverAlListado() {
@@ -101,8 +108,7 @@ export class FormularioClienteComponent implements OnDestroy {
   }
 
   guardarCliente() {
-    const cliente: Cliente = { ...this.clienteForm.value, contactos: [] };
-    console.log('cliente', cliente)
+    const cliente: Cliente = { ...this.clienteForm.value, contactos: this.clienteService.contactos };
     if (this.esEditar && this.idCliente && this.idCliente !== 0) {
       cliente.idCliente = this.idCliente;
       this.ejecutarOperacion(this.clienteService.editarCliente(this.idCliente, cliente));
@@ -117,7 +123,6 @@ export class FormularioClienteComponent implements OnDestroy {
       this.router.navigate([AppConstants.RUTA_CLIENTES]);
     })
       .catch(err => {
-        console.log('error guardando el cliente ', err)
         this.uiService.mostrarError(err);
       });
   }

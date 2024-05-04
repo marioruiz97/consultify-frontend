@@ -4,13 +4,13 @@ export interface Cliente {
   nombreComercial: string;
   razonSocial: string;
   tipoDocumento: string;
-  contactos?: Contacto[];
+  contactos: Contacto[];
 }
 
 export interface Contacto {
-  id?: number;
+  id?: string;
   idCliente?: number;
-  nombre: string;
-  telefono?: string;
+  nombreCompleto: string;
+  telefono: string;
   correo: string;
 }
