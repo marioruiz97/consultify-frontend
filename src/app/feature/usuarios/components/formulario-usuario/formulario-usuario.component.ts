@@ -144,7 +144,6 @@ export class FormularioUsuarioComponent implements OnDestroy {
       this.router.navigate([rutas.RUTA_USUARIOS]);
     })
       .catch(err => {
-        console.log('error guardando el usuario ', err)
         this.uiService.mostrarError(err);
       });
   }

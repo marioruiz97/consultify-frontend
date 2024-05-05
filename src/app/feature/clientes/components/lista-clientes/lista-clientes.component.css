@@ -1,0 +1,21 @@
+header {
+  min-height: 45vh;
+  background-image: url("/assets/img/lists-background.jpg");
+  background-position: 50% 60%;
+  background-size: cover;
+}
+
+header h1 {
+  margin: 0 auto;
+  padding: 2% 1%;
+  padding-top: 8%;
+  font-size: 3rem;
+  font-weight: 400 !important;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.list-button mat-form-field,
+.list-button button {
+  min-width: 30%;
+}
