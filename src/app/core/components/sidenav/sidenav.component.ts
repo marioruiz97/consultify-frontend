@@ -23,6 +23,7 @@ export class SidenavComponent {
   }
 
   cerrarSesion() {
+    this.closeSidenav.emit();
     this.authService.cerrarSesion();
   }
 }

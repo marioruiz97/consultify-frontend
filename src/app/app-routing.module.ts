@@ -12,6 +12,7 @@ import { AcercaDeComponent } from './feature/acerca-de/acerca-de.component';
 import { ContactenosComponent } from './feature/contactenos/contactenos.component';
 import { ListaClientesComponent } from './feature/clientes/components/lista-clientes/lista-clientes.component';
 import { FormularioClienteComponent } from './feature/clientes/components/formulario-cliente/formulario-cliente.component';
+import { ListaProyectosComponent } from './feature/proyectos/components/lista-proyectos/lista-proyectos.component';
 
 const routes: Routes = [
   // módulos generales
@@ -29,7 +30,10 @@ const routes: Routes = [
   { path: rutas.RUTA_USUARIOS, component: ListaUsuariosComponent },
   { path: `${rutas.RUTA_USUARIOS}/:id`, component: FormularioUsuarioComponent },
   { path: rutas.RUTA_CLIENTES, component: ListaClientesComponent },
-  { path: `${rutas.RUTA_CLIENTES}/:id`, component: FormularioClienteComponent }
+  { path: `${rutas.RUTA_CLIENTES}/:id`, component: FormularioClienteComponent },
+
+  // proyectos
+  { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent}
 
 ];
 

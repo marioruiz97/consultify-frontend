@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UsuariosModule } from './feature/usuarios/usuarios.module';
 import { ClientesModule } from './feature/clientes/clientes.module';
+import { ProyectosModule } from './feature/proyectos/proyectos.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ClientesModule } from './feature/clientes/clientes.module';
     CoreModule,
     AutenticacionModule,
     UsuariosModule,
-    ClientesModule
+    ClientesModule,
+    ProyectosModule
   ],
   providers: [],
   bootstrap: [AppComponent]
