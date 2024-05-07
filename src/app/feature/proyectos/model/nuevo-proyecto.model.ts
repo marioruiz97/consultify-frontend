@@ -1,6 +1,7 @@
 export interface NuevoProyecto {
   idProyecto: number;
   nombreProyecto: string;
-  clienteProyecto: number;
+  idClienteProyecto: number;
   descripcionProyecto: string;
+  creadoPor:string;
 }

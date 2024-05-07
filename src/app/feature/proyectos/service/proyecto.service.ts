@@ -20,13 +20,16 @@ export class ProyectoService {
     return lastValueFrom(this.httpService.getRequest(`${this.proyectoPath}/${id}`));
   }
 
-  crearProyecto(data: NuevoProyecto) {
-    this.httpService.postRequest<NuevoProyecto, InfoProyecto>(this.proyectoPath, data);
+  crearProyecto(data: NuevoProyecto): Promise<InfoProyecto> {
+    return this.httpService.postRequest<NuevoProyecto, InfoProyecto>(this.proyectoPath, data);
   }
 
-  editarProyecto(idProyecto: number, data: NuevoProyecto) {
-    this.httpService.patchRequest<NuevoProyecto, InfoProyecto>(`${this.proyectoPath}/${idProyecto}`, data);
+  editarProyecto(idProyecto: number, data: NuevoProyecto): Promise<InfoProyecto> {
+    return this.httpService.patchRequest<NuevoProyecto, InfoProyecto>(`${this.proyectoPath}/${idProyecto}`, data);
   }
 
+  eliminarProyecto(idProyecto: number): Promise<boolean> {
+    return this.httpService.deleteRequest<boolean>(`${this.proyectoPath}/${idProyecto}`);
+  }
 }
 

@@ -10,6 +10,8 @@ import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model'
 import { AppConstants } from 'src/app/shared/app.constants';
 import { InfoProyecto } from '../../model/info-proyecto.model';
 import { MatDialogRef } from '@angular/material/dialog';
+import { NuevoProyecto } from '../../model/nuevo-proyecto.model';
+import { AuthService } from 'src/app/core/service/auth.service';
 
 @Component({
   selector: 'app-formulario-proyecto',
@@ -30,6 +32,7 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
 
   constructor(
     private clienteService: ClienteService,
+    private authService: AuthService,
     private uiService: UIService,
     private service: ProyectoService,
     private router: Router,
@@ -50,9 +53,23 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
     if (clienteFormControl) {
       this.filteredClientes = clienteFormControl.valueChanges.pipe(
         startWith(''),
-        map(value => value ? this._filter(value) : this.clientes.slice())
+        map(formValue => {
+          const cliente = typeof formValue === 'string' ? formValue : formValue.nombreComercial;
+          return cliente ? this._filter(cliente as string) : this.clientes.slice();
+        })
       );
     }
+  }
+
+  mostrarClienteFn(cliente: Cliente): string {
+    return cliente && cliente.nombreComercial ? `${cliente.idCliente} - ${cliente.nombreComercial}` : '';
+  }
+
+  private _filter(value: string): Cliente[] {
+    const filterValue = value.trim().toLowerCase();
+    return this.clientes.filter(c =>
+      c.razonSocial.toLowerCase().includes(filterValue) || c.nombreComercial.toLowerCase().includes(filterValue)
+    ).slice();
   }
 
   private obtenerClientes() {
@@ -103,20 +120,9 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
     this.proyectoForm.setValue({
       nombreProyecto: proyecto.nombreProyecto,
       descripcionProyecto: proyecto.descripcionProyecto,
-      clienteProyecto: this.setClienteValue(proyecto.clienteProyecto)
+      clienteProyecto: proyecto.clienteProyecto
     });
     this.proyectoForm.get('clienteProyecto')?.disable();
-  }
-
-  setClienteValue(cliente: Cliente) {
-    return `${cliente.idCliente} - ${cliente.razonSocial}`;
-  }
-
-  private _filter(value: string): Cliente[] {
-    const filterValue = value.trim().toLowerCase();
-    return this.clientes.filter(c =>
-      c.razonSocial.toLowerCase().includes(filterValue) || c.nombreComercial.toLowerCase().includes(filterValue)
-    ).slice();
   }
 
   mostrarErrores(): string[] {
@@ -135,13 +141,19 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     if (this.esEditar) {
-      this.service.editarProyecto(this.idProyecto, { ...this.proyectoForm.value, idProyecto: this.idProyecto, clienteProyecto: this.idCliente });
+      this.service.editarProyecto(this.idProyecto, { ...this.proyectoForm.value });
     } else {
-      const cliente: string = this.proyectoForm.value.cliente;
-      console.log('cliente proyecto', cliente);
-      const idCliente = cliente.substring(0, cliente.indexOf('-')).trim();
-      this.proyectoForm.value.cliente = parseInt(idCliente, 10);
-      this.service.crearProyecto(this.proyectoForm.value);
+      const idCliente: number = this.proyectoForm.value.clienteProyecto?.idCliente;
+      const usuario = this.authService.obtenerUsuarioSesion()?.nombreUsuario;
+      const nuevoProyecto: NuevoProyecto = { ...this.proyectoForm.value, creadoPor: usuario, idClienteProyecto: idCliente };
+      console.log('form', nuevoProyecto);
+      this.service.crearProyecto(nuevoProyecto)
+        .then(res => {
+          this.uiService.mostrarSnackBar(`El proyecto ${res.nombreProyecto} se ha guardado con exito`, 4);
+          this.dialogRef.close();
+          this.router.navigate([`/${AppConstants.RUTA_PROYECTOS}/${res.idProyecto}`]);
+        })
+        .catch(err => this.uiService.mostrarError(err));
     }
   }
 

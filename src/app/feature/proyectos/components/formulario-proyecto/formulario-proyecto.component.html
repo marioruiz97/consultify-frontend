@@ -23,8 +23,8 @@
       <mat-form-field appearance="outline" fxFlex>
         <mat-label>Cliente</mat-label>
         <input type="text" matInput [matAutocomplete]="auto" formControlName="clienteProyecto">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-          <mat-option *ngFor="let cliente of filteredClientes | async" [value]="setClienteValue(cliente)">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="mostrarClienteFn">
+          <mat-option *ngFor="let cliente of filteredClientes | async" [value]="cliente">
             <span>{{cliente.idCliente}} - {{cliente.razonSocial + ' - ' + cliente.nombreComercial}}</span>
           </mat-option>
         </mat-autocomplete>

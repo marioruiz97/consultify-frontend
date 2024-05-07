@@ -61,7 +61,7 @@
         <button mat-icon-button matTooltip="Ir al dashboard" [routerLink]="['/proyectos/'+pro.idProyecto]">
           <mat-icon>dashboard</mat-icon>
         </button>
-        <button mat-icon-button color="warn" matTooltip="Eliminar proyecto" (click)="eliminarProyecto(pro.idProyecto)">
+        <button mat-icon-button color="warn" matTooltip="Eliminar proyecto" (click)="eliminarProyecto(pro)">
           <mat-icon>delete</mat-icon>
         </button>
       </mat-card-actions>

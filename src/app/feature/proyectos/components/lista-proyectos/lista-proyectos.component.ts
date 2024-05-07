@@ -5,7 +5,10 @@ import { FilterData } from './filter/model/filter-data.model';
 import { ProyectoService } from '../../service/proyecto.service';
 import { FormularioProyectoComponent } from '../formulario-proyecto/formulario-proyecto.component';
 import { MatDialog } from '@angular/material/dialog';
-import { customConfig } from 'src/app/shared/app.constants';
+import { DIALOG_CONFIG, customConfig } from 'src/app/shared/app.constants';
+import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
+import { UIService } from 'src/app/core/service/ui.service';
 
 @Component({
   selector: 'app-lista-proyectos',
@@ -21,7 +24,8 @@ export class ListaProyectosComponent {
 
   constructor(
     private servicioProyecto: ProyectoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private uiService: UIService
   ) {
     this.obtenerProyectos();
   }
@@ -57,8 +61,24 @@ export class ListaProyectosComponent {
     this.proyectosFiltrados.next(this.proyectos);
   }
 
-  eliminarProyecto(idProyecto: number) {
-    throw new Error('Method not implemented.');
+  eliminarProyecto(proyecto: InfoProyecto) {
+    const data: ConfirmDialogData = {
+      title: "Eliminar Proyecto",
+      message: `¿Estás seguro de eliminar el proyecto?`,
+      errors: [],
+      confirm: "Sí, deseo eliminar el proyecto",
+      showCancel: true
+    }
+    this.subs.push(this.dialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(eliminado => {
+      if (eliminado) this.servicioProyecto.eliminarProyecto(proyecto.idProyecto)
+        .then(res => {
+          if (res) {
+            this.uiService.mostrarAlerta(`El proyecto ${proyecto.nombreProyecto} ha sido eliminado con éxito`);
+            this.obtenerProyectos();
+          }
+        })
+        .catch(err => this.uiService.mostrarError(err));
+    }));
   }
 
 }
