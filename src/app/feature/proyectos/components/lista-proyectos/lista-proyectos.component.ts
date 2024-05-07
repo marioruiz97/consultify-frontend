@@ -39,7 +39,8 @@ export class ListaProyectosComponent {
   }
 
   abrirFormulario() {
-    this.dialog.open(FormularioProyectoComponent, { ...customConfig('80vw', '80vh'), disableClose: true });
+    const dialogRef = this.dialog.open(FormularioProyectoComponent, { ...customConfig('80vw'), disableClose: true });
+    this.subs.push(dialogRef.afterClosed().subscribe(recargar => { if (recargar) this.obtenerProyectos() }));
   }
 
 
@@ -47,11 +48,12 @@ export class ListaProyectosComponent {
     const result = this.proyectos.filter(pr => {
       const filtroCliente = filtros.cliente ? filtros.cliente.trim().toLowerCase() : undefined;
       const filtroNombre = filtros.nombreProyecto ? filtros.nombreProyecto.trim().toLowerCase() : undefined;
+      const filtroFecha = filtros.desde ?? undefined;
 
-      const filtro1 = !(filtroNombre && !pr.nombreProyecto.trim().toLowerCase().includes(filtroNombre));
-      const filtro2 = !(filtroCliente && !pr.clienteProyecto.razonSocial.trim().toLowerCase().includes(filtroCliente));
-      /* const filtro3 = !(filtros.desde && new Date(pr.createdDate) < filtros.desde); */
-      return filtro1 && filtro2;
+      const condicion1 = !(filtroNombre && !pr.nombreProyecto.trim().toLowerCase().includes(filtroNombre));
+      const condicion2 = !(filtroCliente && !pr.clienteProyecto.razonSocial.trim().toLowerCase().includes(filtroCliente));
+      const condicion3 = !(filtroFecha && new Date(pr.creadoEn) < filtroFecha);
+      return condicion1 && condicion2 && condicion3;
     }).slice();
     this.proyectosFiltrados.next(result);
   }

@@ -7,4 +7,5 @@ export interface InfoProyecto {
   clienteProyecto: Cliente;
   descripcionProyecto: string;
   miembros: UsuarioEditar[];
+  creadoEn: Date;
 }

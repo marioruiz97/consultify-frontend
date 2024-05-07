@@ -52,13 +52,13 @@
         <li *ngFor="let campo of mostrarErrores()">{{campo}}</li>
       </ul>
     </div>
-    <div class="form-action mt-4 pb-3" fxLayoutAlign="center" fxLayout.lt-sm="column">
+    <mat-dialog-actions class="mt-4 pb-3" fxLayoutAlign="center" fxLayout.lt-sm="column">
       <button class="m-2" type="button" mat-raised-button (click)="cancelar()" color="warn">
         <mat-icon>arrow_back</mat-icon> Cancelar
       </button>
       <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!proyectoForm.valid">
         <mat-icon>save</mat-icon> Guardar Proyecto
       </button>
-    </div>
+    </mat-dialog-actions>
   </form>
 </section>

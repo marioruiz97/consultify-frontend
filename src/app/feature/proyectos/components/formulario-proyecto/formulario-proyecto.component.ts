@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable, Subscription, map, of, startWith } from 'rxjs';
 import { UIService } from 'src/app/core/service/ui.service';
 import { Cliente } from 'src/app/feature/clientes/model/cliente.model';
@@ -9,7 +9,7 @@ import { ProyectoService } from '../../service/proyecto.service';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { AppConstants } from 'src/app/shared/app.constants';
 import { InfoProyecto } from '../../model/info-proyecto.model';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NuevoProyecto } from '../../model/nuevo-proyecto.model';
 import { AuthService } from 'src/app/core/service/auth.service';
 
@@ -31,21 +31,20 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: InfoProyecto,
     private clienteService: ClienteService,
     private authService: AuthService,
     private uiService: UIService,
     private service: ProyectoService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
     private dialogRef: MatDialogRef<FormularioProyectoComponent>
   ) {
     this.proyectoForm = this.iniciarForm();
     this.obtenerClientes();
 
-    this.subs.push(this.activatedRoute.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id && id !== '0') this.getProyecto(+id)
-    }));
+    if (this.data) {
+      this.setForm(this.data);
+    }
   }
 
   ngOnInit(): void {
@@ -105,7 +104,6 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
   }
 
   private getProyecto(id: number) {
-    this.idProyecto = id;
     this.service.obtenerProyectoPorId(id)
       .then(res => this.setForm(res))
       .catch(err => {
@@ -115,6 +113,7 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
   }
 
   private setForm(proyecto: InfoProyecto) {
+    this.idProyecto = proyecto.idProyecto;
     this.esEditar = true;
     this.idCliente = proyecto.clienteProyecto.idCliente;
     this.proyectoForm.setValue({
@@ -146,11 +145,10 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
       const idCliente: number = this.proyectoForm.value.clienteProyecto?.idCliente;
       const usuario = this.authService.obtenerUsuarioSesion()?.nombreUsuario;
       const nuevoProyecto: NuevoProyecto = { ...this.proyectoForm.value, creadoPor: usuario, idClienteProyecto: idCliente };
-      console.log('form', nuevoProyecto);
       this.service.crearProyecto(nuevoProyecto)
         .then(res => {
           this.uiService.mostrarSnackBar(`El proyecto ${res.nombreProyecto} se ha guardado con exito`, 4);
-          this.dialogRef.close();
+          this.dialogRef.close(true);
           this.router.navigate([`/${AppConstants.RUTA_PROYECTOS}/${res.idProyecto}`]);
         })
         .catch(err => this.uiService.mostrarError(err));
