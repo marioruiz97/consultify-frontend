@@ -23,7 +23,7 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
 
   private listSub: Subscription[] = [];
 
-  displayedColumns = ['nombres', 'apellidos', 'nombreUsuario', 'correo', 'telefono', 'rol', 'estado', 'acciones'];
+  displayedColumns = ['nombres', 'apellidos', 'nombreUsuario', 'correo', 'telefono', 'rol', 'estado', 'creadoPor', 'acciones'];
   datasource = new MatTableDataSource<UsuarioLista>();
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();

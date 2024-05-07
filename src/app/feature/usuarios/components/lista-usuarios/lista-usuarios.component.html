@@ -46,6 +46,10 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header fxHide.lt-md> Estado</th>
           <td mat-cell *matCellDef="let doc" fxHide.lt-md>{{doc.estado? 'Activo':'Inactivo'}}</td>
         </ng-container>
+        <ng-container matColumnDef="creadoPor">
+          <th mat-header-cell *matHeaderCellDef fxHide.lt-md> Creado Por</th>
+          <td mat-cell *matCellDef="let doc" fxHide.lt-md>{{doc.creadoPor}}</td>
+        </ng-container>
 
         <!-- botones para editar, eliminar -->
         <ng-container matColumnDef="acciones">

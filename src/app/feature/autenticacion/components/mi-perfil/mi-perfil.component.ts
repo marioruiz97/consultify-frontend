@@ -65,7 +65,8 @@ export class MiPerfilComponent implements OnDestroy {
       correo: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email, Validators.maxLength(64)]),
       identificacion: new FormControl({ value: '', disabled: true }),
       tipoDocumento: new FormControl({ value: '', disabled: true }),
-      rol: new FormControl({ value: '', disabled: true })
+      rol: new FormControl({ value: '', disabled: true }),
+      creadoPor: new FormControl({ value: '', disabled: true })
     });
   }
 
@@ -78,7 +79,8 @@ export class MiPerfilComponent implements OnDestroy {
       correo: perfil.correo,
       identificacion: perfil.identificacion,
       tipoDocumento: TipoDocumentoMap.get(perfil.tipoDocumento),
-      rol: this.mostrarRol(perfil.rol.toString())
+      rol: this.mostrarRol(perfil.rol.toString()),
+      creadoPor: perfil.creadoPor
     });
   }
 
@@ -88,6 +90,10 @@ export class MiPerfilComponent implements OnDestroy {
 
   private mostrarRol(rol: string) {
     return RolMap.get(rol);
+  }
+
+  mostrarUltimoInicioSesion(){
+    return this.miPerfil.ultimoInicio;
   }
 
   toggleEdit() {
@@ -122,7 +128,9 @@ export class MiPerfilComponent implements OnDestroy {
       correo: form.correo,
       identificacion: this.miPerfil.identificacion,
       tipoDocumento: this.miPerfil.tipoDocumento,
-      rol: this.miPerfil.rol
+      rol: this.miPerfil.rol,
+      creadoPor: this.miPerfil.creadoPor,
+      ultimoInicio: this.miPerfil.ultimoInicio
     };
     this.toggleEdit();
     this.cuentaService.editarInformacionBasica(this.idUsuario, perfil)
