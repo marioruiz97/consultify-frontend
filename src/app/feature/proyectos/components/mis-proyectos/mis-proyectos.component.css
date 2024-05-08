@@ -1,0 +1,24 @@
+h4.titulo {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+mat-card {
+  border: 0.1px outset var(--light-gray);
+}
+
+mat-card-content p {
+  max-width: 100%;
+  min-height: fit-content;
+}
+
+mat-list-item {
+  height: 26px !important;
+  line-height: 26px !important;
+}
+
+.list-title {
+  display: inline-block;
+  min-width: 29%;
+  font-weight: 500;
+}

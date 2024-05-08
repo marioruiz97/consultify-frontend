@@ -36,8 +36,12 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         if (err.status === 403) {
           if (this.router.url !== `/${rutas.RUTA_LOGIN}`) {
-            this.location.back()
-            setTimeout(() => this.uiService.mostrarAlerta(`Acceso Denegado. <br/> No tienes acceso a este recurso`), 200);
+            if (this.authService.haExpiradoToken()) {
+              this.authService.sesionExpirada(err)
+            } else {
+              this.router.navigate([rutas.RUTA_HOME]);
+              setTimeout(() => this.uiService.mostrarAlerta(`Acceso Denegado. <br/> No tienes acceso a este recurso`), 200);
+            }
           }
         }
         return throwError(() => err);

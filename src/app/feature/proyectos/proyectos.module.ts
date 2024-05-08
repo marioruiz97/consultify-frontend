@@ -6,6 +6,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FilterComponent } from './components/lista-proyectos/filter/filter.component';
 import { ProyectoService } from './service/proyecto.service';
+import { MisProyectosComponent } from './components/mis-proyectos/mis-proyectos.component';
 
 
 
@@ -13,13 +14,15 @@ import { ProyectoService } from './service/proyecto.service';
   declarations: [
     ListaProyectosComponent,
     FormularioProyectoComponent,
-    FilterComponent
+    FilterComponent,
+    MisProyectosComponent
   ],
   imports: [
     AppRoutingModule,
     CommonModule,
     SharedModule
   ],
+  exports: [MisProyectosComponent],
   providers: [
     ProyectoService
   ]

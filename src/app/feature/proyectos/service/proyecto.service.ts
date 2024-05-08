@@ -9,6 +9,7 @@ import { NuevoProyecto } from '../model/nuevo-proyecto.model';
 export class ProyectoService {
 
   private proyectoPath = AppConstants.RUTA_PROYECTOS;
+  private misProyectosPath = AppConstants.RUTA_MIS_PROYECTOS;
 
   constructor(private httpService: HttpService) { }
 
@@ -18,6 +19,10 @@ export class ProyectoService {
 
   obtenerProyectoPorId(id: number): Promise<InfoProyecto> {
     return lastValueFrom(this.httpService.getRequest(`${this.proyectoPath}/${id}`));
+  }
+
+  obtenerMisProyectos(): Observable<InfoProyecto[]> {
+    return this.httpService.getRequest(this.misProyectosPath);
   }
 
   crearProyecto(data: NuevoProyecto): Promise<InfoProyecto> {

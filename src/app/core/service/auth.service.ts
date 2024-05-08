@@ -36,6 +36,14 @@ export class AuthService {
     return this.token;
   }
 
+  haExpiradoToken(): boolean {
+    const token = this.token
+    if (!token) return true;
+    const payload = token.jwt ? JSON.parse(atob(token.jwt.split('.')[1])) : null;
+    const now = new Date().getTime() / 1000;
+    return payload === null || payload.exp < now ? true : false;
+  }
+
   verificarSesion(): boolean {
     const sesionActiva = sessionStorage.getItem('token');
     if (!sesionActiva || (this.token && sesionActiva.valueOf() !== this.token?.jwt)) {

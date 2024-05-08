@@ -13,7 +13,7 @@ export class AuthGuard {
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
     if (this.authService.estaAutenticado.getValue()) {
-      if (this.haExpiradoToken()) {
+      if (this.authService.haExpiradoToken()) {
         this.authService.sesionExpirada(null);
         return false;
       }
@@ -23,12 +23,5 @@ export class AuthGuard {
     return false;
   }
 
-  private haExpiradoToken(): boolean {
-    const token = this.authService.obtenerToken();
-    if (!token) return true;
-    const payload = token.jwt ? JSON.parse(atob(token.jwt.split('.')[1])) : null;
-    const now = new Date().getTime() / 1000;
-    return payload === null || payload.exp < now ? true : false;
-  }
 
 }

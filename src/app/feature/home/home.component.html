@@ -1,12 +1,34 @@
 <div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
 
-  <header class="home-header mx-1 mt-3" gdArea="header" fxLayoutAlign="center center">
-    <h1>Bienvenidos <br /> </h1>
+  <header class="home-header" gdArea="header" fxLayoutAlign="center">
+    <h1 class="pt-3">Bienvenidos</h1>
   </header>
 
-  <section class="m-1" gdArea="content">
-    <div fxLayout="row wrap" fxLayoutAlign="space-evenly start">
+  <section class="my-1" gdArea="content">
 
+    <app-mis-proyectos></app-mis-proyectos>
+
+    <h3 class="mat-h1 mx-auto text-center mt-2">Utiliza los atajos</h3>
+
+    <div fxLayout="row wrap" fxLayoutAlign="space-evenly">
+      <mat-card class="mb-4" fxFlex="30" fxFlex.lt-sm="100" *ngFor="let card of cards">
+        <mat-card-header>
+          <mat-icon matCardAvatar class="my-auto">{{card.avatar}}</mat-icon>
+          <mat-card-title matCardTitle>{{card.title}}</mat-card-title>
+          <mat-card-subtitle matCardSubtitle>{{card.subtitle}}</mat-card-subtitle>
+        </mat-card-header>
+        <img class="home-img mt-2" matCardImage [src]="card.img" [alt]="card.title" />
+        <mat-card-content>
+          <p>
+            {{card.content}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions fxLayoutAlign="end">
+          <button class="card-button mb-3" mat-button [routerLink]="[card.urlTo]">{{card.button}}</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-evenly">
     </div>
   </section>
 </div>

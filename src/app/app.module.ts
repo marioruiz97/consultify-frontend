@@ -12,10 +12,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UsuariosModule } from './feature/usuarios/usuarios.module';
 import { ClientesModule } from './feature/clientes/clientes.module';
 import { ProyectosModule } from './feature/proyectos/proyectos.module';
+import { HomeComponent } from './feature/home/home.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
