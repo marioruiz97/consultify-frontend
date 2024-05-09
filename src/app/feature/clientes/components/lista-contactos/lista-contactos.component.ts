@@ -17,7 +17,7 @@ export class ListaContactosComponent implements AfterViewInit, OnDestroy {
 
   private suscripciones: Subscription[] = [];
 
-  displayedColumns = ['nombreCompleto', 'telefono', 'correo', 'acciones'];
+  displayedColumns = ['nombreCompleto', 'cargo', 'telefono', 'correo', 'acciones'];
   datasource = new MatTableDataSource<Contacto>();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort = new MatSort();
