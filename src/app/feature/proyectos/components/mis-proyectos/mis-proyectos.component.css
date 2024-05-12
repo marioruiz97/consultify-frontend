@@ -19,3 +19,8 @@ mat-list-item {
   min-width: 29%;
   font-weight: 500;
 }
+
+.darken-orange {
+  color: var(--darken-orange);
+  --mdc-text-button-label-text-color: var(--darken-orange);
+}

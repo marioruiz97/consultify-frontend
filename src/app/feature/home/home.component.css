@@ -27,6 +27,8 @@ section {
 }
 
 mat-icon {
+  padding-top: 3px;
+  padding-left: 2px;
   color: var(--darken-orange);
   font-size: 2rem;
 }

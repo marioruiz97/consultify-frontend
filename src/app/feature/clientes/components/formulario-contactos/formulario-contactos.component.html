@@ -34,10 +34,10 @@
     </mat-dialog-content>
 
     <mat-dialog-actions class="my-4">
+      <button type="button" mat-button fxFlex [matDialogClose]="false">Cancelar</button>
       <button type="submit" mat-button fxFlex [disabled]="contactoForm.invalid" color="primary">
         Guardar Contacto
       </button>
-      <button type="button" mat-button fxFlex [matDialogClose]="false">Cancelar</button>
     </mat-dialog-actions>
   </form>
 </section>

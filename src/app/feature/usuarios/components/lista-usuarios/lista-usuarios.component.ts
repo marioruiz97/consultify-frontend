@@ -52,8 +52,7 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   mostrarDetalles(usuario: UsuarioLista) {
-    const ref = this.dialog.open(DetalleUsuarioComponent, { ...DIALOG_CONFIG, data: usuario });
-    this.listSub.push(ref.afterClosed().subscribe(res => { if (res) { this.obtenerTodosUsuarios(); } }));
+    this.dialog.open(DetalleUsuarioComponent, { ...DIALOG_CONFIG, data: usuario });
   }
 
   mostrarRol(rol: string) {

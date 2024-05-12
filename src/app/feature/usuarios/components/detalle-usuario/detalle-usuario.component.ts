@@ -46,12 +46,8 @@ export class DetalleUsuarioComponent {
   }
 
 
-  closeModal(res = false) {
-    if (res) {
-      this.dialogRef.close(true);
-    } else {
-      this.dialogRef.close();
-    }
+  closeModal() {
+    this.dialogRef.close();
   }
 
 }
