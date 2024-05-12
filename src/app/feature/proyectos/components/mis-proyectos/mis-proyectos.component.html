@@ -1,7 +1,7 @@
 <h3 class="mat-h1 mx-auto text-center mt-5" *ngIf="mostrarTitulo">Tus proyectos a tu alcance</h3>
 
 <div class="cards" fxLayout="row wrap" fxLayoutAlign="space-evenly start">
-  <mat-card fxFlex.gt-xs="32" class="mb-4 mat-elevation-z24" *ngFor="let pro of misProyectos | async">
+  <mat-card fxFlex.gt-xs="32" class="mb-4 mat-mdc-elevation-specific mat-mdc-elevation-specific mat-elevation-z24" *ngFor="let pro of misProyectos | async">
     <mat-card-header class="mb-2">
       <mat-card-title class="my-auto">Proyecto {{pro.idProyecto + ' - ' + pro.nombreProyecto}}</mat-card-title>
       <mat-card-subtitle>Fecha de Creacion: {{ pro.creadoEn | date: 'medium'}}</mat-card-subtitle>

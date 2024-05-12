@@ -3,9 +3,6 @@ h4.titulo {
   margin-bottom: 8px;
 }
 
-mat-card {
-  border: 0.1px outset var(--light-gray);
-}
 
 mat-card-content p {
   max-width: 100%;
