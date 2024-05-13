@@ -103,14 +103,6 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
     });
   }
 
-  private getProyecto(id: number) {
-    this.service.obtenerProyectoPorId(id)
-      .then(res => this.setForm(res))
-      .catch(err => {
-        this.uiService.mostrarError(err);
-        this.router.navigate([`/${AppConstants.RUTA_PROYECTOS}/${id}`]);
-      });
-  }
 
   private setForm(proyecto: InfoProyecto) {
     this.idProyecto = proyecto.idProyecto;
@@ -123,6 +115,7 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
     });
     this.proyectoForm.get('clienteProyecto')?.disable();
   }
+
 
   mostrarErrores(): string[] {
     const controls = ['nombreProyecto', 'descripcionProyecto', 'clienteProyecto'];
@@ -139,20 +132,29 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
+    const usuario = this.authService.obtenerUsuarioSesion()?.nombreUsuario;
+
     if (this.esEditar) {
-      this.service.editarProyecto(this.idProyecto, { ...this.proyectoForm.value });
+      const proyectoEditado: NuevoProyecto = { ...this.proyectoForm.value, idProyecto: this.idProyecto, creadoPor: usuario, idClienteProyecto: this.idCliente };
+
+      this.service.editarProyecto(this.idProyecto, proyectoEditado)
+        .then(res => this.guardadoExitoso(res))
+        .catch(err => this.uiService.mostrarError(err));
+
     } else {
       const idCliente: number = this.proyectoForm.value.clienteProyecto?.idCliente;
-      const usuario = this.authService.obtenerUsuarioSesion()?.nombreUsuario;
       const nuevoProyecto: NuevoProyecto = { ...this.proyectoForm.value, creadoPor: usuario, idClienteProyecto: idCliente };
+
       this.service.crearProyecto(nuevoProyecto)
-        .then(res => {
-          this.uiService.mostrarSnackBar(`El proyecto ${res.nombreProyecto} se ha guardado con exito`, 4);
-          this.dialogRef.close(true);
-          this.router.navigate([`/${AppConstants.RUTA_PROYECTOS}/${res.idProyecto}`]);
-        })
+        .then(res => this.guardadoExitoso(res))
         .catch(err => this.uiService.mostrarError(err));
     }
+  }
+
+  private guardadoExitoso(proyecto: InfoProyecto) {
+    this.uiService.mostrarSnackBar(`El proyecto ${proyecto.nombreProyecto} se ha guardado con exito`, 4);
+    this.dialogRef.close(true);
+    this.router.navigate([`/${AppConstants.RUTA_PROYECTOS}/${proyecto.idProyecto}`]);
   }
 
 

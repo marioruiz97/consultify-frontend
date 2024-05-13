@@ -4,7 +4,7 @@
   <form [formGroup]="formulario" (ngSubmit)="cambiarCorreo()" autocomplete="off">
     <mat-dialog-content class="mb-4" fxLayout>
       <!-- nuevo correo -->
-      <mat-form-field fxFlex>
+      <mat-form-field appearance="outline" fxFlex>
         <mat-label>Nuevo Correo Electrónico </mat-label>
         <input matInput formControlName="correoNuevo" autocomplete="off">
         <mat-error *ngIf="!formulario.value.correoNuevo"> El correo electrónico es obligatorio. </mat-error>

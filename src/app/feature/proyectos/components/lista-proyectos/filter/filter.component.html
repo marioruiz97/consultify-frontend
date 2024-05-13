@@ -1,10 +1,10 @@
 <form autocomplete="off" [formGroup]="form" (ngSubmit)="ejecutarFiltro()" fxFlex fxLayoutGap="10px"
   fxLayout.lt-sm="column">
-  <mat-form-field fxFlex>
+  <mat-form-field appearance="outline" fxFlex>
     <mat-label>Nombre del Proyecto</mat-label>
     <input matInput formControlName="nombreProyecto">
   </mat-form-field>
-  <mat-form-field fxFlex>
+  <mat-form-field appearance="outline" fxFlex>
     <mat-label>Cliente</mat-label>
     <input type="text" placeholder="Busca por razón social o nombre comercial" matInput [matAutocomplete]="auto"
       formControlName="cliente">
@@ -15,13 +15,15 @@
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>
-  <mat-form-field fxFlex>
+  <mat-form-field appearance="outline" fxFlex>
     <mat-label>Fecha Creación</mat-label>
     <input matInput [max]="maxDate" [matDatepicker]="myDatepicker" formControlName="desde">
     <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
     <mat-datepicker #myDatepicker></mat-datepicker>
   </mat-form-field>
   <div fxFlex></div>
-  <button type="button" mat-button color="accent" (click)="eliminarFiltros.emit()" *ngIf="form.touched">Quitar Filtros</button>
+  <button type="button" mat-button color="accent" (click)="eliminarFiltros.emit()" *ngIf="form.touched">
+    Quitar Filtros
+  </button>
   <button type="submit" mat-button color="primary">Aplicar Filtros</button>
 </form>

@@ -11,6 +11,7 @@ import { TableroProyectoComponent } from './components/tablero-proyecto/tablero-
 import { TableroProyectoService } from './service/tablero-proyecto.service';
 import { MiembrosProyectoComponent } from './components/miembros-proyecto/miembros-proyecto.component';
 import { NotificacionesProyectoComponent } from './components/notificaciones-proyecto/notificaciones-proyecto.component';
+import { GestionarMiembrosProyectoComponent } from './components/gestionar-miembros-proyecto/gestionar-miembros-proyecto.component';
 
 
 
@@ -22,7 +23,8 @@ import { NotificacionesProyectoComponent } from './components/notificaciones-pro
     MisProyectosComponent,
     TableroProyectoComponent,
     MiembrosProyectoComponent,
-    NotificacionesProyectoComponent
+    NotificacionesProyectoComponent,
+    GestionarMiembrosProyectoComponent
   ],
   imports: [
     AppRoutingModule,

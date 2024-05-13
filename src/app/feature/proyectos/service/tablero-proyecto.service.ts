@@ -5,6 +5,7 @@ import { HttpService } from 'src/app/core/service/http.service';
 import { UIService } from 'src/app/core/service/ui.service';
 import { TableroProyecto } from '../model/tablero/tablero-proyecto.model';
 import { AppConstants } from 'src/app/shared/app.constants';
+import { MiembroProyecto } from '../model/miembros/miembro-proyecto.model';
 
 @Injectable()
 export class TableroProyectoService {
@@ -28,6 +29,11 @@ export class TableroProyectoService {
       error: (err) => this.uiService.mostrarError(err)
     })
     return this.tableroActual;
+  }
+
+  obtenerPosiblesMiembros(): Observable<MiembroProyecto[]> {
+    const id = this.$TableroActual.getValue()?.infoProyecto.idProyecto;
+    return this.httpService.getRequest<MiembroProyecto[]>(`${this.tableroPath}/${id}/posibles-miembros`);
   }
 
 }
