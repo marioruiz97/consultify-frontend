@@ -7,6 +7,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormularioContactosComponent } from '../formulario-contactos/formulario-contactos.component';
+import { UIService } from 'src/app/core/service/ui.service';
+import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 
 @Component({
   selector: 'app-lista-contactos',
@@ -16,15 +18,17 @@ import { FormularioContactosComponent } from '../formulario-contactos/formulario
 export class ListaContactosComponent implements AfterViewInit, OnDestroy {
 
   private suscripciones: Subscription[] = [];
-
+  mostrarLista = false;
   displayedColumns = ['nombreCompleto', 'cargo', 'telefono', 'correo', 'acciones'];
   datasource = new MatTableDataSource<Contacto>();
 
   @ViewChild(MatSort, { static: false }) sort: MatSort = new MatSort();
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  constructor(private clienteService: ClienteService, private dialog: MatDialog) {
-    this.suscripciones.push(this.clienteService.contactos$.subscribe(listaContactos => this.datasource.data = listaContactos));
+  constructor(private clienteService: ClienteService,
+    private dialog: MatDialog,
+    private uiService: UIService) {
+    this.suscripciones.push(this.clienteService.contactos$.subscribe(listaContactos => { this.datasource.data = listaContactos; this.mostrarLista = listaContactos.length > 0 }));
   }
 
   ngAfterViewInit() {
@@ -42,7 +46,16 @@ export class ListaContactosComponent implements AfterViewInit, OnDestroy {
   }
 
   eliminar(id: string) {
-    this.clienteService.eliminarContacto(id);
+    const data: ConfirmDialogData = {
+      errors: [],
+      showCancel: true,
+      confirm: 'Si, eliminar contacto',
+      title: '¿Eliminar Contacto?',
+      message: '¿Estás seguro de eliminar el contacto?'
+    };
+    this.suscripciones.push(
+      this.uiService.mostrarConfirmDialog(data).afterClosed().subscribe(eliminar => { if (eliminar) this.clienteService.eliminarContacto(id) })
+    );
   }
 
   ngOnDestroy() {

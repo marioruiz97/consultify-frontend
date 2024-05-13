@@ -1,4 +1,4 @@
-<section fxFill fxLayoutAlign="center center">
+<section fxFill fxLayoutAlign="center center" *ngIf="mostrarLista">
   <div fxFill fxLayout="column">
     <mat-form-field>
       <input matInput type="text" (keyup)="doFilter($event)" placeholder="buscar...">
@@ -42,7 +42,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <!-- paginador de angular material-->
-    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 30, 50, 100]" class="mat-mdc-elevation-specific mat-elevation-z4">
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 30, 50, 100]"
+      class="mat-mdc-elevation-specific mat-elevation-z4">
     </mat-paginator>
   </div>
 </section>
