@@ -13,6 +13,7 @@ import { ContactenosComponent } from './feature/contactenos/contactenos.componen
 import { ListaClientesComponent } from './feature/clientes/components/lista-clientes/lista-clientes.component';
 import { FormularioClienteComponent } from './feature/clientes/components/formulario-cliente/formulario-cliente.component';
 import { ListaProyectosComponent } from './feature/proyectos/components/lista-proyectos/lista-proyectos.component';
+import { TableroProyectoComponent } from './feature/proyectos/components/tablero-proyecto/tablero-proyecto.component';
 
 const routes: Routes = [
   // módulos generales
@@ -33,12 +34,13 @@ const routes: Routes = [
   { path: `${rutas.RUTA_CLIENTES}/:id`, component: FormularioClienteComponent },
 
   // proyectos
-  { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent}
+  { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent },
+  { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent }
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

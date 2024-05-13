@@ -19,6 +19,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
@@ -52,6 +54,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatSelectModule,
     MatExpansionModule,
     MatSlideToggleModule,
+    MatProgressBarModule,
+    MatTabsModule,
     MatAutocompleteModule,
     MatDatepickerModule,
     MatMomentDateModule
@@ -75,6 +79,8 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatSelectModule,
     MatExpansionModule,
     MatSlideToggleModule,
+    MatProgressBarModule,
+    MatTabsModule,
     MatAutocompleteModule,
     MatDatepickerModule,
     MatMomentDateModule

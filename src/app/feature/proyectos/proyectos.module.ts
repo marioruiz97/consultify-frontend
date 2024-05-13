@@ -7,6 +7,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FilterComponent } from './components/lista-proyectos/filter/filter.component';
 import { ProyectoService } from './service/proyecto.service';
 import { MisProyectosComponent } from './components/mis-proyectos/mis-proyectos.component';
+import { TableroProyectoComponent } from './components/tablero-proyecto/tablero-proyecto.component';
+import { TableroProyectoService } from './service/tablero-proyecto.service';
+import { MiembrosProyectoComponent } from './components/miembros-proyecto/miembros-proyecto.component';
+import { NotificacionesProyectoComponent } from './components/notificaciones-proyecto/notificaciones-proyecto.component';
 
 
 
@@ -15,7 +19,10 @@ import { MisProyectosComponent } from './components/mis-proyectos/mis-proyectos.
     ListaProyectosComponent,
     FormularioProyectoComponent,
     FilterComponent,
-    MisProyectosComponent
+    MisProyectosComponent,
+    TableroProyectoComponent,
+    MiembrosProyectoComponent,
+    NotificacionesProyectoComponent
   ],
   imports: [
     AppRoutingModule,
@@ -24,7 +31,8 @@ import { MisProyectosComponent } from './components/mis-proyectos/mis-proyectos.
   ],
   exports: [MisProyectosComponent],
   providers: [
-    ProyectoService
+    ProyectoService,
+    TableroProyectoService
   ]
 })
 export class ProyectosModule { }

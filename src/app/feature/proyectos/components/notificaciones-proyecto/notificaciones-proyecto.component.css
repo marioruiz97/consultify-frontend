@@ -1,0 +1,15 @@
+.PRIMARY {
+  color: #007bff;
+}
+
+.SUCCESS {
+  color: #28a745;
+}
+
+.INFO {
+  color: #ffc107;
+}
+
+.WARN {
+  color: #dc3545;
+}
