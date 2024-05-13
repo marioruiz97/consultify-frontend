@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, lastValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpService } from 'src/app/core/service/http.service';
 import { AppConstants } from 'src/app/shared/app.constants';
 import { InfoProyecto } from '../model/info-proyecto.model';
@@ -17,9 +17,6 @@ export class ProyectoService {
     return this.httpService.getRequest(this.proyectoPath);
   }
 
-  obtenerProyectoPorId(id: number): Promise<InfoProyecto> {
-    return lastValueFrom(this.httpService.getRequest(`${this.proyectoPath}/${id}`));
-  }
 
   obtenerMisProyectos(): Observable<InfoProyecto[]> {
     return this.httpService.getRequest(this.misProyectosPath);

@@ -4,6 +4,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subscription, map, of, startWith } from 'rxjs';
 import { TableroProyectoService } from '../../service/tablero-proyecto.service';
+import { UIService } from 'src/app/core/service/ui.service';
+import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 
 @Component({
   selector: 'app-gestionar-miembros-proyecto',
@@ -27,6 +29,7 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: MiembroProyecto[],
     private tableroService: TableroProyectoService,
+    private uiService: UIService,
     private dialogRef: MatDialogRef<GestionarMiembrosProyectoComponent>
   ) {
     if (data && data.length > 0) this.miembros = data;
@@ -71,8 +74,21 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
     return `${user.nombres} ${user.apellidos}`;
   }
 
-  eliminarMiembro(_t66: any) {
-    throw new Error('Method not implemented.');
+  eliminarMiembro(miembro: MiembroProyecto) {
+    const data: ConfirmDialogData = {
+      title: 'Quitar Miembro',
+      message: '¿Estás seguro de quitar un miembro?',
+      errors: [],
+      showCancel: true,
+      confirm: 'Sí, deseo quitarlo'
+    };
+
+    this.subs.push(
+      this.uiService.mostrarConfirmDialog(data).afterClosed().subscribe(respuesta => {
+        if (respuesta) this.tableroService.quitarMiembro(miembro)
+          .then(nuevaLista => { if (nuevaLista && nuevaLista.length >= 0) this.data = nuevaLista; })
+      })
+    );
   }
 
   cerrarModal() {
@@ -81,7 +97,8 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log('miembro', this.miembroForm.value);
-
+    this.tableroService.agregarMiembro(this.miembroForm.value)
+      .then(exito => { if (exito) this.miembroForm.reset(); });
   }
 
   ngOnDestroy(): void {
