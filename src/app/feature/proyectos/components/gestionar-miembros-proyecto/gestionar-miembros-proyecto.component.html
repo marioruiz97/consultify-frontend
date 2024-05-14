@@ -21,7 +21,7 @@
       </mat-list>
 
 
-      <form [formGroup]="miembroForm" (ngSubmit)="onSubmit()" fxLayout="column">
+      <form [formGroup]="miembroForm" (ngSubmit)="agregarMiembro()" fxLayout="column">
 
         <mat-form-field class="mb-3 mx-auto" appearance="outline">
           <mat-label>Usuario</mat-label>
@@ -39,8 +39,8 @@
           <mat-error>Campo Obligatorio</mat-error>
         </mat-form-field>
 
-        <div fxFlexFill fxLayout fxLayoutAlign="center">
-          <button mat-button (click)="cerrarModal()" color="warn" class="mx-3">Volver al tablero</button>
+        <div fxFlexFill fxLayout fxLayoutAlign="center" class="mb-4">
+          <button mat-button type="button" (click)="cerrarModal()" color="warn" class="mx-3">Volver al tablero</button>
           <button mat-raised-button type="submit" color="primary" class="mx-3" [disabled]="!miembroForm.valid">
             Agregar al proyecto
           </button>

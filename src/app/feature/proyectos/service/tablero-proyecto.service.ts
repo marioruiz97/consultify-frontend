@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpService } from 'src/app/core/service/http.service';
 import { UIService } from 'src/app/core/service/ui.service';
@@ -15,8 +14,7 @@ export class TableroProyectoService {
 
   constructor(
     private httpService: HttpService,
-    private uiService: UIService,
-    private router: Router
+    private uiService: UIService
   ) { }
 
   public get tableroActual() {
