@@ -3,20 +3,32 @@
     mat-list-item {
       height: 45px !important;
     }
+
     .property {
       font-weight: 500;
     }
   </style>
   <h2 matDialogTitle>Ver detalles del usuario</h2>
 
-  <mat-dialog-content fxFill fxLayout="column">
+  <mat-dialog-content fxFill fxLayout fxLayout.lt-md="column">
     <div class="mb-4">
       <div mat-subheader>Información Personal</div>
       <mat-list dense>
-        <mat-list-item *ngFor="let usuario of info">
+        <mat-list-item *ngFor="let usuario of infoUsuario">
           <mat-icon matListItemIcon>label_important</mat-icon>
           <div matListItemTitle>
             <span class="property">{{usuario.property}}</span> {{usuario.data}}
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="mb-4">
+      <div mat-subheader>Información Cuenta</div>
+      <mat-list dense>
+        <mat-list-item *ngFor="let cuenta of infoCuenta">
+          <mat-icon matListItemIcon>label_important</mat-icon>
+          <div matListItemTitle>
+            <span class="property">{{cuenta.property}}</span> {{cuenta.data}}
           </div>
         </mat-list-item>
       </mat-list>

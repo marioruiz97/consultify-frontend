@@ -1,0 +1,64 @@
+<section>
+  <div>
+    <h2 matDialogTitle>{{esEditar? 'Editar' : 'Crear'}} Proyecto</h2>
+    <div fxFlex></div>
+    <button mat-icon-button (click)="cancelar()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+  <span mat-subheader class="pl-5">Los campos con * son obligatorios</span>
+
+  <form autocomplete="off" [formGroup]="proyectoForm" (ngSubmit)="onSubmit()" class="mt-2 px-5" fxLayout="column"
+    fxLayoutAlign="center">
+    <div class="form-group" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Nombre del Proyecto</mat-label>
+        <input matInput formControlName="nombreProyecto">
+        <mat-hint>
+          Ingrese un nombre de máximo 50 caracteres / actual:{{proyectoForm.value.nombreProyecto.length}}
+        </mat-hint>
+        <mat-error>Ingrese un nombre válido</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Cliente</mat-label>
+        <input type="text" matInput [matAutocomplete]="auto" formControlName="clienteProyecto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="mostrarClienteFn">
+          <mat-option *ngFor="let cliente of filteredClientes | async" [value]="cliente">
+            <span>{{cliente.idCliente}} - {{cliente.razonSocial + ' - ' + cliente.nombreComercial}}</span>
+          </mat-option>
+        </mat-autocomplete>
+        <mat-hint>Busca por razón social o nombre comercial</mat-hint>
+        <mat-error>El cliente es obligatorio</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" fxLayoutAlign="center">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Descripción general del proyecto</mat-label>
+        <textarea matInput formControlName="descripcionProyecto"></textarea>
+        <mat-icon matPrefix>message</mat-icon>
+        <mat-hint>
+          Ingresa una descripción que permita identificar el propósito del proyecto
+          <br />Máximo 255 caracteres / actual:{{proyectoForm.value.descripcionProyecto.length}}
+        </mat-hint>
+      </mat-form-field>
+    </div>
+
+    <p class="invalid-form pt-4" *ngIf="proyectoForm.invalid">**El formulario posee errores, verifica los campos.</p>
+    <div class="invalid-form" *ngIf="proyectoForm.invalid">
+      <h4 class="mx-0">Campos con errores:</h4>
+      <ul style="list-style: none;">
+        <li *ngFor="let campo of mostrarErrores()">{{campo}}</li>
+      </ul>
+    </div>
+    <mat-dialog-actions class="mt-4 pb-3" fxLayoutAlign="center" fxLayout.lt-sm="column">
+      <button class="m-2" type="button" mat-raised-button (click)="cancelar()" color="warn">
+        <mat-icon>arrow_back</mat-icon> Cancelar
+      </button>
+      <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!proyectoForm.valid">
+        <mat-icon>save</mat-icon> Guardar Proyecto
+      </button>
+    </mat-dialog-actions>
+  </form>
+</section>

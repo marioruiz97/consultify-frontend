@@ -11,6 +11,7 @@ export interface Contacto {
   id?: string;
   idCliente?: number;
   nombreCompleto: string;
+  cargo: string;
   telefono: string;
   correo: string;
 }

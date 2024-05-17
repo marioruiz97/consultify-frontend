@@ -10,10 +10,6 @@ header {
   padding: 10px 5px;
 }
 
-.fondo-claro {
-  background-color: rgb(244, 238, 231);
-}
-
 app-contacto-list {
   min-width: 90%;
 }

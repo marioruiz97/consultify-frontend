@@ -37,7 +37,7 @@ export class HttpService {
       ));
   }
 
-  putRequest<T, R>(path: string, data: T): Promise<R> {
+  putRequest<T, R = T>(path: string, data: T): Promise<R> {
     return lastValueFrom(this.httpClient
       .put<R>(
         `${this.API_ENDPOINT}/${path}`,

@@ -7,7 +7,7 @@
 </div>
 <section fxLayout fxLayout.lt-md="column">
   <aside aria-label="info-basica" fxLayout="column" fxFlex.gt-sm="65" class="px-md-5">
-    <mat-card class="mat-elevation-z16 m-2">
+    <mat-card class="mat-mdc-elevation-specific mat-elevation-z4 m-2">
       <mat-card-header class="mb-2">
         <mat-card-title class="title">Datos personales </mat-card-title>
         <span fxFlex></span>
@@ -60,6 +60,13 @@
           </mat-form-field>
 
           <mat-form-field>
+            <mat-label>Creado Por</mat-label>
+            <input matInput type="text" formControlName="creadoPor">
+            <mat-icon matPrefix class="mat-18" [inline]="habilitarCampos">face</mat-icon>
+            <mat-hint *ngIf="habilitarCampos">Este dato no se puede modificar</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field>
             <mat-label>Correo</mat-label>
             <input matInput type="email" formControlName="correo">
             <mat-icon matPrefix class="mat-18" [inline]="habilitarCampos">mail</mat-icon>
@@ -87,15 +94,17 @@
   </aside>
 
   <aside fxFlex aria-label="opciones" fxLayout="column" class="pr-md-5">
-    <mat-card class="mat-elevation-z16 my-2">
+    <mat-card class="mat-mdc-elevation-specific mat-elevation-z4 my-2">
       <mat-card-header>
         <mat-card-title>Últimas Notificaciones</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        No hay notificaciones
+        <mat-list>
+          <mat-list-item>último inicio de sesión: {{mostrarUltimoInicioSesion() | date: 'dd/MMM/yyyy HH:mm:ss'}}</mat-list-item>
+        </mat-list>
       </mat-card-content>
     </mat-card>
-    <mat-card class="mat-elevation-z16 my-2">
+    <mat-card class="mat-mdc-elevation-specific mat-elevation-z4 my-2">
       <mat-card-header>
         <mat-card-title>Opciones</mat-card-title>
       </mat-card-header>

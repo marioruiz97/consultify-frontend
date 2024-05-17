@@ -50,7 +50,7 @@
   <div class="about-team mt-4">
     <h3 fxLayoutAlign="center">Equipo de Desarrollo</h3>
     <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap.gt-xs="25px">
-      <mat-card *ngFor="let person of equipo" class="mat-elevation-z8" fxFlex.lt-sm="100">
+      <mat-card *ngFor="let person of equipo" class="mat-mdc-elevation-specific mat-elevation-z4" fxFlex.lt-sm="100">
         <mat-card-header fxLayoutAlign="center">
           <mat-card-title>{{person.nombre}}</mat-card-title>
           <mat-card-subtitle> {{person.cargo}} </mat-card-subtitle>

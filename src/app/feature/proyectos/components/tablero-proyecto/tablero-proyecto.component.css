@@ -1,0 +1,43 @@
+mat-card.info-card> :first-child {
+  margin-top: -20px;
+  color: #fff;
+}
+
+mat-card.info-card h3 {
+  font-weight: 500;
+  text-align: center;
+}
+
+.card-title {
+  border-radius: 6px;
+}
+
+.boton-opciones {
+  min-width: 15vw;
+  text-align: center;
+  font-weight: 450;
+  border-radius: 5px;
+  padding: 36px 0;
+  margin: 10px 0px;
+}
+
+button.mat-mdc-list-item,
+button.mdc-list-item {
+  color: var(--darken-orange);
+  --mdc-list-list-item-label-text-color: var(--darken-orange);
+  --mdc-list-list-item-hover-label-text-color: var(--darken-orange);
+  --mdc-list-list-item-focus-label-text-color: var(--darken-orange);
+}
+
+.boton-opciones mat-icon {
+  font-size: 1.6rem;
+}
+
+h4.mat-mdc-list-item-line,
+h4.mdc-list-item__secondary-text {
+  color: black;
+}
+
+.font-12 {
+  font-size: 1.12em;
+}

@@ -1,4 +1,4 @@
 export interface Elemento {
   property: string;
-  data: any;
+  data: unknown;
 }

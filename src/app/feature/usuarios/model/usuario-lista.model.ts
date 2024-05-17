@@ -13,4 +13,5 @@ export interface UsuarioLista {
   estado: boolean;
   rol: Rol;
   creadoPor: string;
+  ultimoInicio: Date;
 }

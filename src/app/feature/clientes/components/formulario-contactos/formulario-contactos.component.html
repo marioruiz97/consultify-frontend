@@ -11,17 +11,22 @@
 
   <form [formGroup]="contactoForm" (ngSubmit)="onSubmit()">
     <mat-dialog-content fxLayout="column">
-      <mat-form-field>
+      <mat-form-field appearance="outline" class="mb-3">
         <mat-label>Nombre contacto</mat-label>
         <input type="text" matInput formControlName="nombreCompleto">
         <mat-hint>Ingrese nombre del contacto</mat-hint>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field appearance="outline" class="mb-3">
+        <mat-label>Cargo o Rol</mat-label>
+        <input type="text" matInput formControlName="cargo">
+        <mat-hint>Ingrese el cargo o rol del contacto</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="mb-3">
         <mat-label>Telefono</mat-label>
         <input type="tel" matInput formControlName="telefono">
         <mat-hint>Ingrese el teléfono (hasta 10 caracteres)</mat-hint>
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field appearance="outline" class="mb-3">
         <mat-label>Correo electrónico</mat-label>
         <input type="email" matInput formControlName="correo">
         <mat-hint>Ingrese el correo electrónico</mat-hint>
@@ -29,10 +34,10 @@
     </mat-dialog-content>
 
     <mat-dialog-actions class="my-4">
+      <button type="button" mat-button fxFlex [matDialogClose]="false">Cancelar</button>
       <button type="submit" mat-button fxFlex [disabled]="contactoForm.invalid" color="primary">
         Guardar Contacto
       </button>
-      <button type="button" mat-button fxFlex [matDialogClose]="false">Cancelar</button>
     </mat-dialog-actions>
   </form>
 </section>

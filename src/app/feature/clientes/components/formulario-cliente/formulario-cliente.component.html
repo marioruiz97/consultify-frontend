@@ -1,12 +1,12 @@
 <div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
 
-  <header class="m-2" gdArea="header" fxLayoutAlign="center center">
+  <header class="mb-2" gdArea="header" fxLayoutAlign="center center">
     <h1 fxFlex="50">{{ esEditar? 'Actualizar' : 'Crear'}} Cliente</h1>
   </header>
 
   <section gdArea="content" class="py-5 fondo-claro">
     <form autocomplete="off" [formGroup]="clienteForm" (ngSubmit)="guardarCliente()" fxLayoutAlign="center">
-      <mat-card class="mat-elevation-z16 p-4" fxFlex="80" fxFlex.lt-sm="100">
+      <mat-card class="mat-mdc-elevation-specific mat-elevation-z8 p-4" fxFlex="80" fxFlex.lt-sm="100">
         <mat-card-content class="p-2" fxLayout="column">
 
           <mat-form-field appearance="outline" class="form-input" fxFlex="30">
@@ -49,7 +49,7 @@
           </div>
           <mat-divider class="mt-4"></mat-divider>
           <h3 class="contact-header mt-2 mx-auto">Contactos</h3>
-          <button type="button" mat-mini-fab color="primary" (click)="agregarContacto()" fxFlexAlign="center">
+          <button type="button" mat-mini-fab color="primary" (click)="agregarContacto()" fxFlexAlign="center" matTooltip="Agregar Contacto">
             <mat-icon>add</mat-icon>
           </button>
 

@@ -1,0 +1,70 @@
+<section class="mb-5">
+
+  <h2>Proyectos</h2>
+
+  <mat-toolbar class="my-2 mb-5 mx-auto mat-mdc-elevation-specific mat-elevation-z2">
+    <mat-toolbar-row fxLayoutAlign="end">
+      <button mat-button color="accent" (click)="mostrarFiltros = !mostrarFiltros" class="my-auto">
+        <mat-icon>{{mostrarFiltros ? 'visibility_off' : 'visibility'}}</mat-icon>
+        {{mostrarFiltros ? 'Ocultar Filtros' : 'Mostrar Filtros' }}
+      </button>
+    </mat-toolbar-row>
+    <mat-toolbar-row *ngIf="mostrarFiltros">
+      <app-filter (filtrar)="filtrar($event)" (eliminarFiltros)="eliminarFiltros()" fxFlex></app-filter>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+
+  <div class="cards" fxLayout="row wrap" fxLayoutAlign="space-evenly start">
+    <mat-card class="mat-mdc-elevation-specific mat-elevation-z2 add-card mb-4" fxFlex.gt-xs="20" fxLayout="column" fxLayoutAlign="center center">
+      <button mat-fab color="primary" (click)="abrirFormulario()">
+        <mat-icon class="mat-18">add</mat-icon>
+      </button>
+      <h3 class="mt-2 add-project">Crear Proyecto</h3>
+    </mat-card>
+
+    <mat-card fxFlex.gt-xs="32" class="mb-4 mat-mdc-elevation-specific mat-elevation-z2" *ngFor="let pro of proyectosFiltrados | async">
+      <mat-card-header class="mb-2">
+        <mat-card-title class="my-auto">Proyecto {{pro.idProyecto + ' - ' + pro.nombreProyecto}}</mat-card-title>
+        <mat-card-subtitle>Fecha de Creacion: {{ pro.creadoEn | date: 'medium'}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+
+      <mat-card-content class="pt-3">
+        <h4 class="titulo">Descripción</h4>
+        <p>{{pro.descripcionProyecto}}</p>
+
+        <mat-list dense>
+          <h4 matListItemTitle>Información del cliente</h4>
+          <mat-list-item>
+            <div matListItemLine>
+              <span class="list-title">Identificación: </span>
+              <span>{{pro.clienteProyecto.tipoDocumento + ' - ' + pro.clienteProyecto.numeroIdentificacion}}</span>
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <div matListItemLine>
+              <span class="list-title">Nombre: </span>
+              <span>{{pro.clienteProyecto.nombreComercial}}</span>
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <div matListItemLine>
+              <span class="list-title">Razón social: </span>
+              <span>{{pro.clienteProyecto.razonSocial}}</span>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-icon-button matTooltip="Ir al dashboard" [routerLink]="['/proyectos/'+pro.idProyecto]">
+          <mat-icon>dashboard</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" matTooltip="Eliminar proyecto" (click)="eliminarProyecto(pro)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</section>

@@ -1,5 +1,5 @@
 <section fxLayout.lt-sm="column">
-  <div class="info-empresa mat-elevation-z4 py-4" fxFlex fxLayout="column" fxLayoutAlign="space-evenly center">
+  <div class="info-empresa mat-mdc-elevation-specific mat-elevation-z4 py-4" fxFlex fxLayout="column" fxLayoutAlign="space-evenly center">
     <h3>Asistencia Gerencial Estratégica</h3>
 
     <mat-list>
@@ -24,7 +24,7 @@
     </mat-list>
   </div>
 
-  <div class="form-contacto mat-elevation-z4 py-4" fxFlex>
+  <div class="form-contacto mat-mdc-elevation-specific mat-elevation-z4 py-4" fxFlex>
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center center">
       <h3 class="contacto-title">Ponte en contacto</h3>
 
@@ -60,7 +60,7 @@
         <mat-error>Mensaje es obligatorio</mat-error>
       </mat-form-field>
 
-      <button mat-button type="submit" class="px-3 py-1 mat-elevation-z4" [disabled]="contactForm.invalid">
+      <button mat-button type="submit" class="px-3 py-1 mat-mdc-elevation-specific mat-elevation-z4" [disabled]="contactForm.invalid">
         Enviar mensaje
       </button>
     </form>

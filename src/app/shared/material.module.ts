@@ -19,8 +19,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
-
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 
 
@@ -49,7 +53,12 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatSnackBarModule,
     MatSelectModule,
     MatExpansionModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressBarModule,
+    MatTabsModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatMomentDateModule
   ],
   exports: [
     MatToolbarModule,
@@ -69,7 +78,12 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatSnackBarModule,
     MatSelectModule,
     MatExpansionModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressBarModule,
+    MatTabsModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatMomentDateModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'es' },

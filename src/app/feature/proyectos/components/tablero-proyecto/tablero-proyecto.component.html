@@ -1,0 +1,99 @@
+<div class="mt-5 pt-5" *ngIf="!datosCargados" fxLayout="column" fxLayoutAlign="center center">
+  <mat-progress-bar class="py-2" mode="query"></mat-progress-bar>
+  <h3>Cargando Datos</h3>
+</div>
+
+<div gdAreas="info | dashboards" gdRows="auto auto" *ngIf="datosCargados">
+  <header gdArea="info" class="pt-5" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="space-evenly">
+
+    <mat-card fxFlex fxFlex.gt-sm="48" class="mb-5 px-3 pb-3 info-card mat-mdc-elevation-specific mat-elevation-z6"
+      *ngIf="cliente">
+      <div class="p-1 mat-mdc-elevation-specific mat-elevation-z4 card-title" style="background-color: #3b5998;">
+        <h3 class="my-2">Cliente: {{cliente.nombreComercial}}</h3>
+      </div>
+      <mat-card-content class="mt-4 p-sm-0" fxLayout="column" fxLayoutAlign="center center">
+        <div class="width-100 mb-3 font-12" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-evenly">
+          <p class="text-center">Razón Social <br /><span class="text-bold">{{cliente.razonSocial}}</span></p>
+          <p class="text-center">Identificación <br /> <span class="text-bold">{{
+              tipoDocumento(cliente.tipoDocumento) + ' : ' + cliente.numeroIdentificacion}}</span></p>
+        </div>
+        <mat-list>
+          <h3 matListItemTitle class="mb-1">Contactos</h3>
+          <mat-divider class="mb-3"></mat-divider>
+          <mat-list-item *ngFor="let contacto of cliente.contactos" class="mb-3">
+            <h4 matListItemLine class="mb-0">Nombre: {{contacto.nombreCompleto}}</h4>
+            <p matListItemLine>
+              <span>Correo: {{contacto.correo}},</span> <span class="ml-3">Teléfono: {{contacto.telefono}}</span>
+            </p>
+            <span matListItemMeta class="my-auto">Cargo: {{contacto.cargo}}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card fxFlex fxFlex.gt-sm="48" class="mb-5 px-3 pb-3 info-card mat-mdc-elevation-specific mat-elevation-z6"
+      *ngIf="proyecto">
+      <div class="p-1 mat-mdc-elevation-specific mat-elevation-z4 card-title" style="background-color: #ff0000;">
+        <h3 class="my-2">Proyecto</h3>
+      </div>
+      <mat-card-content class="mt-5 font-12" fxLayout="column" fxLayoutAlign="center center">
+        <span>Nombre:</span>
+        <span class="text-bold mb-4">{{proyecto.nombreProyecto }}</span>
+        <span>Fecha de Inicio:</span>
+        <span class="text-bold mb-4">{{ proyecto.creadoEn | date: 'medium'}}</span>
+        <span>Descripción:</span>
+        <p class="mb-3">{{proyecto.descripcionProyecto}}</p>
+      </mat-card-content>
+    </mat-card>
+  </header>
+
+  <mat-tab-group gdArea="dashboards" mat-stretch-tabs>
+    <mat-tab label="Información del Proyecto">
+
+      <mat-drawer-container class="mt-3 h-50">
+        <mat-drawer #aside class="sidenav" role="directory" mode="side">
+          <!-- opciones del dashboard -->
+          <mat-action-list>
+            <button class="boton-opciones" color="darken-orange" mat-list-item (click)="abrirGestionarMiembro()">
+              <mat-icon>person_add</mat-icon><br />
+              <span>Gestionar Miembros</span>
+            </button>
+            <button class="boton-opciones" color="darken-orange" mat-list-item (click)="abrirEditarFormulario()">
+              <mat-icon>edit</mat-icon><br />
+              <span>Editar Proyecto</span>
+            </button>
+            <button class="boton-opciones" color="darken-orange" mat-list-item (click)="abrirCambiarEstado()">
+              <mat-icon>swap_horiz</mat-icon><br />
+              <span>Cambiar Estado Proyecto</span>
+            </button>
+          </mat-action-list>
+        </mat-drawer>
+
+        <mat-drawer-content class="pl-2">
+
+          <button mat-button (click)="aside.toggle()" [color]="aside.opened ? '' : 'darken-orange'"
+            [matTooltip]="aside.opened ? 'Cerrar' : 'Abrir'">
+            <mat-icon matIconPrefix class="my-auto">
+              {{ aside.opened ? 'keyboard_arrow_left' : 'keyboard_arrow_right'}}
+            </mat-icon>
+            <span class="my-auto">{{aside.opened ? 'Cerrar menú lateral' : 'Abrir menú lateral'}}</span>
+          </button>
+
+          <div class="row my-3" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px"
+            fxLayoutAlign.gt-sm="space-evenly">
+            <app-miembros-proyecto fxFlex.gt-sm="49"></app-miembros-proyecto>
+            <app-notificaciones-proyecto fxFlex.gt-sm="49"></app-notificaciones-proyecto>
+          </div>
+
+          <!-- <app-proximas-actividades class="row mb-3"></app-proximas-actividades> -->
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </mat-tab>
+
+    <!-- fin widgets - otros componentes -->
+    <mat-tab label="Tablero de Actividades">
+      Actividades
+    </mat-tab>
+  </mat-tab-group>
+
+</div>

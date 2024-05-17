@@ -1,0 +1,45 @@
+<h3 class="mat-h1 mx-auto text-center mt-3" *ngIf="mostrarTitulo">Tus proyectos a tu alcance</h3>
+
+<div class="cards" fxLayout="row wrap" fxLayoutAlign="space-evenly start">
+  <mat-card fxFlex.gt-xs="32" class="mb-4 mat-mdc-elevation-specific mat-mdc-elevation-specific mat-elevation-z8"
+    *ngFor="let pro of misProyectos | async">
+    <mat-card-header class="mb-2">
+      <mat-card-title class="my-auto">Proyecto {{pro.idProyecto + ' - ' + pro.nombreProyecto}}</mat-card-title>
+      <mat-card-subtitle>Fecha de Creacion: {{ pro.creadoEn | date: 'medium'}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+
+    <mat-card-content class="pt-3">
+      <h4 class="titulo">Descripción</h4>
+      <p>{{pro.descripcionProyecto}}</p>
+
+      <mat-list dense>
+        <h4 matListItemTitle>Información del cliente</h4>
+        <mat-list-item>
+          <div matListItemLine>
+            <span class="list-title">Identificación: </span>
+            <span>{{pro.clienteProyecto.tipoDocumento + ' - ' + pro.clienteProyecto.numeroIdentificacion}}</span>
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <div matListItemLine>
+            <span class="list-title">Nombre: </span>
+            <span>{{pro.clienteProyecto.nombreComercial}}</span>
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <div matListItemLine>
+            <span class="list-title">Razón social: </span>
+            <span>{{pro.clienteProyecto.razonSocial}}</span>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button class="darken-orange" mat-button [routerLink]="['/proyectos/'+pro.idProyecto]">
+        <mat-icon>dashboard</mat-icon> Ir al tablero
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

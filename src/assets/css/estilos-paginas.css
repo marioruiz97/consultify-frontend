@@ -3,12 +3,21 @@ h2.h2-verde {
   color: #126961;
 }
 
+button.mat-darken-orange {
+  color: var(--darken-orange);
+  --mdc-text-button-label-text-color: var(--darken-orange);
+}
+
 .text-center {
   text-align: center;
 }
 
 .h-50 {
   min-height: 50vh;
+}
+
+.width-100 {
+  min-width: 100%;
 }
 
 .rounded {

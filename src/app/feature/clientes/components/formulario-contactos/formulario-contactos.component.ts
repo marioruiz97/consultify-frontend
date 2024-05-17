@@ -31,6 +31,7 @@ export class FormularioContactosComponent {
   private initForm() {
     return new FormGroup({
       nombreCompleto: new FormControl('', [Validators.required, Validators.maxLength(120)]),
+      cargo: new FormControl('', [Validators.required, Validators.maxLength(64)]),
       telefono: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.pattern(AppConstants.PATRON_TELEFONO)]),
       correo: new FormControl('', [Validators.required, Validators.email]),
     });
@@ -40,6 +41,7 @@ export class FormularioContactosComponent {
     this.esEditar = true;
     this.contactoForm.setValue({
       nombreCompleto: data.nombreCompleto,
+      cargo: data.cargo,
       telefono: data.telefono,
       correo: data.correo
     });

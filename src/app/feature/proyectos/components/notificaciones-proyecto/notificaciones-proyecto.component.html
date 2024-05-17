@@ -1,0 +1,21 @@
+<mat-card class="mat-mdc-elevation-specific mat-elevation-z3">
+  <mat-card-header>
+    <mat-icon matCardAvatar class="pt-1 pl-1">info</mat-icon>
+    <mat-card-title class="pt-1 pl-1">Últimas Notificaciones</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+
+      <mat-list-item *ngIf="notificaciones.length === 0">
+        <mat-icon matListItemIcon>message</mat-icon>
+        <p matListItemLine>No hay notificaciones de actividades recientes</p>
+      </mat-list-item>
+
+      <mat-list-item *ngFor="let item of notificaciones">
+        <mat-icon matListItemIcon [ngClass]="item.color">message</mat-icon>
+        <p matListItemLine>{{item.mensaje}}</p>
+      </mat-list-item>
+
+    </mat-list>
+  </mat-card-content>
+</mat-card>
