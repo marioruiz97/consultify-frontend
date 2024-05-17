@@ -12,7 +12,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UsuariosModule } from './feature/usuarios/usuarios.module';
 import { ClientesModule } from './feature/clientes/clientes.module';
 import { ProyectosModule } from './feature/proyectos/proyectos.module';
-import { HomeComponent } from './feature/home/home.component';
+import { HomeComponent } from './feature/otros/home/home.component';
+import { ActividadesModule } from './feature/actividades/actividades.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HomeComponent } from './feature/home/home.component';
     AutenticacionModule,
     UsuariosModule,
     ClientesModule,
-    ProyectosModule
+    ProyectosModule,
+    ActividadesModule
   ],
   providers: [],
   bootstrap: [AppComponent]
