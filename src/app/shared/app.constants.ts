@@ -14,6 +14,7 @@ export class AppConstants {
   public static readonly RUTA_CONTACTO = 'contactenos';
   public static readonly RUTA_ACERCA = 'acerca';
   public static readonly RUTA_MIS_PROYECTOS = 'mis-proyectos';
+  public static readonly RUTA_ACTIVIDADES = 'proyectos/{idProyecto}/actividades';
 
   // PATRONES
   public static readonly PATRON_CONTRASENA = '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,16}';

@@ -3,10 +3,10 @@ import { ResponsableActividad } from "./responsable-actividad.model";
 
 export interface Actividad {
   id: number;
-  titulo: string;
+  nombre: string;
   descripcion: string;
-  responsable: ResponsableActividad;
-  fechaVencimiento: Date;
   estado: EstadoActividad;
-  comentarios: string[];
+  fechaCierreEsperado: Date;
+  responsable: ResponsableActividad;
+  seguimiento: string[];
 }

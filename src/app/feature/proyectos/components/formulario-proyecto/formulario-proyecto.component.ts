@@ -52,16 +52,14 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
     if (clienteFormControl) {
       this.filteredClientes = clienteFormControl.valueChanges.pipe(
         startWith(''),
-        map(formValue => {
-          const cliente = typeof formValue === 'string' ? formValue : formValue.nombreComercial;
-          return cliente ? this._filter(cliente as string) : this.clientes.slice();
-        })
+        map(valorFormulario => typeof valorFormulario === 'string' ? valorFormulario : valorFormulario.nombreComercial),
+        map(cliente => cliente ? this._filter(cliente as string) : this.clientes.slice())
       );
     }
   }
 
   mostrarClienteFn(cliente: Cliente): string {
-    return cliente && cliente.nombreComercial ? `${cliente.idCliente} - ${cliente.nombreComercial}` : '';
+    return cliente && cliente.nombreComercial ? `${cliente.idCliente} - ${cliente.razonSocial} - ${cliente.nombreComercial}` : '';
   }
 
   private _filter(value: string): Cliente[] {

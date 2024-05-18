@@ -13,7 +13,6 @@ import { UsuariosModule } from './feature/usuarios/usuarios.module';
 import { ClientesModule } from './feature/clientes/clientes.module';
 import { ProyectosModule } from './feature/proyectos/proyectos.module';
 import { HomeComponent } from './feature/otros/home/home.component';
-import { ActividadesModule } from './feature/actividades/actividades.module';
 
 @NgModule({
   declarations: [
@@ -31,8 +30,7 @@ import { ActividadesModule } from './feature/actividades/actividades.module';
     AutenticacionModule,
     UsuariosModule,
     ClientesModule,
-    ProyectosModule,
-    ActividadesModule
+    ProyectosModule
   ],
   providers: [],
   bootstrap: [AppComponent]
