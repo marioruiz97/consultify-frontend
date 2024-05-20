@@ -8,5 +8,4 @@ export interface Actividad {
   estado: EstadoActividad;
   fechaCierreEsperado: Date;
   responsable: ResponsableActividad;
-  seguimiento: string[];
 }

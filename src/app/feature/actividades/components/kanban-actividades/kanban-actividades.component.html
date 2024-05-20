@@ -1,1 +1,39 @@
-<p>kanban-actividades works!</p>
+<div class="text-center my-4">
+  <button mat-fab color="primary" (click)="abrirCrearActividad()" matTooltip="Crear nueva actividad">
+    <mat-icon class="mat-18">add</mat-icon>
+  </button>
+</div>
+
+<div>
+  <div fxFlex></div>
+  <button mat-button color="accent" (click)="resetColumnas()" *ngIf="mostrarReset">
+    <mat-icon class="mat-18">restart_alt</mat-icon> Mostrar todas las columnas
+  </button>
+</div>
+
+<div class="kanban-board my-4 px-1" fxLayout="row" fxLayoutGap="4px">
+
+  <div *ngFor="let column of columnas" [fxHide]="column.oculta" [fxFlex]="column.ancho"
+    class="mat-mdc-elevation-specific mat-elevation-z5 pt-3 kanban-column">
+
+    <div class="pl-2 pr-1 mb-3">
+      <h2 [matBadge]="column.actividades.length" matBadgePosition="above after">
+        {{ column.titulo }}
+      </h2>
+      <div fxFlex></div>
+      <button mat-icon-button (click)="toggleExpand(column)"
+        [matTooltip]="column.isExpanded ? 'Retraer Columna' : 'Expandir Columna'">
+        <mat-icon class="expand-icon">{{column.isExpanded ? 'fullscreen_exit' : 'fullscreen'}}</mat-icon>
+      </button>
+      <button mat-icon-button (click)="toggleHide(column)" matTooltip="Ocultar Columna" *ngIf="!column.isExpanded">
+        <mat-icon class="hide-icon">visibility_off</mat-icon>
+      </button>
+    </div>
+
+
+    <mat-card *ngFor="let activity of column.actividades">
+      {{ activity.nombre }}
+    </mat-card>
+
+  </div>
+</div>

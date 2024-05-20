@@ -16,6 +16,7 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
 
   miembroForm: FormGroup;
   miembros: MiembroProyecto[] = [];
+  noHayPosiblesMiembros = false;
 
   private usuarios: MiembroProyecto[] = [];
   filteredUsuarios: Observable<MiembroProyecto[]> = of(this.usuarios);
@@ -64,7 +65,10 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
 
   obtenerPosiblesMiembros() {
     this.subs.push(
-      this.tableroService.obtenerPosiblesMiembros().subscribe(usuarios => this.usuarios = usuarios)
+      this.tableroService.obtenerPosiblesMiembros().subscribe(usuarios => {
+        this.usuarios = usuarios;
+        this.noHayPosiblesMiembros = usuarios.length < 1;
+      })
     );
   }
 

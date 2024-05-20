@@ -21,6 +21,9 @@
       </mat-list>
 
 
+      <h4 class="text-center mb-2" *ngIf="noHayPosiblesMiembros">
+        *No hay mas usuarios o posibles miembros por agregar*
+      </h4>
       <form [formGroup]="miembroForm" (ngSubmit)="agregarMiembro()" fxLayout="column">
 
         <mat-form-field class="mb-3 mx-auto" appearance="outline">

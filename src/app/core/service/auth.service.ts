@@ -41,7 +41,7 @@ export class AuthService {
     if (!token) return true;
     const payload = token.jwt ? JSON.parse(atob(token.jwt.split('.')[1])) : null;
     const now = new Date().getTime() / 1000;
-    return payload === null || payload.exp < now ? true : false;
+    return payload === null || payload.exp < now;
   }
 
   verificarSesion(): boolean {

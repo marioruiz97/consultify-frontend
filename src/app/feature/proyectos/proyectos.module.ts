@@ -12,6 +12,7 @@ import { TableroProyectoService } from './service/tablero-proyecto.service';
 import { MiembrosProyectoComponent } from './components/miembros-proyecto/miembros-proyecto.component';
 import { NotificacionesProyectoComponent } from './components/notificaciones-proyecto/notificaciones-proyecto.component';
 import { GestionarMiembrosProyectoComponent } from './components/gestionar-miembros-proyecto/gestionar-miembros-proyecto.component';
+import { ActividadesModule } from '../actividades/actividades.module';
 
 
 
@@ -29,7 +30,8 @@ import { GestionarMiembrosProyectoComponent } from './components/gestionar-miemb
   imports: [
     AppRoutingModule,
     CommonModule,
-    SharedModule
+    SharedModule,
+    ActividadesModule
   ],
   exports: [MisProyectosComponent],
   providers: [

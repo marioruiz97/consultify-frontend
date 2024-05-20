@@ -1,0 +1,4 @@
+.kanban-board,
+.kanban-column {
+  transition: flex 0.3s ease;
+}

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { KanbanActividadesComponent } from './components/kanban-actividades/kanban-actividades.component';
+import { GestorActividadesService } from './service/gestor-actividades.service';
 
 
 
@@ -14,6 +15,8 @@ import { KanbanActividadesComponent } from './components/kanban-actividades/kanb
     AppRoutingModule,
     CommonModule,
     SharedModule
-  ]
+  ],
+  exports: [KanbanActividadesComponent],
+  providers: [GestorActividadesService]
 })
 export class ActividadesModule { }

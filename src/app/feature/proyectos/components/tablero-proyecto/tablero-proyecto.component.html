@@ -8,18 +8,28 @@
 
     <mat-card fxFlex fxFlex.gt-sm="48" class="mb-5 px-3 pb-3 info-card mat-mdc-elevation-specific mat-elevation-z6"
       *ngIf="cliente">
+
       <div class="p-1 mat-mdc-elevation-specific mat-elevation-z4 card-title" style="background-color: #3b5998;">
         <h3 class="my-2">Cliente: {{cliente.nombreComercial}}</h3>
       </div>
+
       <mat-card-content class="mt-4 p-sm-0" fxLayout="column" fxLayoutAlign="center center">
+
         <div class="width-100 mb-3 font-12" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-evenly">
           <p class="text-center">Razón Social <br /><span class="text-bold">{{cliente.razonSocial}}</span></p>
           <p class="text-center">Identificación <br /> <span class="text-bold">{{
               tipoDocumento(cliente.tipoDocumento) + ' : ' + cliente.numeroIdentificacion}}</span></p>
         </div>
+
         <mat-list>
           <h3 matListItemTitle class="mb-1">Contactos</h3>
           <mat-divider class="mb-3"></mat-divider>
+
+          <div *ngIf="!cliente.contactos || cliente.contactos.length===0">
+            <h4>El cliente no tiene contactos asociados.</h4>
+            <span class="mat-caption">Puedes agregarlos en la pantalla de clientes</span>
+          </div>
+
           <mat-list-item *ngFor="let contacto of cliente.contactos" class="mb-3">
             <h4 matListItemLine class="mb-0">Nombre: {{contacto.nombreCompleto}}</h4>
             <p matListItemLine>
@@ -92,7 +102,7 @@
 
     <!-- fin widgets - otros componentes -->
     <mat-tab label="Tablero de Actividades">
-      Actividades
+      <app-kanban-actividades></app-kanban-actividades>
     </mat-tab>
   </mat-tab-group>
 
