@@ -14,6 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
@@ -50,6 +51,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatDividerModule,
     MatDialogModule,
     MatPaginatorModule,
+    MatSortModule,
     MatTableModule,
     MatSnackBarModule,
     MatSelectModule,
@@ -76,6 +78,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatDividerModule,
     MatDialogModule,
     MatPaginatorModule,
+    MatSortModule,
     MatTableModule,
     MatSnackBarModule,
     MatSelectModule,

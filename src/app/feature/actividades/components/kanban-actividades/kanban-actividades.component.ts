@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Actividad } from '../../model/actividad.model';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { GestorActividadesService } from '../../service/gestor-actividades.service';
 import { Columna } from '../../model/columna-kanban.model';
+import { TableroProyectoService } from 'src/app/feature/proyectos/service/tablero-proyecto.service';
+import { EstadoActividad } from '../../model/estado-actividad.model';
+import { ResponsableActividad } from '../../model/responsable-actividad.model';
 
 @Component({
   selector: 'app-kanban-actividades',
@@ -11,28 +14,43 @@ import { Columna } from '../../model/columna-kanban.model';
 })
 export class KanbanActividadesComponent implements OnInit, OnDestroy {
 
-  actividadesPorHacer: Actividad[] = [];
-  actividadesEnCurso: Actividad[] = [];
-  actividadesEnRevision: Actividad[] = [];
-  actividadesCompletadas: Actividad[] = [];
+  actividadesPorHacer: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
+  actividadesEnProgreso: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
+  actividadesEnRevision: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
+  actividadesCompletadas: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
 
   mostrarReset = false;
   columnas: Columna[] = [
-    { titulo: 'Por Hacer', actividades: this.actividadesPorHacer, oculta: false, prev: false, isExpanded: false, ancho: '25' },
-    { titulo: 'En Curso', actividades: this.actividadesEnCurso, oculta: false, prev: false, isExpanded: false, ancho: '25' },
-    { titulo: 'En Revisión', actividades: this.actividadesEnRevision, oculta: false, prev: false, isExpanded: false, ancho: '25' },
-    { titulo: 'Completada', actividades: this.actividadesCompletadas, oculta: false, prev: false, isExpanded: false, ancho: '25' }
+    { titulo: 'Por Hacer', actividades: this.actividadesPorHacer, oculta: false, prev: false, isExpanded: false, ancho: '25', claseCss: 'por-hacer' },
+    { titulo: 'En Progreso', actividades: this.actividadesEnProgreso, oculta: false, prev: false, isExpanded: false, ancho: '25', claseCss: 'en-progreso' },
+    { titulo: 'En Revisión', actividades: this.actividadesEnRevision, oculta: false, prev: false, isExpanded: false, ancho: '25', claseCss: 'en-revision' },
+    { titulo: 'Completada', actividades: this.actividadesCompletadas, oculta: false, prev: false, isExpanded: false, ancho: '25', claseCss: 'completada' }
   ];
 
   private subs: Subscription[] = [];
 
+  mostrarNombreCompleto = (responsable: ResponsableActividad): string => {
+    responsable.nombresCompletos = responsable.nombres + ' ' + responsable.apellidos;
+    return responsable.nombresCompletos;
+  };
 
   constructor(
-    private actividadService: GestorActividadesService
+    private actividadService: GestorActividadesService,
+    private tableroservice: TableroProyectoService
   ) { }
 
   ngOnInit(): void {
-    console.log('on init kanban');
+    this.subs.push(
+      this.tableroservice.tableroActual.subscribe(tablero => {
+        if (tablero) {
+          const todas = tablero.actividades;
+          this.actividadesPorHacer.next(todas.filter(actividad => actividad.estado == EstadoActividad.POR_HACER));
+          this.actividadesEnProgreso.next(todas.filter(actividad => actividad.estado == EstadoActividad.EN_PROGRESO));
+          this.actividadesEnRevision.next(todas.filter(actividad => actividad.estado == EstadoActividad.EN_REVISION));
+          this.actividadesCompletadas.next(todas.filter(actividad => actividad.estado == EstadoActividad.COMPLETADA));
+        }
+      })
+    );
   }
 
   /**

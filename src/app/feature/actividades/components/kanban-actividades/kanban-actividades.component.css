@@ -2,3 +2,68 @@
 .kanban-column {
   transition: flex 0.3s ease;
 }
+
+p.y-center {
+  vertical-align: middle;
+}
+
+.kanban-column {
+  border-radius: 5px;
+}
+
+.column-title {
+  color: white;
+}
+
+.mat-badge-content {
+  right: -15px !important;
+  background-color: white;
+  color: black;
+}
+
+.por-hacer {
+  border-left: 4px solid var(--deep-blue);
+  border-top: 4px solid var(--deep-blue);
+}
+
+.por-hacer .column-title {
+  background-color: var(--deep-blue);
+}
+
+.en-progreso {
+  border-left: 4px solid #8cd500;
+  border-top: 4px solid #8cd500;
+}
+
+.en-progreso .column-title {
+  background-color: #8cd500;
+}
+
+.en-revision {
+  border-left: 4px solid var(--darken-orange);
+  border-top: 4px solid var(--darken-orange);
+}
+
+.en-revision .column-title {
+  background-color: var(--darken-orange);
+}
+
+.completada {
+  border-left: 4px solid #05a60d;
+  border-top: 4px solid #05a60d;
+}
+
+.completada .column-title {
+  background-color: #05a60d;
+}
+
+.fecha-vencimiento {
+  font-size: 12px;
+  letter-spacing: 0.001em;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.weight-500 {
+  font-weight: 500;
+}

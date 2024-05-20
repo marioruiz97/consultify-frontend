@@ -39,7 +39,7 @@
           <td mat-cell *matCellDef="let doc" fxHide.lt-md>{{doc.telefono}}</td>
         </ng-container>
         <ng-container matColumnDef="rol">
-          <th mat-header-cell *matHeaderCellDef fxHide.lt-md> Rol</th>
+          <th mat-header-cell *matHeaderCellDef fxHide.lt-md mat-sort-header> Rol</th>
           <td mat-cell *matCellDef="let doc" fxHide.lt-md>{{mostrarRol(doc.rol)}}</td>
         </ng-container>
         <ng-container matColumnDef="estado">
@@ -47,7 +47,7 @@
           <td mat-cell *matCellDef="let doc" fxHide.lt-md>{{doc.estado? 'Activo':'Inactivo'}}</td>
         </ng-container>
         <ng-container matColumnDef="creadoPor">
-          <th mat-header-cell *matHeaderCellDef fxHide.lt-md> Creado Por</th>
+          <th mat-header-cell *matHeaderCellDef fxHide.lt-md mat-sort-header> Creado Por</th>
           <td mat-cell *matCellDef="let doc" fxHide.lt-md>{{doc.creadoPor}}</td>
         </ng-container>
 

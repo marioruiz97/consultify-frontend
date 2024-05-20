@@ -1,10 +1,12 @@
+import { BehaviorSubject } from "rxjs";
 import { Actividad } from "./actividad.model";
 
 export interface Columna {
   titulo: string;
-  actividades: Actividad[];
+  actividades: BehaviorSubject<Actividad[]>;
   oculta: boolean;
   prev: boolean;
   isExpanded: boolean;
   ancho: string;
+  claseCss: string;
 }

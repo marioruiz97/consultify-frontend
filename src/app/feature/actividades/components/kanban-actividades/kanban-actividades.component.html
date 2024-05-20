@@ -11,13 +11,13 @@
   </button>
 </div>
 
-<div class="kanban-board my-4 px-1" fxLayout="row" fxLayoutGap="4px">
+<div class="kanban-board my-4 px-2" fxLayout="row" fxLayoutGap="8px">
 
   <div *ngFor="let column of columnas" [fxHide]="column.oculta" [fxFlex]="column.ancho"
-    class="mat-mdc-elevation-specific mat-elevation-z5 pt-3 kanban-column">
+    class="mat-mdc-elevation-specific mat-elevation-z5 kanban-column" [ngClass]="column.claseCss">
 
-    <div class="pl-2 pr-1 mb-3">
-      <h2 [matBadge]="column.actividades.length" matBadgePosition="above after">
+    <div class="pl-2 pr-1 pt-3 mb-3 column-title">
+      <h2 class="column-title-h2" [matBadge]="(column.actividades | async)?.length" matBadgePosition="above after">
         {{ column.titulo }}
       </h2>
       <div fxFlex></div>
@@ -31,8 +31,19 @@
     </div>
 
 
-    <mat-card *ngFor="let activity of column.actividades">
-      {{ activity.nombre }}
+    <mat-card class="m-2" *ngFor="let activity of column.actividades | async">
+      <mat-card-title class="mat-h3 weight-500 pl-2">
+        {{ activity.nombre }}
+      </mat-card-title>
+      <mat-card-content class="pb-2">
+        <p>{{activity.descripcion}}</p>
+        <p class="y-center">
+          <span class="fecha-vencimiento">Vence en: {{activity.fechaCierreEsperado | date: 'dd MMM yyyy'}}</span>
+          <span fxFlex></span>
+          <ngx-avatars [size]="25" [name]="mostrarNombreCompleto(activity.responsable)"
+            [matTooltip]="'Asignado a: ' + activity.responsable.nombresCompletos"></ngx-avatars>
+        </p>
+      </mat-card-content>
     </mat-card>
 
   </div>
