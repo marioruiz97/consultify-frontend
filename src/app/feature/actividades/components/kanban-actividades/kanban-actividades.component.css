@@ -1,3 +1,11 @@
+.botonera button {
+  font-size: 15px;
+}
+
+.botonera mat-form-field {
+  min-width: 40%;
+}
+
 .kanban-board,
 .kanban-column {
   transition: flex 0.3s ease;
