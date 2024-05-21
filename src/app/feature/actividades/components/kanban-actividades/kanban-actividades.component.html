@@ -45,10 +45,13 @@
     </div>
 
 
-    <mat-card class="m-2 mat-mdc-elevation-specific mat-elevation-z2" *ngFor="let activity of column.actividades | async">
+    <mat-card class="m-2 mat-mdc-elevation-specific mat-elevation-z2"
+      *ngFor="let activity of column.actividades | async">
+
       <mat-card-title class="mat-h3 weight-500 pl-2">
         {{ activity.nombre }}
       </mat-card-title>
+
       <mat-card-content class="pb-0">
         <p class="y-center">
           <ngx-avatars [size]="25" [name]="mostrarNombreCompleto(activity.responsable)"
@@ -56,17 +59,29 @@
           <span fxFlex></span>
           <span class="fecha-vencimiento">Vence en: {{activity.fechaCierreEsperado | date: 'dd MMM yyyy'}}</span>
         </p>
+
         <p>{{activity.descripcion}}</p>
+
         <p class="y-center">
           <span fxFlex></span>
-          <button mat-icon-button type="button" color="primary" matTooltip="Editar Actividad"
-            (click)="abrirEditarActividad(activity)" class="p-0">
-            <mat-icon>edit</mat-icon>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu Actividad"
+            matTooltip="Abrir menú de opciones">
+            <mat-icon>more_vert</mat-icon>
           </button>
-          <button mat-icon-button type="button" color="accent" matTooltip="Eliminar Actividad"
-            (click)="eliminarActividad(activity)" class="p-0">
-            <mat-icon>delete</mat-icon>
-          </button>
+          <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
+            <button mat-menu-item type="button" [routerLink]="['actividades/'+activity.id]">
+              <mat-icon>open_in_new</mat-icon>
+              <span class="weight-500">Gestionar Actividad</span>
+            </button>
+            <button mat-menu-item type="button" (click)="abrirEditarActividad(activity)">
+              <mat-icon color="primary">edit</mat-icon>
+              <span class="weight-500">Editar Campos</span>
+            </button>
+            <button mat-menu-item type="button" (click)="eliminarActividad(activity)">
+              <mat-icon color="warn">delete</mat-icon>
+              <span class="weight-500">Eliminar Actividad</span>
+            </button>
+          </mat-menu>
         </p>
       </mat-card-content>
     </mat-card>

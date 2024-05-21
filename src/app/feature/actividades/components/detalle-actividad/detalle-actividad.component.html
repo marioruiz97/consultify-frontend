@@ -1,0 +1,24 @@
+<section class="container">
+
+  <div class="row my-3 ml-3">
+    <button type="button" mat-button [routerLink]="volver()" color="accent">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Volver al proyecto</span>
+    </button>
+  </div>
+
+  <div class="row my-3 ml-3">
+    <h2 class="mat-h2">Actividad #{{actividad.id}}: {{actividad.nombre}}</h2>
+  </div>
+
+  <div class="content" fxLayout fxLayout.lt-md="column" fxLayoutGap="8px">
+    <mat-card class="m-2 p-2" fxFlex>
+      <mat-card-title class="pl-2 mat-h2">Detalles</mat-card-title>
+    </mat-card>
+
+    <aside class="m-2" fxFlex>
+      <h3 class="mat-h2 pl-2">Seguimiento</h3>
+    </aside>
+  </div>
+
+</section>

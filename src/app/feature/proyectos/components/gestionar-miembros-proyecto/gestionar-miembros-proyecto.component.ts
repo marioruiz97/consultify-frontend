@@ -101,10 +101,7 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
 
   agregarMiembro() {
     this.tableroService.agregarMiembro(this.miembroForm.value)
-      .then(exito => {
-        if (exito) this.miembroForm.reset();
-        this.obtenerPosiblesMiembros();
-      });
+      .then(() => this.obtenerPosiblesMiembros());
   }
 
   ngOnDestroy(): void {

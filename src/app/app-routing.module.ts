@@ -14,6 +14,7 @@ import { ListaClientesComponent } from './feature/clientes/components/lista-clie
 import { FormularioClienteComponent } from './feature/clientes/components/formulario-cliente/formulario-cliente.component';
 import { ListaProyectosComponent } from './feature/proyectos/components/lista-proyectos/lista-proyectos.component';
 import { TableroProyectoComponent } from './feature/proyectos/components/tablero-proyecto/tablero-proyecto.component';
+import { DetalleActividadComponent } from './feature/actividades/components/detalle-actividad/detalle-actividad.component';
 
 const routes: Routes = [
   // módulos generales
@@ -35,7 +36,8 @@ const routes: Routes = [
 
   // proyectos
   { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent },
-  { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent }
+  { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent },
+  { path: `${rutas.RUTA_PROYECTOS}/:id/actividades/:id`, component: DetalleActividadComponent }
 
 ];
 
