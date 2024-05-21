@@ -56,12 +56,12 @@ export class TableroProyectoComponent {
 
   abrirGestionarMiembro() {
     const data = this.proyecto?.miembros;
-    this.dialog.open(GestionarMiembrosProyectoComponent, { data, ...customConfig('80vw', '60vh') });
+    this.dialog.open(GestionarMiembrosProyectoComponent, { data, ...customConfig('50vw', '60vh') });
   }
 
   abrirEditarFormulario() {
     const data = this.infoTablero?.infoProyecto;
-    const dialogRef = this.dialog.open(FormularioProyectoComponent, { data, ...customConfig('80vw'), disableClose: true });
+    const dialogRef = this.dialog.open(FormularioProyectoComponent, { data, ...customConfig('60vw'), disableClose: true });
     this.subs.push(dialogRef.afterClosed().subscribe(recargar => { if (recargar) this.servicioTablero.obtenerTablero(this.idProyecto) }));
   }
 

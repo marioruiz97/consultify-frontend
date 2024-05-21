@@ -1,0 +1,88 @@
+<section class="container">
+
+  <div>
+    <h2 matDialogTitle>{{esEditar? 'Editar' : 'Crear'}} Actividad</h2>
+    <div fxFlex></div>
+    <button mat-icon-button (click)="cancelar()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+
+  <span mat-subheader class="pl-5">Los campos con * son obligatorios</span>
+
+  <form autocomplete="off" [formGroup]="actividadForm" (ngSubmit)="guardarActividad()" class="mt-2 px-5"
+    fxLayout="column" fxLayoutAlign="center">
+
+    <div class="form-group" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Nombre actividad</mat-label>
+        <input matInput formControlName="nombre">
+        <mat-hint> Máximo 100 caracteres / actual:{{actividadForm.value.nombre.length}} </mat-hint>
+        <mat-error>Ingrese un nombre válido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Asignado a</mat-label>
+        <input type="text" matInput [matAutocomplete]="auto" formControlName="responsable">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="mostrarResponsableFn">
+          <mat-option *ngFor="let responsable of filteredMiembros | async" [value]="responsable.usuario">
+            <span>
+              {{responsable.usuario.nombres + ' ' + responsable.usuario.apellidos + ' - ' + responsable.usuario.correo}}
+            </span>
+          </mat-option>
+        </mat-autocomplete>
+        <mat-hint>Busca por nombre o correo</mat-hint>
+        <mat-error>El responsable es obligatorio</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
+      <mat-form-field appearance="outline" class="form-input" fxFlex>
+        <mat-label>Estado de Actividad</mat-label>
+        <mat-select formControlName="estado">
+          <mat-option [value]="estado.key" *ngFor="let estado of estados | keyvalue">{{estado.value}}</mat-option>
+        </mat-select>
+        <mat-hint>Seleccione un estado de actividad</mat-hint>
+        <mat-error>El estado es obligatorio</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Fecha esperada para el cierre</mat-label>
+        <input matInput [min]="minDate" [matDatepicker]="fechaCierre" formControlName="fechaCierreEsperado">
+        <mat-datepicker-toggle matSuffix [for]="fechaCierre"></mat-datepicker-toggle>
+        <mat-datepicker #fechaCierre></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" fxLayoutAlign="center">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Descripción de la actividad</mat-label>
+        <textarea matInput formControlName="descripcion"></textarea>
+        <mat-icon matPrefix>message</mat-icon>
+        <mat-hint>
+          Ingresa una descripción que permita identificar el propósito de la actividad
+          <br />Máximo 254 caracteres / actual:{{actividadForm.value.descripcion.length}}
+        </mat-hint>
+      </mat-form-field>
+    </div>
+
+    <p class="invalid-form pt-4" *ngIf="actividadForm.invalid">**El formulario posee errores, verifica los campos.</p>
+    <div class="invalid-form" *ngIf="actividadForm.invalid">
+      <h4 class="mx-0">Campos con errores:</h4>
+      <ul style="list-style: none;">
+        <li *ngFor="let campo of mostrarErrores()">{{campo}}</li>
+      </ul>
+    </div>
+
+    <mat-dialog-actions class="mt-4 pb-3" fxLayoutAlign="center" fxLayout.lt-sm="column">
+      <button class="m-2" type="button" mat-raised-button (click)="cancelar()" color="warn">
+        <mat-icon>arrow_back</mat-icon> Cancelar
+      </button>
+      <button class="m-2" type="submit" mat-raised-button color="primary" [disabled]="!actividadForm.valid">
+        <mat-icon>save</mat-icon> Guardar Actividad
+      </button>
+    </mat-dialog-actions>
+
+  </form>
+</section>

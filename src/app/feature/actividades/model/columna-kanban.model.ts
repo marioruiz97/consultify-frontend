@@ -7,6 +7,5 @@ export interface Columna {
   oculta: boolean;
   prev: boolean;
   isExpanded: boolean;
-  ancho: string;
   claseCss: string;
 }

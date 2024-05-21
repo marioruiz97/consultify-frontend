@@ -4,12 +4,14 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { KanbanActividadesComponent } from './components/kanban-actividades/kanban-actividades.component';
 import { GestorActividadesService } from './service/gestor-actividades.service';
+import { FormularioActividadComponent } from './components/formulario-actividad/formulario-actividad.component';
 
 
 
 @NgModule({
   declarations: [
-    KanbanActividadesComponent
+    KanbanActividadesComponent,
+    FormularioActividadComponent
   ],
   imports: [
     AppRoutingModule,

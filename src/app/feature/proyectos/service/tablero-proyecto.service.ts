@@ -5,6 +5,8 @@ import { UIService } from 'src/app/core/service/ui.service';
 import { TableroProyecto } from '../model/tablero/tablero-proyecto.model';
 import { AppConstants } from 'src/app/shared/app.constants';
 import { MiembroProyecto } from '../model/miembros/miembro-proyecto.model';
+import { Actividad } from '../../actividades/model/actividad.model';
+import { ResponsableActividad } from '../../actividades/model/responsable-actividad.model';
 
 @Injectable()
 export class TableroProyectoService {
@@ -79,6 +81,34 @@ export class TableroProyectoService {
         .catch(err => { this.uiService.mostrarError(err); return []; });
 
     return miembros;
+  }
+
+  /**
+   * GESTION DE ACTIVIDADES
+   */
+  agregarActividad(actividad: Actividad, asignadoA: ResponsableActividad) {
+    actividad.responsable = asignadoA;
+    actividad.responsable.nombresCompletos = asignadoA.nombres + ' ' + asignadoA.apellidos;
+    const tablero = this.$TableroActual.value;
+
+    if (tablero) {
+      const esEditar = tablero.actividades.some(tarea => tarea.id === actividad.id);
+
+      if (esEditar)
+        tablero.actividades = tablero.actividades.filter(tarea => tarea.id !== actividad.id);
+
+      tablero.actividades.push(actividad);
+      this.$TableroActual.next(tablero);
+    }
+  }
+
+  eliminarActividad(actividad: Actividad) {
+    const tablero = this.$TableroActual.value;
+
+    if (tablero) {
+      tablero.actividades = tablero.actividades.filter(tarea => tarea.id !== actividad.id);
+      this.$TableroActual.next(tablero);
+    }
   }
 
 }

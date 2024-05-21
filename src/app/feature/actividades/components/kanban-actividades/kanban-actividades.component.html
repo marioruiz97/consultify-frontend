@@ -22,13 +22,15 @@
   </button>
 </div>
 
-<div class="kanban-board my-2 px-2" fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutAlign="space-evenly" fxLayoutGap="8px">
+<div class="kanban-board my-2 px-2" fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutAlign="space-evenly"
+  fxLayoutGap="8px">
 
-  <div *ngFor="let column of columnas" [fxHide]="column.oculta" [fxFlex]="column.ancho"
+  <div *ngFor="let column of columnas" [fxHide]="column.oculta" fxFlex
     class="mat-mdc-elevation-specific mat-elevation-z4 kanban-column my-2" [ngClass]="column.claseCss">
 
     <div class="pl-2 pr-1 pt-3 mb-3 column-title">
-      <h2 class="column-title-h2" fxHide.lt-md [matBadge]="(column.actividades | async)?.length" matBadgePosition="above after">
+      <h2 class="column-title-h2" fxHide.lt-md [matBadge]="(column.actividades | async)?.length"
+        matBadgePosition="above after">
         {{ column.titulo }}
       </h2>
       <h4 fxHide.gt-sm> {{ column.titulo }} </h4>
@@ -43,17 +45,28 @@
     </div>
 
 
-    <mat-card class="m-2" *ngFor="let activity of column.actividades | async">
+    <mat-card class="m-2 mat-mdc-elevation-specific mat-elevation-z2" *ngFor="let activity of column.actividades | async">
       <mat-card-title class="mat-h3 weight-500 pl-2">
         {{ activity.nombre }}
       </mat-card-title>
-      <mat-card-content class="pb-2">
-        <p>{{activity.descripcion}}</p>
+      <mat-card-content class="pb-0">
         <p class="y-center">
-          <span class="fecha-vencimiento">Vence en: {{activity.fechaCierreEsperado | date: 'dd MMM yyyy'}}</span>
-          <span fxFlex></span>
           <ngx-avatars [size]="25" [name]="mostrarNombreCompleto(activity.responsable)"
             [matTooltip]="'Asignado a: ' + activity.responsable.nombresCompletos"></ngx-avatars>
+          <span fxFlex></span>
+          <span class="fecha-vencimiento">Vence en: {{activity.fechaCierreEsperado | date: 'dd MMM yyyy'}}</span>
+        </p>
+        <p>{{activity.descripcion}}</p>
+        <p class="y-center">
+          <span fxFlex></span>
+          <button mat-icon-button type="button" color="primary" matTooltip="Editar Actividad"
+            (click)="abrirEditarActividad(activity)" class="p-0">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button type="button" color="accent" matTooltip="Eliminar Actividad"
+            (click)="eliminarActividad(activity)" class="p-0">
+            <mat-icon>delete</mat-icon>
+          </button>
         </p>
       </mat-card-content>
     </mat-card>
