@@ -1,6 +1,7 @@
 <section class="container">
 
-  <mat-card class="seguimiento-card mb-3" *ngFor="let seguimiento of seguimientos">
+  <mat-card class="seguimiento-card mb-3 mat-mdc-elevation-specific mat-elevation-z5"
+    *ngFor="let seguimiento of seguimientos">
     <mat-card-header class="line mb-3">
       <ngx-avatars [name]="nombreCompleto(seguimiento.usuario)" size="32"
         [matTooltip]="nombreCompleto(seguimiento.usuario)"></ngx-avatars>
@@ -13,7 +14,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card class="form mt-4">
+  <mat-card class="form mt-4 mat-mdc-elevation-specific mat-elevation-z5">
     <mat-card-content fxLayout class="pb-0">
 
       <mat-form-field appearance="outline" fxFlex>

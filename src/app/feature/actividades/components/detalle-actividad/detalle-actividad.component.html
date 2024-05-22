@@ -14,7 +14,8 @@
   </div>
 
   <div class="content" fxLayout fxLayout.lt-md="column" fxLayoutGap="8px">
-    <mat-card class="m-3 p-2" fxFlex [ngClass]="!habilitarCampos ? 'card-standard' : 'card-expanded' ">
+    <mat-card class="m-3 p-2 mat-mdc-elevation-specific mat-elevation-z5" fxFlex
+      [ngClass]="!habilitarCampos ? 'card-standard' : 'card-expanded' ">
       <mat-card-title class="pl-2">
         <span class="mat-h2">Detalles</span>
         <span fxFlex></span>

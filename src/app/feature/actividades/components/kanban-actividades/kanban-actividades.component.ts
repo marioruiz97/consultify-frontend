@@ -14,6 +14,7 @@ import { DIALOG_CONFIG, customConfig } from 'src/app/shared/app.constants';
 import { UIService } from 'src/app/core/service/ui.service';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
+import { ActividadFiltrada } from '../../model/actividad-filtrada.model';
 
 @Component({
   selector: 'app-kanban-actividades',
@@ -24,7 +25,7 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
 
   private miUsuario: UsuarioSesion | null;
   private actividades: Actividad[] = [];
-  private actividadesFiltradas: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
+  private actividadesFiltradas: BehaviorSubject<ActividadFiltrada> = new BehaviorSubject<ActividadFiltrada>({ prev: [], current: [] });
 
   actividadesPorHacer: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
   actividadesEnProgreso: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
@@ -60,10 +61,10 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subs.push(
       this.actividadesFiltradas.subscribe(filtradas => {
-        this.actividadesPorHacer.next(filtradas.filter(actividad => actividad.estado == EstadoActividad.POR_HACER));
-        this.actividadesEnProgreso.next(filtradas.filter(actividad => actividad.estado == EstadoActividad.EN_PROGRESO));
-        this.actividadesEnRevision.next(filtradas.filter(actividad => actividad.estado == EstadoActividad.EN_REVISION));
-        this.actividadesCompletadas.next(filtradas.filter(actividad => actividad.estado == EstadoActividad.COMPLETADA));
+        this.actividadesPorHacer.next(filtradas.current.filter(actividad => actividad.estado == EstadoActividad.POR_HACER));
+        this.actividadesEnProgreso.next(filtradas.current.filter(actividad => actividad.estado == EstadoActividad.EN_PROGRESO));
+        this.actividadesEnRevision.next(filtradas.current.filter(actividad => actividad.estado == EstadoActividad.EN_REVISION));
+        this.actividadesCompletadas.next(filtradas.current.filter(actividad => actividad.estado == EstadoActividad.COMPLETADA));
       })
     );
 
@@ -71,7 +72,7 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
       this.tableroservice.tableroActual.subscribe(tablero => {
         if (tablero) {
           this.actividades = tablero.actividades;
-          this.actividadesFiltradas.next(this.actividades)
+          this.actividadesFiltradas.next({ prev: this.actividades, current: this.actividades });
         }
       })
     );
@@ -80,7 +81,8 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
 
   filtrarMisActividades() {
     this.mostrarSoloMias = !this.mostrarSoloMias;
-    this.aplicarFiltros([]);
+    const actividades = this.mostrarSoloMias ? this.actividadesFiltradas.value.current : this.actividadesFiltradas.value.prev;
+    this.aplicarFiltros(actividades);
   }
 
   doFilter(event: Event) {
@@ -95,23 +97,13 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
   }
 
   private aplicarFiltros(filtradas: Actividad[]) {
-    if (filtradas && filtradas.length > 0) {
-      if (this.mostrarSoloMias) {
-        const misActividades: Actividad[] = filtradas.filter(actividad => actividad.responsable.idUsuario === this.miUsuario?.idUsuario);
-        this.actividadesFiltradas.next(misActividades);
-      } else {
-        this.actividadesFiltradas.next(filtradas);
-      }
-
+    const prev = this.actividadesFiltradas.value.current;
+    if (this.mostrarSoloMias) {
+      const current: Actividad[] = filtradas.filter(actividad => actividad.responsable.idUsuario === this.miUsuario?.idUsuario);
+      this.actividadesFiltradas.next({ prev, current });
     } else {
-      if (this.mostrarSoloMias) {
-        const misActividades: Actividad[] = this.actividades.filter(actividad => actividad.responsable.idUsuario === this.miUsuario?.idUsuario);
-        this.actividadesFiltradas.next(misActividades);
-      } else {
-        this.actividadesFiltradas.next(this.actividades);
-      }
+      this.actividadesFiltradas.next({ prev, current: filtradas });
     }
-
   }
 
   /**

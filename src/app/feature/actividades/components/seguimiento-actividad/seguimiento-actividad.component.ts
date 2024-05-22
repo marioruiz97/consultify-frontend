@@ -43,6 +43,7 @@ export class SeguimientoActividadComponent implements OnInit {
           if (this.miUsuario) seguimiento.usuario = { nombres: '', apellidos: '', nombreCompleto: this.miUsuario.nombreCompleto };
           this.uiService.mostrarSnackBar('Seguimiento agregado con exito', 0.5, '');
           this.seguimientos.push(seguimiento);
+          this.comentarios.setValue('');
         })
         .catch(err => this.uiService.mostrarError(err));
     }

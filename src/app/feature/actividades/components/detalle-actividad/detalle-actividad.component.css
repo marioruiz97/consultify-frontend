@@ -25,6 +25,10 @@
   background-color: #05a60dd1;
 }
 
+.mdc-button.mat-mdc-button.mat-white {
+  font-size: 16px;
+}
+
 .mdc-button.mat-mdc-button.mat-white,
 .white {
   color: white;

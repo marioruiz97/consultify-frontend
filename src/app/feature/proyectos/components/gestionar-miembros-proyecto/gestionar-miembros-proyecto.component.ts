@@ -90,7 +90,10 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.uiService.mostrarConfirmDialog(data).afterClosed().subscribe(respuesta => {
         if (respuesta) this.tableroService.quitarMiembro(miembro)
-          .then(nuevaLista => { if (nuevaLista && nuevaLista.length >= 0) this.miembros = nuevaLista; })
+          .then(nuevaLista => {
+            if (nuevaLista && nuevaLista.length >= 0) this.miembros = nuevaLista;
+            this.obtenerPosiblesMiembros();
+          })
       })
     );
   }
@@ -101,7 +104,10 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
 
   agregarMiembro() {
     this.tableroService.agregarMiembro(this.miembroForm.value)
-      .then(() => this.obtenerPosiblesMiembros());
+      .then(() => {
+        this.obtenerPosiblesMiembros();
+        this.miembroForm.reset({ usuario: '' });
+      });
   }
 
   ngOnDestroy(): void {
