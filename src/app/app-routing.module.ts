@@ -37,7 +37,7 @@ const routes: Routes = [
   // proyectos
   { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent },
   { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent },
-  { path: `${rutas.RUTA_PROYECTOS}/:id/actividades/:id`, component: DetalleActividadComponent }
+  { path: `${rutas.RUTA_PROYECTOS}/:idProyecto/actividades/:idActividad`, component: DetalleActividadComponent }
 
 ];
 

@@ -88,7 +88,6 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
 
   private setForm(actividad: Actividad) {
     this.actividad = actividad;
-    console.log('Actividad actual', actividad);
 
     this.esEditar = true;
     this.actividadForm.get('estado')?.enable();
@@ -118,7 +117,6 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
 
   guardarActividad() {
     const actividad: Actividad = { ...this.actividad, ...this.actividadForm.value };
-    console.log('actividad a guardar', actividad);
 
     if (this.esEditar) {
       this.manejarOperacion(this.servicioActividad.editarActividad(actividad), actividad.responsable);

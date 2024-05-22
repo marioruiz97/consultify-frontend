@@ -6,6 +6,7 @@ import { KanbanActividadesComponent } from './components/kanban-actividades/kanb
 import { GestorActividadesService } from './service/gestor-actividades.service';
 import { FormularioActividadComponent } from './components/formulario-actividad/formulario-actividad.component';
 import { DetalleActividadComponent } from './components/detalle-actividad/detalle-actividad.component';
+import { SeguimientoActividadComponent } from './components/seguimiento-actividad/seguimiento-actividad.component';
 
 
 
@@ -13,7 +14,8 @@ import { DetalleActividadComponent } from './components/detalle-actividad/detall
   declarations: [
     KanbanActividadesComponent,
     FormularioActividadComponent,
-    DetalleActividadComponent
+    DetalleActividadComponent,
+    SeguimientoActividadComponent
   ],
   imports: [
     AppRoutingModule,

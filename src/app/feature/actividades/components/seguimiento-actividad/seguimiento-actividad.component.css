@@ -1,0 +1,14 @@
+mat-card.seguimiento-card {
+  min-height: 120px;
+}
+
+h3.mat-title {
+  font-weight: 500;
+}
+
+.fecha-seguimiento {
+  font-size: 12px;
+  letter-spacing: 0.001em;
+  font-weight: 200;
+  font-style: italic;
+}
