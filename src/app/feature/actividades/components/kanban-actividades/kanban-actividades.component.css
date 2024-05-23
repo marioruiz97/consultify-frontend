@@ -11,7 +11,7 @@ p.y-center {
 }
 
 .botonera mat-form-field.buscar {
-  min-width: 40%;
+  min-width: 350px;
 }
 
 .kanban-board,

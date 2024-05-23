@@ -104,7 +104,7 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
           err.error.error = 'Error obteniendo la actividad';
           err.error.message = err.message;
           this.uiService.mostrarError(err);
-          this.router.navigate([`/${AppConstants.RUTA_PROYECTOS}/${this.idProyecto}`])
+          this.volverAlTablero();
         }
       })
     );
@@ -133,8 +133,8 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
 
   }
 
-  volver(): string {
-    return `/${AppConstants.RUTA_PROYECTOS}/${this.idProyecto}`;
+  volverAlTablero() {
+    this.router.navigate([`/${AppConstants.RUTA_PROYECTOS}/${this.idProyecto}`], { queryParams: { tab: 1 } })
   }
 
   habilitarGuardar() {

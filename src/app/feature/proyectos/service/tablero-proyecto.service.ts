@@ -51,7 +51,7 @@ export class TableroProyectoService {
     const result =
       await this.httpService.putRequest<MiembroProyecto>(`${this.tableroPath}/${id}/miembros`, miembro)
         .then(miembro => {
-          this.uiService.mostrarSnackBar(`Se ha agregado a ${miembro.usuario.nombres} ${miembro.usuario.apellidos} a la lista de miembros`, 3);
+          this.uiService.mostrarSnackBar(`Se ha agregado a ${miembro.usuario.nombres} ${miembro.usuario.apellidos} a la lista de miembros`, 1.2);
           const tablero: TableroProyecto | undefined = this.$TableroActual.getValue();
           if (tablero) {
             tablero.infoProyecto.miembros.push(miembro);
@@ -70,7 +70,7 @@ export class TableroProyectoService {
     const miembros =
       await this.httpService.deleteRequest<MiembroProyecto[]>(`${this.tableroPath}/${id}/miembros/${miembro.usuario.idUsuario}`)
         .then(miembros => {
-          this.uiService.mostrarSnackBar(`Se ha eliminado a ${miembro.usuario.nombres} ${miembro.usuario.apellidos} de la lista de miembros`, 3);
+          this.uiService.mostrarSnackBar(`Se ha eliminado a ${miembro.usuario.nombres} ${miembro.usuario.apellidos} de la lista de miembros`, 1.25);
           const tablero: TableroProyecto | undefined = this.$TableroActual.getValue();
           if (tablero) {
             tablero.infoProyecto.miembros = miembros;

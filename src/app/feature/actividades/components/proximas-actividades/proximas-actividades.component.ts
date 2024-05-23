@@ -23,6 +23,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
   displayedColumns = ['nombre', 'fechaCierreEsperado', 'estado', 'responsable', 'accion'];
   datasource = new MatTableDataSource<Actividad>();
   numeroActividades = 0;
+  fechaFutura = new Date();
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -33,6 +34,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
     private uiService: UIService,
     private dialog: MatDialog
   ) {
+    this.fechaFutura.setDate(new Date().getDate() + 8);
   }
 
   ngOnInit(): void {
@@ -41,11 +43,9 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
     this.subs.push(
       this.tableroService.tableroActual.subscribe(tablero => {
         if (tablero) {
-          const fechaFutura = new Date();
-          fechaFutura.setDate(new Date().getDate() + 8);
 
           const actividades: Actividad[] = tablero.actividades;
-          this.datasource.data = actividades.filter(actividad => new Date(actividad.fechaCierreEsperado).getTime() <= new Date(fechaFutura).getTime() && actividad.estado !== EstadoActividad.COMPLETADA);
+          this.datasource.data = actividades.filter(actividad => new Date(actividad.fechaCierreEsperado).getTime() <= new Date(this.fechaFutura).getTime() && actividad.estado !== EstadoActividad.COMPLETADA);
           this.numeroActividades = this.datasource.data.length;
 
 

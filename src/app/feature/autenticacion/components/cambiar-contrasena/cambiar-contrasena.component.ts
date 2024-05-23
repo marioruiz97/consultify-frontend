@@ -42,8 +42,8 @@ export class CambiarContrasenaComponent implements OnInit {
 
   cambiarContrasena() {
     const form = this.formulario.value;
-    if (form.contrasena !== form.confirmar) this.uiService.mostrarSnackBar('Las contraseñas no coinciden', 3);
-    if (form.contrasena === form.contrasenaActual) this.uiService.mostrarSnackBar('La contraseña nueva no puede ser igual a la anterior', 3);
+    if (form.contrasena !== form.confirmar) this.uiService.mostrarSnackBar('Las contraseñas no coinciden', 1.5);
+    if (form.contrasena === form.contrasenaActual) this.uiService.mostrarSnackBar('La contraseña nueva no puede ser igual a la anterior', 1.5);
     if (form.contrasena === form.confirmar && form.contrasena !== form.contrasenaActual) {
       const cambioContrasena: CambioContrasena = {
         idUsuario: this.idUsuario,

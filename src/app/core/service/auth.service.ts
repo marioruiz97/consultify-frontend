@@ -102,7 +102,7 @@ export class AuthService {
   }
 
   cerrarSesion() {
-    this.uiService.mostrarSnackBar('Se ha cerrado sesión', 3)
+    this.uiService.mostrarSnackBar('Se ha cerrado sesión', 1.5)
     this.limpiarDatosSesion();
   }
 

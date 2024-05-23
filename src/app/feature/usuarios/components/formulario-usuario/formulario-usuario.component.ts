@@ -140,7 +140,7 @@ export class FormularioUsuarioComponent implements OnDestroy {
 
   private ejecutarOperacion(operacion: Promise<UsuarioEditar>) {
     operacion.then(res => {
-      this.uiService.mostrarSnackBar(`El usuario ${res.nombreUsuario} se ha guardado con exito`, 4);
+      this.uiService.mostrarSnackBar(`El usuario ${res.nombreUsuario} se ha guardado con exito`, 1.25);
       this.router.navigate([rutas.RUTA_USUARIOS]);
     })
       .catch(err => {

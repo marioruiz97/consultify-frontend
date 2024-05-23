@@ -129,7 +129,7 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
   private manejarOperacion(operacion: Promise<Actividad>, responsable: ResponsableActividad) {
     operacion
       .then(actividad => {
-        this.uiService.mostrarSnackBar(`La actividad ${actividad.nombre} se ha guardado con exito`, 4);
+        this.uiService.mostrarSnackBar(`La actividad ${actividad.nombre} se ha guardado con exito`, 1.25);
         this.tableroService.agregarActividad(actividad, responsable);
         this.dialogRef.close(true);
       })

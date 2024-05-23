@@ -150,7 +150,7 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
   }
 
   private guardadoExitoso(proyecto: InfoProyecto) {
-    this.uiService.mostrarSnackBar(`El proyecto ${proyecto.nombreProyecto} se ha guardado con exito`, 4);
+    this.uiService.mostrarSnackBar(`El proyecto ${proyecto.nombreProyecto} se ha guardado con exito`, 2);
     this.dialogRef.close(true);
     this.router.navigate([`/${AppConstants.RUTA_PROYECTOS}/${proyecto.idProyecto}`]);
   }

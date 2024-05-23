@@ -9,4 +9,5 @@ export interface Actividad {
   estado: EstadoActividad;
   fechaCierreEsperado: Date;
   responsable: ResponsableActividad;
+  fechaCompletada: Date;
 }
