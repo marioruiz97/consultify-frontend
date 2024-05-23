@@ -15,6 +15,7 @@ import { UIService } from 'src/app/core/service/ui.service';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
 import { ActividadFiltrada } from '../../model/actividad-filtrada.model';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-kanban-actividades',
@@ -32,6 +33,11 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
   actividadesEnRevision: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
   actividadesCompletadas: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
 
+  rango: FormGroup = new FormGroup({
+    inicio: new FormControl<Date | null>(null),
+    fin: new FormControl<Date | null>(null),
+  });
+
   mostrarSoloMias = false;
   mostrarResetColumnas = false;
   columnas: Columna[] = [
@@ -47,6 +53,11 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
     responsable.nombresCompletos = responsable.nombres + ' ' + responsable.apellidos;
     return responsable.nombresCompletos;
   };
+
+
+  get hayActividades() {
+    return this.actividades.length > 0;
+  }
 
   constructor(
     private actividadService: GestorActividadesService,
@@ -83,6 +94,17 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
     this.mostrarSoloMias = !this.mostrarSoloMias;
     const actividades = this.mostrarSoloMias ? this.actividadesFiltradas.value.current : this.actividadesFiltradas.value.prev;
     this.aplicarFiltros(actividades);
+  }
+
+  aplicarFiltroFecha() {
+    const { inicio, fin } = this.rango.value;
+    if (inicio && fin) {
+      const filtradas: Actividad[] = this.actividades.filter(actividad => {
+        const cierre = new Date(actividad.fechaCierreEsperado);
+        return cierre >= new Date(inicio) && cierre <= new Date(fin);
+      });
+      this.aplicarFiltros(filtradas);
+    }
   }
 
   doFilter(event: Event) {
@@ -160,11 +182,11 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
    */
 
   abrirCrearActividad() {
-    this.dialog.open(FormularioActividadComponent, { ...customConfig('60vw', '60vh'), position: { right: '0' } });
+    this.dialog.open(FormularioActividadComponent, { ...customConfig('50vw', '60vh'), position: { right: '2px' } });
   }
 
   abrirEditarActividad(data: Actividad) {
-    this.dialog.open(FormularioActividadComponent, { data, ...customConfig('60vw', '60vh'), position: { right: '0' } });
+    this.dialog.open(FormularioActividadComponent, { data, ...customConfig('50vw', '60vh'), position: { right: '2px' } });
   }
 
   eliminarActividad(actividad: Actividad) {

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faFacebookF, faInstagram, faXTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faFacebookF, faInstagram, faLinkedin, faXTwitter } from '@fortawesome/free-brands-svg-icons';
 import { AuthRequest } from 'src/app/core/model/auth-request.model';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { AppConstants } from 'src/app/shared/app.constants';
@@ -17,8 +17,9 @@ export class InicioSesionComponent {
 
   redes: EnlaceExterno[] = [
     { nombre: "Facebook", faIcon: faFacebookF, url: "https://www.facebook.com/ASISGE", target: "_blank" },
-    { nombre: "Twitter", faIcon: faXTwitter, url: "https://twitter.com/asisgesa", target: "_blank" },
     { nombre: "Instagram", faIcon: faInstagram, url: "https://www.instagram.com/asisges.a.s", target: "_blank" },
+    { nombre: "Twitter", faIcon: faXTwitter, url: "https://twitter.com/asisgesa", target: "_blank" },
+    { nombre: "LinkedIn", faIcon: faLinkedin, url: "https://www.linkedin.com/company/asisge/", target: "_blank" },
   ]
 
   loginForm: FormGroup;

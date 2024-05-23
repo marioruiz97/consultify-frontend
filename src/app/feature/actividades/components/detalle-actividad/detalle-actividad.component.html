@@ -77,8 +77,8 @@
               <textarea matInput formControlName="descripcion"></textarea>
               <mat-icon matPrefix>message</mat-icon>
               <mat-hint *ngIf="habilitarCampos">
-                Ingresa una descripción que permita identificar el propósito de la actividad
-                <br />Máximo 254 caracteres / actual:{{actividadForm.value.descripcion.length}}
+                Descripción que permite identificar el propósito de la actividad
+                <br />(Max: 254 caracteres / actual:{{actividadForm.value.descripcion.length}})
               </mat-hint>
             </mat-form-field>
           </div>

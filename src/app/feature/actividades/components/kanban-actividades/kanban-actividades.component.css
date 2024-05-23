@@ -1,8 +1,16 @@
+p.y-center {
+  vertical-align: middle;
+}
+
+.weight-500 {
+  font-weight: 500;
+}
+
 .botonera button {
   font-size: 15px;
 }
 
-.botonera mat-form-field {
+.botonera mat-form-field.buscar {
   min-width: 40%;
 }
 
@@ -11,16 +19,18 @@
   transition: flex 0.3s ease;
 }
 
-p.y-center {
-  vertical-align: middle;
-}
-
 .kanban-column {
   border-radius: 5px;
+  background-color: #f3f3f3;
 }
 
 .column-title {
   color: white;
+}
+
+div.column-title button {
+  position: relative;
+  top: -10px;
 }
 
 .mat-badge-content {
@@ -29,6 +39,7 @@ p.y-center {
   color: black;
 }
 
+/* colores para las columnas segun el estado actividad */
 .por-hacer {
   border-left: 4px solid var(--deep-blue);
   border-top: 4px solid var(--deep-blue);
@@ -72,6 +83,20 @@ p.y-center {
   font-style: italic;
 }
 
-.weight-500 {
-  font-weight: 500;
+
+/*
+* estilos para comportamiento sticky
+*/
+div.sticky-header {
+  position: -webkit-sticky;
+  /* Para Safari */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.kanban-tasks {
+  max-height: 82vh;
+  /* Ajusta según la altura de tu encabezado sticky */
+  overflow-y: auto;
 }

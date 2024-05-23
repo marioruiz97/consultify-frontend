@@ -7,6 +7,7 @@ import { GestorActividadesService } from './service/gestor-actividades.service';
 import { FormularioActividadComponent } from './components/formulario-actividad/formulario-actividad.component';
 import { DetalleActividadComponent } from './components/detalle-actividad/detalle-actividad.component';
 import { SeguimientoActividadComponent } from './components/seguimiento-actividad/seguimiento-actividad.component';
+import { ProximasActividadesComponent } from './components/proximas-actividades/proximas-actividades.component';
 
 
 
@@ -15,14 +16,15 @@ import { SeguimientoActividadComponent } from './components/seguimiento-activida
     KanbanActividadesComponent,
     FormularioActividadComponent,
     DetalleActividadComponent,
-    SeguimientoActividadComponent
+    SeguimientoActividadComponent,
+    ProximasActividadesComponent
   ],
   imports: [
     AppRoutingModule,
     CommonModule,
     SharedModule
   ],
-  exports: [KanbanActividadesComponent],
+  exports: [KanbanActividadesComponent, ProximasActividadesComponent],
   providers: [GestorActividadesService]
 })
 export class ActividadesModule { }

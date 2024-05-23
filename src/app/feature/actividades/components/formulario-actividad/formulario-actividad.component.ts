@@ -81,7 +81,7 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
       nombre: new FormControl('', [Validators.required, Validators.maxLength(100)]),
       descripcion: new FormControl('', [Validators.required, Validators.maxLength(254)]),
       estado: new FormControl({ value: 'POR_HACER', disabled: true }, [Validators.required]),
-      fechaCierreEsperado: new FormControl(new Date(), [Validators.required]),
+      fechaCierreEsperado: new FormControl(''),
       responsable: new FormControl('', [Validators.required]),
     });
   }

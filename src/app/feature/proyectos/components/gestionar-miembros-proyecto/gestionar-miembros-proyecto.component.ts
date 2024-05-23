@@ -106,7 +106,8 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
     this.tableroService.agregarMiembro(this.miembroForm.value)
       .then(() => {
         this.obtenerPosiblesMiembros();
-        this.miembroForm.reset({ usuario: '' });
+        this.miembroForm.controls['usuario'].reset('');
+        this.miembroForm.controls['usuario'].setErrors(null);
       });
   }
 
