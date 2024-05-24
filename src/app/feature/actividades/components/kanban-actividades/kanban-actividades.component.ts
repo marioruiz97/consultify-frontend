@@ -90,10 +90,10 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
   }
 
 
-  filtrarMisActividades() {
-    this.mostrarSoloMias = !this.mostrarSoloMias;
-    const actividades = this.mostrarSoloMias ? this.actividadesFiltradas.value.current : this.actividadesFiltradas.value.prev;
-    this.aplicarFiltros(actividades);
+
+  cancelarFiltroFecha() {
+    this.rango.setValue({ inicio: null, fin: null });
+    this.aplicarFiltros(this.actividadesFiltradas.value.prev);
   }
 
   aplicarFiltroFecha() {
@@ -105,6 +105,12 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
       });
       this.aplicarFiltros(filtradas);
     }
+  }
+
+  filtrarMisActividades() {
+    this.mostrarSoloMias = !this.mostrarSoloMias;
+    const actividades = this.mostrarSoloMias ? this.actividadesFiltradas.value.current : this.actividadesFiltradas.value.prev;
+    this.aplicarFiltros(actividades);
   }
 
   doFilter(event: Event) {

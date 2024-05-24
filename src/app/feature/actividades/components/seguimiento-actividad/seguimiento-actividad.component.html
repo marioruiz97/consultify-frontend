@@ -7,7 +7,7 @@
         [matTooltip]="nombreCompleto(seguimiento.usuario)"></ngx-avatars>
       <h3 class="ml-2 my-auto mat-title">{{nombreCompleto(seguimiento.usuario)}}</h3>
       <span fxFlex></span>
-      <span class="fecha-seguimiento my-auto">{{seguimiento.fechaSeguimiento | date: 'MMM dd, yyyy hh:mm'}}</span>
+      <span class="fecha-seguimiento my-auto">{{seguimiento.fechaSeguimiento | date: 'medium'}}</span>
     </mat-card-header>
     <mat-card-content class="comentario">
       {{seguimiento.comentarios}}

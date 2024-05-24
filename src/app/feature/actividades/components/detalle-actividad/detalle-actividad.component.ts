@@ -55,7 +55,7 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.activatedRoute.paramMap.subscribe(params => {
         const idProyecto = params.get('idProyecto');
-        this.idProyecto = idProyecto ? idProyecto : '0';
+        this.idProyecto = idProyecto ?? '0';
 
         const idActividad = params.get('idActividad');
         if (idActividad && idActividad !== '0') {
@@ -150,7 +150,7 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
     const actividad: Actividad = { ...this.actividad, ...this.actividadForm.value };
     this.actividadService.editarActividad(actividad)
       .then(guardada => {
-        this.uiService.mostrarSnackBar(`La actividad ${guardada.nombre} se ha guardado con exito`, 3);
+        this.uiService.mostrarSnackBar(`La actividad ${guardada.nombre} se ha guardado con exito`, 1.5);
         this.tableroService.agregarActividad(guardada, actividad.responsable);
         guardada.responsable = actividad.responsable;
         this.setForm(guardada);

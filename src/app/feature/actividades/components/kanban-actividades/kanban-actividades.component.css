@@ -1,4 +1,5 @@
-p.y-center {
+p.y-center,
+p.y-center span {
   vertical-align: middle;
 }
 
@@ -80,6 +81,12 @@ div.column-title button {
   font-size: 12px;
   letter-spacing: 0.001em;
   font-weight: 200;
+  font-style: italic;
+}
+
+.fecha-completada {
+  font-size: 12px;
+  letter-spacing: 0.001em;
   font-style: italic;
 }
 

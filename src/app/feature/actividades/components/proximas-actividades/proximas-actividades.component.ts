@@ -23,6 +23,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
   displayedColumns = ['nombre', 'fechaCierreEsperado', 'estado', 'responsable', 'accion'];
   datasource = new MatTableDataSource<Actividad>();
   numeroActividades = 0;
+  private mostrarAlertaVencidas = true;
   fechaFutura = new Date();
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -50,9 +51,10 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
 
 
           const vencidas: Actividad[] = this.datasource.data.filter(actividad => new Date(actividad.fechaCierreEsperado).getTime() < new Date().getTime())
-          if (vencidas && vencidas.length > 0) {
-            const message = `Hay ${vencidas.length} actividades cuya fecha de cierre ya ha pasado`;
-            const errors: string[] = vencidas.map(actividad => `${actividad.nombre}, responsable: ${actividad.responsable.nombres} ${actividad.responsable.apellidos}`);
+          if (vencidas && vencidas.length > 0 && this.mostrarAlertaVencidas) {
+            this.mostrarAlertaVencidas = false;
+            const message = `Hay ${vencidas.length} ${vencidas.length != 1 ? 'actividades' : 'actividad'} cuya fecha de cierre ya ha pasado`;
+            const errors: string[] = vencidas.map((actividad, i) => `${i + 1} - ${actividad.nombre}, responsable: ${actividad.responsable.nombres} ${actividad.responsable.apellidos}`);
             this.uiService.mostrarConfirmDialog({
               title: 'Alerta: Actividades Vencidas',
               message,
@@ -98,6 +100,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
 
   ngOnDestroy(): void {
     if (this.subs) { this.subs.forEach(sub => sub.unsubscribe()); }
+    this.mostrarAlertaVencidas = true;
   }
 
 }
