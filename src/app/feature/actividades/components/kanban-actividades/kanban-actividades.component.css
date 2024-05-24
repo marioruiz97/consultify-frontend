@@ -92,15 +92,8 @@ div.column-title button {
 
 
 /*
-* estilos para comportamiento sticky
+* estilos para drop down
 */
-div.sticky-header {
-  position: -webkit-sticky;
-  /* Para Safari */
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
 
 .kanban-tasks {
   height: 100%;
