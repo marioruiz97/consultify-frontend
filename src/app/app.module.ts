@@ -14,6 +14,15 @@ import { ClientesModule } from './feature/clientes/clientes.module';
 import { ProyectosModule } from './feature/proyectos/proyectos.module';
 import { HomeComponent } from './feature/otros/home/home.component';
 import { InformesModule } from './feature/informes/informes.module';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DatePipe, registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+
+
+registerLocaleData(localeEs);
+const MatLocale = { provide: MAT_DATE_LOCALE, useValue: 'es-ES' };
+const AppDateAdapter = { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] };
 
 @NgModule({
   declarations: [
@@ -34,7 +43,11 @@ import { InformesModule } from './feature/informes/informes.module';
     ProyectosModule,
     InformesModule
   ],
-  providers: [],
+  providers: [
+    MatLocale,
+    AppDateAdapter,
+    DatePipe,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

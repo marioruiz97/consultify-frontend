@@ -29,11 +29,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 
-
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-
-
-
 @NgModule({
   declarations: [],
   imports: [
@@ -90,9 +85,6 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     MatAutocompleteModule,
     MatDatepickerModule,
     MatMomentDateModule
-  ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'es' },
   ],
 })
 export class MaterialModule { }

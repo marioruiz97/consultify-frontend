@@ -28,6 +28,10 @@ export class GestorActividadesService {
     if (!this.idProyecto) this.tableroService.obtenerTablero(+idProyecto);
   }
 
+  /**
+   * GESTION DE ACTIVIDADES
+   */
+
   obtenerActividadPorId(idProyecto: string, id: number): Observable<Actividad> {
     const path = this.idProyecto ? this.path : AppConstants.RUTA_ACTIVIDADES.replace("{idProyecto}", idProyecto);
     return this.httpService.getRequest<Actividad>(`${path}/${id}`);
@@ -44,6 +48,11 @@ export class GestorActividadesService {
   eliminarActividad(idActividad: number): Promise<void> {
     return this.httpService.deleteRequest(`${this.path}/${idActividad}`);
   }
+
+  actualizarEstado(actividad: Actividad): Promise<Actividad> {
+    return this.httpService.putRequest<Actividad>(`${this.path}/${actividad.id}`, actividad);
+  }
+
 
   /**
    * GESTION DE SEGUIMIENTOS

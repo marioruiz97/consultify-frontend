@@ -10,6 +10,7 @@ import { FormularioActividadComponent } from '../formulario-actividad/formulario
 import { customConfig } from 'src/app/shared/app.constants';
 import { MatDialog } from '@angular/material/dialog';
 import { EstadoActividad, EstadoActividadMap } from '../../model/estado-actividad.model';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -20,22 +21,29 @@ import { EstadoActividad, EstadoActividadMap } from '../../model/estado-activida
 export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private subs: Subscription[] = [];
+  private mostrarAlertaVencidas = true;
+
   displayedColumns = ['nombre', 'fechaCierreEsperado', 'estado', 'responsable', 'accion'];
   datasource = new MatTableDataSource<Actividad>();
+
   numeroActividades = 0;
-  private mostrarAlertaVencidas = true;
   fechaFutura = new Date();
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
+  get fechaFormateada() {
+    return this.datePipe.transform(this.fechaFutura, 'EEEE dd MMMM y', 'es-ES');
+  }
+
   constructor(
     private tableroService: TableroProyectoService,
     private uiService: UIService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private datePipe: DatePipe
   ) {
-    this.fechaFutura.setDate(new Date().getDate() + 8);
+    this.fechaFutura.setDate(new Date().getDate() + 7);
   }
 
   ngOnInit(): void {

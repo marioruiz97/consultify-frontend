@@ -4,7 +4,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { GestorActividadesService } from '../../service/gestor-actividades.service';
 import { Columna } from '../../model/columna-kanban.model';
 import { TableroProyectoService } from 'src/app/feature/proyectos/service/tablero-proyecto.service';
-import { EstadoActividad } from '../../model/estado-actividad.model';
+import { EstadoActividad, EstadoActividadMap } from '../../model/estado-actividad.model';
 import { ResponsableActividad } from '../../model/responsable-actividad.model';
 import { AuthService } from 'src/app/core/service/auth.service';
 import { UsuarioSesion } from 'src/app/core/model/usuario-sesion.model';
@@ -16,6 +16,7 @@ import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model'
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
 import { ActividadFiltrada } from '../../model/actividad-filtrada.model';
 import { FormControl, FormGroup } from '@angular/forms';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-kanban-actividades',
@@ -41,10 +42,10 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
   mostrarSoloMias = false;
   mostrarResetColumnas = false;
   columnas: Columna[] = [
-    { titulo: 'Por Hacer', actividades: this.actividadesPorHacer, oculta: false, prev: false, isExpanded: false, claseCss: 'por-hacer' },
-    { titulo: 'En Progreso', actividades: this.actividadesEnProgreso, oculta: false, prev: false, isExpanded: false, claseCss: 'en-progreso' },
-    { titulo: 'En Revisión', actividades: this.actividadesEnRevision, oculta: false, prev: false, isExpanded: false, claseCss: 'en-revision' },
-    { titulo: 'Completada', actividades: this.actividadesCompletadas, oculta: false, prev: false, isExpanded: false, claseCss: 'completada' }
+    { id: 'POR_HACER', titulo: 'Por Hacer', actividades: this.actividadesPorHacer, oculta: false, prev: false, isExpanded: false, claseCss: 'por-hacer' },
+    { id: 'EN_PROGRESO', titulo: 'En Progreso', actividades: this.actividadesEnProgreso, oculta: false, prev: false, isExpanded: false, claseCss: 'en-progreso' },
+    { id: 'EN_REVISION', titulo: 'En Revisión', actividades: this.actividadesEnRevision, oculta: false, prev: false, isExpanded: false, claseCss: 'en-revision' },
+    { id: 'COMPLETADA', titulo: 'Completada', actividades: this.actividadesCompletadas, oculta: false, prev: false, isExpanded: false, claseCss: 'completada' }
   ];
 
   private subs: Subscription[] = [];
@@ -88,8 +89,6 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
       })
     );
   }
-
-
 
   cancelarFiltroFecha() {
     this.rango.setValue({ inicio: null, fin: null });
@@ -214,6 +213,54 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
       }));
   }
 
+  /**
+   * metodos para drag and drop
+   */
+  get mapColumnas(): string[] {
+    return this.columnas.map(c => c.id)
+  }
+
+  drop(event: CdkDragDrop<Actividad[] | null>) {
+
+    if (event.previousContainer === event.container) {
+
+      if (event.container.data) {
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+      }
+
+    } else if (event.previousContainer.data && event.container.data) {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      // Obtener la actividad y el nuevo estado
+      const actividad = event.container.data[event.currentIndex];
+      const nuevoEstado = this.getEstadoPorId(event.container.id);
+
+      if (actividad.estado !== nuevoEstado) {
+        // Actualizar el estado de la actividad
+        actividad.estado = nuevoEstado;
+
+        // Enviar petición HTTP para actualizar el estado en la API
+        this.actividadService.actualizarEstado(actividad)
+          .then(guardada => this.uiService.mostrarSnackBar(`La actividad ${guardada.nombre} se ha movido a ${EstadoActividadMap.get(guardada.estado)}`, 1.5))
+          .catch(err => this.uiService.mostrarError(err));
+      }
+    }
+  }
+
+  private getEstadoPorId(id: string): EstadoActividad {
+    switch (id) {
+      case 'POR_HACER': return EstadoActividad.POR_HACER;
+      case 'EN_PROGRESO': return EstadoActividad.EN_PROGRESO;
+      case 'EN_REVISION': return EstadoActividad.EN_REVISION;
+      case 'COMPLETADA': return EstadoActividad.COMPLETADA;
+      default: return EstadoActividad.POR_HACER;
+    }
+  }
 
   ngOnDestroy(): void {
     this.subs.forEach(sub => sub.unsubscribe());
