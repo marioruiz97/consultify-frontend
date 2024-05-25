@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, mapToCanActivate } from '@angular/router';
-import { HomeComponent } from './feature/home/home.component';
+import { HomeComponent } from './feature/otros/home/home.component';
 import { InicioSesionComponent } from './feature/autenticacion/components/inicio-sesion/inicio-sesion.component';
 import { RecuperarContrasenaComponent } from './feature/autenticacion/components/recuperar-contrasena/recuperar-contrasena.component';
 import { MiPerfilComponent } from './feature/autenticacion/components/mi-perfil/mi-perfil.component';
@@ -8,12 +8,14 @@ import { ListaUsuariosComponent } from './feature/usuarios/components/lista-usua
 import { FormularioUsuarioComponent } from './feature/usuarios/components/formulario-usuario/formulario-usuario.component';
 import { AppConstants as rutas } from './shared/app.constants';
 import { AuthGuard } from './core/guard/auth.guard';
-import { AcercaDeComponent } from './feature/acerca-de/acerca-de.component';
-import { ContactenosComponent } from './feature/contactenos/contactenos.component';
+import { AcercaDeComponent } from './feature/otros/acerca-de/acerca-de.component';
+import { ContactenosComponent } from './feature/otros/contactenos/contactenos.component';
 import { ListaClientesComponent } from './feature/clientes/components/lista-clientes/lista-clientes.component';
 import { FormularioClienteComponent } from './feature/clientes/components/formulario-cliente/formulario-cliente.component';
 import { ListaProyectosComponent } from './feature/proyectos/components/lista-proyectos/lista-proyectos.component';
 import { TableroProyectoComponent } from './feature/proyectos/components/tablero-proyecto/tablero-proyecto.component';
+import { DetalleActividadComponent } from './feature/actividades/components/detalle-actividad/detalle-actividad.component';
+import { InformeProyectoComponent } from './feature/informes/components/informe-proyecto/informe-proyecto.component';
 
 const routes: Routes = [
   // módulos generales
@@ -35,8 +37,11 @@ const routes: Routes = [
 
   // proyectos
   { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent },
-  { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent }
+  { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent },
+  { path: `${rutas.RUTA_PROYECTOS}/:idProyecto/actividades/:idActividad`, component: DetalleActividadComponent },
 
+  // informes
+  { path: rutas.RUTA_INFORMES, component: InformeProyectoComponent },
 ];
 
 @NgModule({

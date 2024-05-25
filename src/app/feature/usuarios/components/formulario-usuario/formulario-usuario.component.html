@@ -65,7 +65,8 @@
               <mat-label>Teléfono de contacto</mat-label>
               <input matInput type="tel" formControlName="telefono">
               <mat-hint>Ingrese preferiblemente teléfono celular</mat-hint>
-              <mat-error>Ingrese un teléfono válido de hasta 10 caracteres (Actual: {{usuarioForm.value.telefono.length}})</mat-error>
+              <mat-error>Ingrese un teléfono válido de hasta 10 caracteres (Actual:
+                {{usuarioForm.value.telefono.length}})</mat-error>
             </mat-form-field>
           </div>
         </mat-expansion-panel>
@@ -105,11 +106,6 @@
             </mat-form-field>
           </div>
 
-          <div>
-            <mat-slide-toggle class="pl-sm-4 mt-3" color="primary" formControlName="activo">
-              <span>El usuario se encuentra {{usuarioForm.value.activo? 'Activo':'Inactivo'}} </span>
-            </mat-slide-toggle>
-          </div>
 
           <!-- BOTONERA -->
           <p class="invalid-form mt-4" *ngIf="usuarioForm.invalid">**El formulario posee errores, verifica los campos.

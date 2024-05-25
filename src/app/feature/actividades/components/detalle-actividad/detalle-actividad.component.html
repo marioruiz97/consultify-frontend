@@ -1,0 +1,110 @@
+<div class="banner" [ngClass]="claseCss"></div>
+
+<section class="container">
+
+  <div class="row my-3 ml-3">
+    <button type="button" mat-button (click)="volverAlTablero()" color="white">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Volver al proyecto</span>
+    </button>
+  </div>
+
+  <div class="row my-3 ml-3 white">
+    <h2 class="mat-h2" *ngIf="actividad">Actividad #{{actividad.id}}: {{actividad.nombre}}</h2>
+  </div>
+
+  <div class="content" fxLayout fxLayout.lt-md="column" fxLayoutGap="8px">
+    <mat-card class="m-3 p-2 mat-mdc-elevation-specific mat-elevation-z5" fxFlex
+      [ngClass]="!habilitarCampos ? 'card-standard' : 'card-expanded' ">
+      <mat-card-title class="pl-2">
+        <span class="mat-h2">Detalles</span>
+        <span fxFlex></span>
+        <button mat-icon-button type="button" class="py-0" (click)="habilitarGuardar()" *ngIf="!habilitarCampos">
+          <mat-icon color="primary" matTooltip="Editar Actividad">edit</mat-icon>
+        </button>
+      </mat-card-title>
+      <mat-card-content>
+        <span mat-subheader *ngIf="habilitarCampos">Los campos con * son obligatorios</span>
+
+        <form autocomplete="off" [formGroup]="actividadForm" (ngSubmit)="guardarActividad()">
+
+          <div class="form-group" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline" fxFlex>
+              <mat-label>Nombre actividad</mat-label>
+              <input matInput formControlName="nombre">
+              <mat-hint *ngIf="habilitarCampos"> Máximo 100 caracteres / actual:{{actividadForm.value.nombre.length}}
+              </mat-hint>
+              <mat-error *ngIf="habilitarCampos">Ingrese un nombre válido</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex>
+              <mat-label>Asignado a</mat-label>
+              <input type="text" matInput [matAutocomplete]="auto" formControlName="responsable">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="mostrarResponsableFn">
+                <mat-option *ngFor="let responsable of filteredMiembros | async" [value]="responsable.usuario">
+                  <span>
+                    {{responsable.usuario.nombres + ' ' + responsable.usuario.apellidos + ' - ' +
+                    responsable.usuario.correo}}
+                  </span>
+                </mat-option>
+              </mat-autocomplete>
+              <mat-hint *ngIf="habilitarCampos">Busca por nombre o correo</mat-hint>
+              <mat-error *ngIf="habilitarCampos">El responsable es obligatorio</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Estado de Actividad</mat-label>
+              <mat-select formControlName="estado">
+                <mat-option [value]="estado.key" *ngFor="let estado of estados | keyvalue">{{estado.value}}</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="habilitarCampos">Seleccione un estado de actividad</mat-hint>
+              <mat-error *ngIf="habilitarCampos">El estado es obligatorio</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex>
+              <mat-label>Fecha esperada para el cierre</mat-label>
+              <input matInput [min]="minDate" [matDatepicker]="fechaCierre" formControlName="fechaCierreEsperado">
+              <mat-datepicker-toggle matSuffix [for]="fechaCierre"></mat-datepicker-toggle>
+              <mat-datepicker #fechaCierre></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="form-group" fxLayoutAlign="center">
+            <mat-form-field appearance="outline" fxFlex>
+              <mat-label>Descripción de la actividad</mat-label>
+              <textarea matInput formControlName="descripcion"></textarea>
+              <mat-icon matPrefix>message</mat-icon>
+              <mat-hint *ngIf="habilitarCampos">
+                Descripción que permite identificar el propósito de la actividad
+                <br />(Max: 254 caracteres / actual:{{actividadForm.value.descripcion.length}})
+              </mat-hint>
+            </mat-form-field>
+          </div>
+
+          <p class="invalid-form pt-4" *ngIf="habilitarCampos && actividadForm.invalid">
+            **El formulario posee errores, verifica los campos.
+          </p>
+
+          <mat-dialog-actions fxLayoutAlign.gt-sm="end" fxLayoutGap="10px" fxLayout.lt-sm="column"
+            *ngIf="habilitarCampos">
+            <button type="button" mat-raised-button color="warn" (click)="deshabilitarGuardar()">
+              <mat-icon>undo</mat-icon> Cancelar
+            </button>
+            <button type="submit" mat-raised-button color="primary" [disabled]="!actividadForm.valid">
+              <mat-icon>save</mat-icon> Guardar Cambios
+            </button>
+          </mat-dialog-actions>
+
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <aside class="m-3" fxFlex *ngIf="actividad">
+      <h3 class="mat-h2 pl-2 white">Seguimiento</h3>
+      <app-seguimiento-actividad [actividad]="actividad"></app-seguimiento-actividad>
+    </aside>
+  </div>
+
+</section>

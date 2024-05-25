@@ -13,7 +13,10 @@ export class AppConstants {
   public static readonly RUTA_TABLEROS = 'tableros';
   public static readonly RUTA_CONTACTO = 'contactenos';
   public static readonly RUTA_ACERCA = 'acerca';
+  public static readonly RUTA_INFORMES = 'informes';
   public static readonly RUTA_MIS_PROYECTOS = 'mis-proyectos';
+  public static readonly RUTA_ACTIVIDADES = 'proyectos/{idProyecto}/actividades';
+  public static readonly RUTA_SEGUIMIENTOS = 'actividades/{idActividad}/seguimientos';
 
   // PATRONES
   public static readonly PATRON_CONTRASENA = '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*#?&^_-]).{8,16}';
@@ -24,6 +27,7 @@ export const MENU_NAVEGACION: NavItem[] = [
   { url: AppConstants.RUTA_USUARIOS, name: 'Usuarios', icon: 'people' },
   { url: AppConstants.RUTA_CLIENTES, name: 'Empresas Clientes', icon: 'account_balance' },
   { url: AppConstants.RUTA_PROYECTOS, name: 'Proyectos', icon: 'dashboard' },
+  { url: AppConstants.RUTA_INFORMES, name: 'Informes', icon: 'pie_chart' },
 ];
 
 export const DIALOG_CONFIG: MatDialogConfig = {

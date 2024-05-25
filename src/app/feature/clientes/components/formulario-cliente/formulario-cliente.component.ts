@@ -119,7 +119,7 @@ export class FormularioClienteComponent implements OnDestroy {
 
   private ejecutarOperacion(operacion: Promise<Cliente>) {
     operacion.then(res => {
-      this.uiService.mostrarSnackBar(`El cliente ${res.nombreComercial} se ha guardado con exito`, 4);
+      this.uiService.mostrarSnackBar(`El cliente ${res.nombreComercial} se ha guardado con exito`, 1.25);
       this.router.navigate([AppConstants.RUTA_CLIENTES]);
     })
       .catch(err => {

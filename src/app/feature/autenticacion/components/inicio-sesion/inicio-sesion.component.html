@@ -1,7 +1,10 @@
 <div fxLayout="row wrap" class="contenedor">
-  <section fxFlex fxFlex.lt-sm="100" class="blanco">
+
+  <section fxFlex fxFlex.lt-sm="100" class="blanco mb-3 mb-md-0 pb-3">
     <div fxLayout="column">
+
       <div class="logo"></div>
+
       <div class="mx-auto redes">
         <h2>Visita nuestras redes sociales</h2>
         <div class="text-center">
@@ -10,14 +13,19 @@
             <mat-icon [class]="enlace.nombre"><fa-icon [icon]="enlace.faIcon"></fa-icon></mat-icon>
           </a>
         </div>
+
       </div>
     </div>
   </section>
+
   <section fxFlex="60" fxFlex.lt-sm="100" class="formulario my-auto py-4 py-sm-0">
+
     <mat-card class="m-auto p-4">
+
       <mat-card-header class="mx-auto mb-5">
         <mat-card-title class="mat-h1">Iniciar Sesión</mat-card-title>
       </mat-card-header>
+
       <form (ngSubmit)="iniciarSesion()" [formGroup]="loginForm" fxLayout="column">
 
         <!-- nombre de usuario o correo-->
@@ -36,20 +44,20 @@
             [attr.aria-pressed]="hide">
             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
-          <mat-hint>Ingrese su contraseña. Debe contener mínimo 1 Mayus, 1 Min, 1 Número y 1 Caracter especial</mat-hint>
-          <mat-error>Contraseña Obligatoria. Asegúrese de contener mínimo 1 Mayus, 1 Min, 1 Número y 1 Caracter especial</mat-error>
+          <mat-hint>
+            Ingrese su contraseña. Debe contener mínimo 1 Mayus, 1 Min, 1 Número y 1 Caracter especial
+          </mat-hint>
+          <mat-error>
+            Contraseña Obligatoria. Asegúrese de contener mínimo 1 Mayus, 1 Min, 1 Número y 1 Caracterespecial
+          </mat-error>
         </mat-form-field>
 
-
-
         <a [routerLink]="['/recuperar']" fxFlexAlign="end" class="mb-3">recuperar contraseña</a>
-        <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid" class="py-4">Iniciar Sesion</button>
+        <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid" class="py-4">
+          Iniciar Sesion
+        </button>
       </form>
     </mat-card>
-
-
-
-
 
   </section>
 </div>

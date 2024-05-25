@@ -73,7 +73,7 @@ export class ContactenosComponent implements OnDestroy {
       this.httpClient.post('https://us-central1-proyectos-asisge.cloudfunctions.net/sendEmail', data, httpOptions)
         .subscribe({
           next: (res: any) => {
-            this.uiService.mostrarSnackBar(res.success, 3);
+            this.uiService.mostrarSnackBar(res.success, 2);
             this.contactForm = this.initForm();
           },
           error: (error) => {

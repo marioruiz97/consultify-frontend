@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UIService } from 'src/app/core/service/ui.service';
 import { TableroProyectoService } from '../../service/tablero-proyecto.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -24,22 +23,32 @@ export class TableroProyectoComponent {
   private subs: Subscription[] = [];
 
   datosCargados = false;
+  tabSeleccionada = 0;
 
 
   constructor(
-    private uiService: UIService,
     private servicioTablero: TableroProyectoService,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog
   ) {
-    this.subs.push(this.activatedRoute.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id && id !== '0') {
-        this.idProyecto = +id;
-        this.servicioTablero.obtenerTablero(this.idProyecto).subscribe(tableroActual => this.infoTablero = tableroActual);
-        this.datosCargados = true;
-      }
-    }));
+    this.subs.push(
+      this.activatedRoute.queryParams.subscribe(params => {
+        const tab = params['tab'];
+        if (tab) this.tabSeleccionada = +tab;
+      })
+    );
+
+    this.subs.push(
+      this.activatedRoute.paramMap.subscribe(params => {
+        const id = params.get('id');
+
+        if (id && id !== '0') {
+          this.idProyecto = +id;
+          this.servicioTablero.obtenerTablero(this.idProyecto).subscribe(tableroActual => this.infoTablero = tableroActual);
+          this.datosCargados = true;
+        }
+      })
+    );
   }
 
 
@@ -49,6 +58,9 @@ export class TableroProyectoComponent {
   get proyecto(): InfoProyecto | undefined {
     return this.infoTablero?.infoProyecto;
   }
+  get actividades(): number {
+    return this.infoTablero ? this.infoTablero.actividades.length : 0;
+  }
 
   tipoDocumento(tipo: string) {
     return TipoDocumentoMap.get(tipo);
@@ -56,12 +68,12 @@ export class TableroProyectoComponent {
 
   abrirGestionarMiembro() {
     const data = this.proyecto?.miembros;
-    this.dialog.open(GestionarMiembrosProyectoComponent, { data, ...customConfig('80vw', '60vh') });
+    this.dialog.open(GestionarMiembrosProyectoComponent, { data, ...customConfig('60vw', '60vh') });
   }
 
   abrirEditarFormulario() {
     const data = this.infoTablero?.infoProyecto;
-    const dialogRef = this.dialog.open(FormularioProyectoComponent, { data, ...customConfig('80vw'), disableClose: true });
+    const dialogRef = this.dialog.open(FormularioProyectoComponent, { data, ...customConfig('60vw'), disableClose: true });
     this.subs.push(dialogRef.afterClosed().subscribe(recargar => { if (recargar) this.servicioTablero.obtenerTablero(this.idProyecto) }));
   }
 

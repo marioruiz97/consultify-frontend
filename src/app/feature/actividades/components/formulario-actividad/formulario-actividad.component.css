@@ -1,0 +1,7 @@
+div.form-group {
+  margin-bottom: 12px;
+}
+
+mat-form-field {
+  padding: 10px 5px;
+}

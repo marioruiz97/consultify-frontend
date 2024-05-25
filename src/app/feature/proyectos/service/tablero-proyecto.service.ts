@@ -5,6 +5,8 @@ import { UIService } from 'src/app/core/service/ui.service';
 import { TableroProyecto } from '../model/tablero/tablero-proyecto.model';
 import { AppConstants } from 'src/app/shared/app.constants';
 import { MiembroProyecto } from '../model/miembros/miembro-proyecto.model';
+import { Actividad } from '../../actividades/model/actividad.model';
+import { ResponsableActividad } from '../../actividades/model/responsable-actividad.model';
 
 @Injectable()
 export class TableroProyectoService {
@@ -49,7 +51,7 @@ export class TableroProyectoService {
     const result =
       await this.httpService.putRequest<MiembroProyecto>(`${this.tableroPath}/${id}/miembros`, miembro)
         .then(miembro => {
-          this.uiService.mostrarSnackBar(`Se ha agregado a ${miembro.usuario.nombres} ${miembro.usuario.apellidos} a la lista de miembros`, 3);
+          this.uiService.mostrarSnackBar(`Se ha agregado a ${miembro.usuario.nombres} ${miembro.usuario.apellidos} a la lista de miembros`, 1.2);
           const tablero: TableroProyecto | undefined = this.$TableroActual.getValue();
           if (tablero) {
             tablero.infoProyecto.miembros.push(miembro);
@@ -68,7 +70,7 @@ export class TableroProyectoService {
     const miembros =
       await this.httpService.deleteRequest<MiembroProyecto[]>(`${this.tableroPath}/${id}/miembros/${miembro.usuario.idUsuario}`)
         .then(miembros => {
-          this.uiService.mostrarSnackBar(`Se ha eliminado a ${miembro.usuario.nombres} ${miembro.usuario.apellidos} de la lista de miembros`, 3);
+          this.uiService.mostrarSnackBar(`Se ha eliminado a ${miembro.usuario.nombres} ${miembro.usuario.apellidos} de la lista de miembros`, 1.25);
           const tablero: TableroProyecto | undefined = this.$TableroActual.getValue();
           if (tablero) {
             tablero.infoProyecto.miembros = miembros;
@@ -79,6 +81,46 @@ export class TableroProyectoService {
         .catch(err => { this.uiService.mostrarError(err); return []; });
 
     return miembros;
+  }
+
+  /**
+   * GESTION DE ACTIVIDADES
+   */
+  agregarActividad(actividad: Actividad, asignadoA: ResponsableActividad) {
+    actividad.responsable = asignadoA;
+    actividad.responsable.nombresCompletos = asignadoA.nombres + ' ' + asignadoA.apellidos;
+    const tablero = this.$TableroActual.value;
+
+    if (tablero) {
+      const esEditar = tablero.actividades.some(tarea => tarea.id === actividad.id);
+
+      if (esEditar)
+        tablero.actividades = tablero.actividades.filter(tarea => tarea.id !== actividad.id);
+
+      tablero.actividades.push(actividad);
+      this.$TableroActual.next(tablero);
+    }
+  }
+
+  actualizarEstadoActividad(actividad: Actividad) {
+    const tablero = this.$TableroActual.value;
+    if (tablero) {
+      const aEditar: Actividad | undefined = tablero.actividades.find(actual => actual.id === actividad.id);
+      if (aEditar) {
+        aEditar.estado = actividad.estado;
+        aEditar.fechaCompletada = actividad.fechaCompletada;
+        this.$TableroActual.next(tablero);
+      }
+    }
+  }
+
+  eliminarActividad(actividad: Actividad) {
+    const tablero = this.$TableroActual.value;
+
+    if (tablero) {
+      tablero.actividades = tablero.actividades.filter(tarea => tarea.id !== actividad.id);
+      this.$TableroActual.next(tablero);
+    }
   }
 
 }

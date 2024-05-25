@@ -1,0 +1,105 @@
+p.y-center,
+p.y-center span {
+  vertical-align: middle;
+}
+
+.weight-500 {
+  font-weight: 500;
+}
+
+.botonera button {
+  font-size: 15px;
+}
+
+.botonera mat-form-field.buscar {
+  min-width: 350px;
+}
+
+.kanban-board,
+.kanban-column {
+  transition: flex 0.3s ease;
+}
+
+.kanban-column {
+  border-radius: 5px;
+  background-color: #f3f3f3;
+}
+
+.column-title {
+  color: white;
+}
+
+div.column-title button {
+  position: relative;
+  top: -10px;
+}
+
+.mat-badge-content {
+  right: -15px !important;
+  background-color: white;
+  color: black;
+}
+
+/* colores para las columnas segun el estado actividad */
+.por-hacer {
+  border-left: 4px solid var(--deep-blue);
+  border-top: 4px solid var(--deep-blue);
+}
+
+.por-hacer .column-title {
+  background-color: var(--deep-blue);
+}
+
+.en-progreso {
+  border-left: 4px solid #91c232;
+  border-top: 4px solid #91c232;
+}
+
+.en-progreso .column-title {
+  background-color: #91c232;
+}
+
+.en-revision {
+  border-left: 4px solid #e8532c;
+  border-top: 4px solid #e8532c;
+}
+
+.en-revision .column-title {
+  background-color: #e8532c;
+}
+
+.completada {
+  border-left: 4px solid #05a60dd1;
+  border-top: 4px solid #05a60dd1;
+}
+
+.completada .column-title {
+  background-color: #05a60dd1;
+}
+
+.fecha-vencimiento {
+  font-size: 12px;
+  letter-spacing: 0.001em;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.fecha-completada {
+  font-size: 12px;
+  letter-spacing: 0.001em;
+  font-style: italic;
+}
+
+/*
+* estilos para drop down
+*/
+
+.kanban-tasks {
+  max-height: 82vh;
+  /* Ajusta según la altura de tu encabezado sticky */
+  overflow-y: auto;
+}
+
+[cdkDrag] {
+  cursor: move;
+}

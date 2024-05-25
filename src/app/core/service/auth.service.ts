@@ -41,7 +41,7 @@ export class AuthService {
     if (!token) return true;
     const payload = token.jwt ? JSON.parse(atob(token.jwt.split('.')[1])) : null;
     const now = new Date().getTime() / 1000;
-    return payload === null || payload.exp < now ? true : false;
+    return payload === null || payload.exp < now;
   }
 
   verificarSesion(): boolean {
@@ -102,7 +102,7 @@ export class AuthService {
   }
 
   cerrarSesion() {
-    this.uiService.mostrarSnackBar('Se ha cerrado sesión', 3)
+    this.uiService.mostrarSnackBar('Se ha cerrado sesión', 1.5)
     this.limpiarDatosSesion();
   }
 

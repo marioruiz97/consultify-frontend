@@ -52,16 +52,14 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
     if (clienteFormControl) {
       this.filteredClientes = clienteFormControl.valueChanges.pipe(
         startWith(''),
-        map(formValue => {
-          const cliente = typeof formValue === 'string' ? formValue : formValue.nombreComercial;
-          return cliente ? this._filter(cliente as string) : this.clientes.slice();
-        })
+        map(valorFormulario => typeof valorFormulario === 'string' ? valorFormulario : valorFormulario.nombreComercial),
+        map(cliente => cliente ? this._filter(cliente as string) : this.clientes.slice())
       );
     }
   }
 
   mostrarClienteFn(cliente: Cliente): string {
-    return cliente && cliente.nombreComercial ? `${cliente.idCliente} - ${cliente.nombreComercial}` : '';
+    return cliente && cliente.nombreComercial ? `${cliente.idCliente} - ${cliente.razonSocial} - ${cliente.nombreComercial}` : '';
   }
 
   private _filter(value: string): Cliente[] {
@@ -152,7 +150,7 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
   }
 
   private guardadoExitoso(proyecto: InfoProyecto) {
-    this.uiService.mostrarSnackBar(`El proyecto ${proyecto.nombreProyecto} se ha guardado con exito`, 4);
+    this.uiService.mostrarSnackBar(`El proyecto ${proyecto.nombreProyecto} se ha guardado con exito`, 2);
     this.dialogRef.close(true);
     this.router.navigate([`/${AppConstants.RUTA_PROYECTOS}/${proyecto.idProyecto}`]);
   }

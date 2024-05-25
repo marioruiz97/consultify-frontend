@@ -1,5 +1,4 @@
 export enum TipoDocumento {
-
   CC,
   CE,
   PA,

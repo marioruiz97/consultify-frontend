@@ -16,6 +16,7 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
 
   miembroForm: FormGroup;
   miembros: MiembroProyecto[] = [];
+  noHayPosiblesMiembros = false;
 
   private usuarios: MiembroProyecto[] = [];
   filteredUsuarios: Observable<MiembroProyecto[]> = of(this.usuarios);
@@ -64,7 +65,10 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
 
   obtenerPosiblesMiembros() {
     this.subs.push(
-      this.tableroService.obtenerPosiblesMiembros().subscribe(usuarios => this.usuarios = usuarios)
+      this.tableroService.obtenerPosiblesMiembros().subscribe(usuarios => {
+        this.usuarios = usuarios;
+        this.noHayPosiblesMiembros = usuarios.length < 1;
+      })
     );
   }
 
@@ -86,7 +90,10 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.uiService.mostrarConfirmDialog(data).afterClosed().subscribe(respuesta => {
         if (respuesta) this.tableroService.quitarMiembro(miembro)
-          .then(nuevaLista => { if (nuevaLista && nuevaLista.length >= 0) this.miembros = nuevaLista; })
+          .then(nuevaLista => {
+            if (nuevaLista && nuevaLista.length >= 0) this.miembros = nuevaLista;
+            this.obtenerPosiblesMiembros();
+          })
       })
     );
   }
@@ -97,9 +104,10 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
 
   agregarMiembro() {
     this.tableroService.agregarMiembro(this.miembroForm.value)
-      .then(exito => {
-        if (exito) this.miembroForm.reset();
+      .then(() => {
         this.obtenerPosiblesMiembros();
+        this.miembroForm.controls['usuario'].reset('');
+        this.miembroForm.controls['usuario'].setErrors(null);
       });
   }
 

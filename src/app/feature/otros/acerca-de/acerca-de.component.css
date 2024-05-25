@@ -18,6 +18,10 @@
   padding: 15px 20px;
 }
 
+.about-content div p {
+  font-size: 16px;
+}
+
 .historia,
 .hacer {
   min-height: 50vh;
@@ -31,7 +35,7 @@
 }
 
 .hacer {
-  background-image: url("/assets/img/quienes-somos.jpg");
+  background-image: url("/assets/img/home-proyectos.png");
 }
 
 .historia-caption h3,

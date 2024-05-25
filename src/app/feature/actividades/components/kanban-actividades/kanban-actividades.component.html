@@ -1,0 +1,136 @@
+<div class="mt-4 botonera" fxLayoutGap="20px" fxLayoutAlign="center">
+
+  <button class="py-4 mr-5" mat-raised-button color="primary" (click)="abrirCrearActividad()"
+    matTooltip="Crear nueva actividad">
+    <mat-icon class="mat-18">add</mat-icon> Nueva actividad
+  </button>
+
+  <button class="py-4" mat-raised-button color="accent" (click)="filtrarMisActividades()">
+    <mat-icon class="mat-18" *ngIf="!mostrarSoloMias">filter_alt</mat-icon> <span *ngIf="!mostrarSoloMias">Ver solo
+      mias</span>
+    <mat-icon class="mat-18" *ngIf="mostrarSoloMias">filter_alt_off</mat-icon> <span *ngIf="mostrarSoloMias">Ver
+      todas</span>
+  </button>
+
+  <mat-form-field>
+    <mat-date-range-input [rangePicker]="rangoFechas" [formGroup]="rango">
+      <input matStartDate formControlName="inicio" placeholder="Fecha Inicio">
+      <input matEndDate formControlName="fin" placeholder="Fecha Fin">
+    </mat-date-range-input>
+    <mat-datepicker-toggle matIconSuffix [for]="rangoFechas"></mat-datepicker-toggle>
+    <mat-date-range-picker #rangoFechas>
+      <mat-date-range-picker-actions>
+        <button mat-button matDateRangePickerCancel (click)="cancelarFiltroFecha()">Cancelar</button>
+        <button mat-raised-button color="primary" matDateRangePickerApply
+          (click)="aplicarFiltroFecha()">Aplicar</button>
+      </mat-date-range-picker-actions>
+    </mat-date-range-picker>
+  </mat-form-field>
+
+  <mat-form-field class="buscar">
+    <input matInput type="text" (keyup)="doFilter($event)" placeholder="buscar por nombre o responsable...">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+</div>
+
+<div>
+  <div fxFlex></div>
+  <button mat-button color="accent" (click)="resetColumnas()" *ngIf="mostrarResetColumnas">
+    <mat-icon class="mat-18">restart_alt</mat-icon> Mostrar todas las columnas
+  </button>
+</div>
+
+<div class="my-2" *ngIf="!hayActividades">
+  <h3 class="mat-h3 weight-500 text-center">No hay actividades aún, empieza a agregar actividades y gestiónalas en el
+    tablero.</h3>
+</div>
+
+<div class="kanban-board my-2 px-2 px-md-4" fxLayout="row" fxLayout.lt-md="row wrap" fxLayoutAlign="space-evenly"
+  fxLayoutGap="10px" fxLayoutGap.gt-sm="20px">
+
+  <div *ngFor="let column of columnas" [fxHide]="column.oculta" fxFlex fxFlex.lt-md="48" fxFlex.lt-sm="96"
+    class="mat-mdc-elevation-specific mat-elevation-z4 kanban-column my-2" [ngClass]="column.claseCss" cdkDropList
+    [id]="column.id" [cdkDropListData]="column.actividades | async" [cdkDropListConnectedTo]="mapColumnas"
+    (cdkDropListDropped)="drop($event)" cdkDropListGroup>
+
+    <div class="pl-2 pt-3 column-title">
+      <h2 class="column-title-h2 mb-0" fxHide.lt-md [matBadge]="(column.actividades | async)?.length"
+        matBadgePosition="above after">
+        {{ column.titulo }}
+      </h2>
+      <h4 fxHide.gt-sm> {{ column.titulo }} </h4>
+
+      <div fxFlex fxHide.lt-md></div>
+
+      <button mat-icon-button (click)="toggleExpand(column)"
+        [matTooltip]="column.isExpanded ? 'Retraer Columna' : 'Expandir Columna'">
+        <mat-icon class="expand-icon">{{column.isExpanded ? 'fullscreen_exit' : 'fullscreen'}}</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="toggleHide(column)" matTooltip="Ocultar Columna" *ngIf="!column.isExpanded">
+        <mat-icon class="hide-icon">visibility_off</mat-icon>
+      </button>
+
+    </div>
+
+    <div class="kanban-tasks">
+      <mat-card class="my-4 mx-2 mat-mdc-elevation-specific mat-elevation-z4"
+        *ngFor="let activity of column.actividades | async" cdkDrag>
+
+        <mat-card-header class="pt-2">
+
+          <mat-card-title class="task-title mat-h4 mb-0 weight-500">{{ activity.nombre }}</mat-card-title>
+          <mat-card-subtitle class="fecha-completada" *ngIf="activity.fechaCompletada">
+            Completada: {{activity.fechaCompletada | date: 'dd MMM yyyy hh:mm a'}}
+          </mat-card-subtitle>
+
+        </mat-card-header>
+
+        <mat-card-content class="pt-2 pb-0">
+          <p class="y-center">
+
+            <ngx-avatars class="my-auto" [size]="25" [name]="mostrarNombreCompleto(activity.responsable)"
+              [matTooltip]="'Asignado a: ' + activity.responsable.nombresCompletos"></ngx-avatars>
+            <span class="my-auto ml-1">{{mostrarNombreCompleto(activity.responsable)}}</span>
+            <span fxFlex></span>
+
+            <span class="fecha-vencimiento my-auto" *ngIf="activity.fechaCierreEsperado">
+              Vence en: {{activity.fechaCierreEsperado | date: 'dd MMM yyyy'}}
+            </span>
+            <span class="fecha-vencimiento my-auto" *ngIf="!activity.fechaCierreEsperado">
+              Sin fecha de vencimiento
+            </span>
+          </p>
+
+          <p>{{activity.descripcion}}</p>
+
+          <p class="y-center">
+            <span fxFlex></span>
+
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu Actividad"
+              matTooltip="Abrir menú de opciones">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
+              <button mat-menu-item type="button" [routerLink]="['actividades/'+activity.id]">
+                <mat-icon>open_in_new</mat-icon>
+                <span class="weight-500">Gestionar Actividad</span>
+              </button>
+              <button mat-menu-item type="button" (click)="abrirEditarActividad(activity)">
+                <mat-icon color="primary">edit</mat-icon>
+                <span class="weight-500">Editar Campos</span>
+              </button>
+              <button mat-menu-item type="button" (click)="eliminarActividad(activity)">
+                <mat-icon color="warn">delete</mat-icon>
+                <span class="weight-500">Eliminar Actividad</span>
+              </button>
+            </mat-menu>
+          </p>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </div>
+</div>

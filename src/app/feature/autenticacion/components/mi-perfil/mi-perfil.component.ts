@@ -135,7 +135,7 @@ export class MiPerfilComponent implements OnDestroy {
     this.toggleEdit();
     this.cuentaService.editarInformacionBasica(this.idUsuario, perfil)
       .then(res => {
-        this.uiService.mostrarSnackBar('La información personal ha sido actualizada!', 4);
+        this.uiService.mostrarSnackBar('La información personal ha sido actualizada!', 1.25);
         this.miPerfil = res;
         this.setForm(res);
       })
