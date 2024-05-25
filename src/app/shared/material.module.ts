@@ -25,6 +25,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
@@ -53,6 +55,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatExpansionModule,
     MatSlideToggleModule,
     MatBadgeModule,
+    MatProgressSpinnerModule,
     MatProgressBarModule,
     MatTabsModule,
     MatAutocompleteModule,
@@ -80,6 +83,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatExpansionModule,
     MatSlideToggleModule,
     MatBadgeModule,
+    MatProgressSpinnerModule,
     MatProgressBarModule,
     MatTabsModule,
     MatAutocompleteModule,

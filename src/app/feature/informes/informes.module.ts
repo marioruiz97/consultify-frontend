@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InformeProyectoComponent } from './components/informe-proyecto/informe-proyecto.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -9,7 +10,8 @@ import { InformeProyectoComponent } from './components/informe-proyecto/informe-
     InformeProyectoComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ]
 })
 export class InformesModule { }

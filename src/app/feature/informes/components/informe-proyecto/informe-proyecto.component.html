@@ -1,1 +1,79 @@
-<p>informe-proyecto works!</p>
+<div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
+
+  <header class="mb-2" gdArea="header">
+    <h1> Informes de avance</h1>
+  </header>
+
+  <section gdArea="content" fxLayoutAlign="center">
+
+    <mat-accordion fxFlex fxFlex.gt-xs="90" class="mat-mdc-elevation-specific mat-elevation-z8">
+
+      <!-- expansion info personal-->
+      <mat-expansion-panel>
+
+        <mat-expansion-panel-header class="py-2">
+          <mat-panel-title>Proyecto: proyecto.nombre, Cliente: proyecto.cliente</mat-panel-title>
+          <mat-panel-description fxShow.gt-sm dir="auto">Informe de avances </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
+        <h3 class="weight-500 mb-1 middle header-h3">
+          <mat-icon class="material-symbols-outlined">info</mat-icon>
+          Informacion del proyecto
+        </h3>
+        <mat-divider class="mb-3"></mat-divider>
+
+        <section>
+          <div fxFlex>
+            <p>Nombre del Proyecto:</p>
+            <p>Cliente:</p>
+            <p>Miembros:</p>
+            <div fxLayout="row">
+              <ngx-avatars name="miembro name" matTooltip="miembro name" size="40"></ngx-avatars>
+              <ngx-avatars name="miembro name" matTooltip="miembro name" size="40"></ngx-avatars>
+            </div>
+          </div>
+
+          <div fxFlex fxLayout="row wrap" fxLayoutAlign="space-evenly">
+
+            <div class="mx-3 width-30" fxflex>
+              <mat-progress-spinner mode="determinate" value="100" diameter="80" class="mx-auto"></mat-progress-spinner>
+              <div class="progress-text-style">
+                6
+              </div>
+              <p class="weight-500 text-center">Total de Actividades</p>
+            </div>
+
+            <div class="mx-3 width-30" fxflex>
+              <mat-progress-spinner mode="determinate" value="50" diameter="80" class="mx-auto"></mat-progress-spinner>
+              <div class="progress-text-style">
+                3
+              </div>
+              <p class="weight-500 text-center">Completadas</p>
+            </div>
+
+            <div class="mx-3 width-30" fxflex>
+              <mat-progress-spinner mode="determinate" value="50" diameter="80" class="mx-auto" color="accent"></mat-progress-spinner>
+              <div class="progress-text-style">
+                3
+              </div>
+              <p class="weight-500 text-center">Proximas a vencer</p>
+            </div>
+
+
+          </div>
+        </section>
+
+        <h3 class="weight-500 mt-3 mb-1 middle header-h3">
+          <mat-icon>bar_chart</mat-icon>
+          Avances
+        </h3>
+        <mat-divider class="mb-3"></mat-divider>
+        <section>
+          content
+        </section>
+
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </section>
