@@ -246,7 +246,10 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
 
         // Enviar petición HTTP para actualizar el estado en la API
         this.actividadService.actualizarEstado(actividad)
-          .then(guardada => this.uiService.mostrarSnackBar(`La actividad ${guardada.nombre} se ha movido a ${EstadoActividadMap.get(guardada.estado)}`, 1.5))
+          .then(guardada => {
+            this.uiService.mostrarSnackBar(`La actividad ${guardada.nombre} se ha movido a ${EstadoActividadMap.get(guardada.estado)}`, 1.5);
+            this.tableroservice.actualizarEstadoActividad(guardada);
+          })
           .catch(err => this.uiService.mostrarError(err));
       }
     }

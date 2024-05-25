@@ -90,13 +90,11 @@ div.column-title button {
   font-style: italic;
 }
 
-
 /*
 * estilos para drop down
 */
 
 .kanban-tasks {
-  height: 100%;
   max-height: 82vh;
   /* Ajusta según la altura de tu encabezado sticky */
   overflow-y: auto;

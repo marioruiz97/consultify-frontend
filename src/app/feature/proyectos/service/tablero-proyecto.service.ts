@@ -102,6 +102,18 @@ export class TableroProyectoService {
     }
   }
 
+  actualizarEstadoActividad(actividad: Actividad) {
+    const tablero = this.$TableroActual.value;
+    if (tablero) {
+      const aEditar: Actividad | undefined = tablero.actividades.find(actual => actual.id === actividad.id);
+      if (aEditar) {
+        aEditar.estado = actividad.estado;
+        aEditar.fechaCompletada = actividad.fechaCompletada;
+        this.$TableroActual.next(tablero);
+      }
+    }
+  }
+
   eliminarActividad(actividad: Actividad) {
     const tablero = this.$TableroActual.value;
 
