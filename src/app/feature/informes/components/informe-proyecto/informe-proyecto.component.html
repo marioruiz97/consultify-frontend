@@ -4,15 +4,19 @@
     <h1> Informes de avance</h1>
   </header>
 
-  <section gdArea="content" fxLayoutAlign="center">
+  <section gdArea="content" fxLayoutAlign="center" fxLayout="column">
 
-    <mat-accordion fxFlex fxFlex.gt-xs="90" class="mat-mdc-elevation-specific mat-elevation-z8">
+    <mat-accordion fxFlex fxFlex.gt-xs="90" class="mat-mdc-elevation-specific mat-elevation-z8 mx-auto mb-5"
+      *ngFor="let proyecto of proyectos | async">
 
       <!-- expansion info personal-->
-      <mat-expansion-panel>
+      <mat-expansion-panel (afterExpand)="cargarInformeProyecto(proyecto)">
 
         <mat-expansion-panel-header class="py-2">
-          <mat-panel-title>Proyecto: proyecto.nombre, Cliente: proyecto.cliente</mat-panel-title>
+          <mat-panel-title>
+            Proyecto: {{proyecto.nombreProyecto}},
+            Cliente: {{proyecto.cliente.nombreComercial}}
+          </mat-panel-title>
           <mat-panel-description fxShow.gt-sm dir="auto">Informe de avances </mat-panel-description>
         </mat-expansion-panel-header>
 
@@ -25,41 +29,44 @@
 
         <section>
           <div fxFlex>
-            <p>Nombre del Proyecto:</p>
-            <p>Cliente:</p>
+            <p>Nombre del Proyecto: {{proyecto.nombreProyecto}}</p>
+            <p>Cliente: {{infoCliente(proyecto.cliente)}}</p>
             <p>Miembros:</p>
             <div fxLayout="row">
-              <ngx-avatars name="miembro name" matTooltip="miembro name" size="40"></ngx-avatars>
-              <ngx-avatars name="miembro name" matTooltip="miembro name" size="40"></ngx-avatars>
+              <ngx-avatars [name]="miembro.nombreCompleto" [matTooltip]="miembro.nombreCompleto" size="40" class="mr-3"
+                *ngFor="let miembro of proyecto.miembros"></ngx-avatars>
             </div>
           </div>
 
-          <div fxFlex fxLayout="row wrap" fxLayoutAlign="space-evenly">
+          <div fxFlex fxLayout="row wrap" fxLayoutAlign="space-evenly" *ngIf="proyecto.informeActividad">
 
             <div class="mx-3 width-30" fxflex>
               <mat-progress-spinner mode="determinate" value="100" diameter="80" class="mx-auto"></mat-progress-spinner>
               <div class="progress-text-style">
-                6
+                {{proyecto.informeActividad.totalActividades}}
               </div>
               <p class="weight-500 text-center">Total de Actividades</p>
             </div>
 
             <div class="mx-3 width-30" fxflex>
-              <mat-progress-spinner mode="determinate" value="50" diameter="80" class="mx-auto"></mat-progress-spinner>
+              <mat-progress-spinner mode="determinate"
+                [value]="calcularCirculo(proyecto.informeActividad.actividadesCompletas, proyecto.informeActividad.totalActividades)"
+                diameter="80" class="mx-auto"></mat-progress-spinner>
               <div class="progress-text-style">
-                3
+                {{proyecto.informeActividad.actividadesCompletas}}
               </div>
               <p class="weight-500 text-center">Completadas</p>
             </div>
 
             <div class="mx-3 width-30" fxflex>
-              <mat-progress-spinner mode="determinate" value="50" diameter="80" class="mx-auto" color="accent"></mat-progress-spinner>
+              <mat-progress-spinner mode="determinate"
+                [value]="calcularCirculo(proyecto.informeActividad.actividadesPorVencer, proyecto.informeActividad.totalActividades)"
+                diameter="80" class="mx-auto" color="accent"></mat-progress-spinner>
               <div class="progress-text-style">
-                3
+                {{proyecto.informeActividad.actividadesPorVencer}}
               </div>
               <p class="weight-500 text-center">Proximas a vencer</p>
             </div>
-
 
           </div>
         </section>
@@ -68,11 +75,53 @@
           <mat-icon>bar_chart</mat-icon>
           Avances
         </h3>
+
         <mat-divider class="mb-3"></mat-divider>
-        <section>
-          content
+
+        <mat-spinner *ngIf="!proyecto.informeActividad"></mat-spinner>
+
+        <section class="contenedor-barras" *ngIf="proyecto.informeActividad">
+
+          <div class="my-3 p-2 barra POR_HACER"
+            [ngStyle]="definirEstilos(proyecto.informeActividad.actividadesPorHacer, proyecto.informeActividad.totalActividades)">
+            Actividades Por Hacer: {{proyecto.informeActividad.actividadesPorHacer}}
+            <span fxFlex></span>
+            <span>{{calcularPorcentaje(proyecto.informeActividad.actividadesPorHacer,
+              proyecto.informeActividad.totalActividades)}}%</span>
+          </div>
+
+          <div class="my-3 p-2 barra EN_PROGRESO"
+            [ngStyle]="definirEstilos(proyecto.informeActividad.actividadesEnProgreso, proyecto.informeActividad.totalActividades)">
+            Actividades En Progreso: {{proyecto.informeActividad.actividadesEnProgreso}}
+            <span fxFlex></span>
+            <span>{{calcularPorcentaje(proyecto.informeActividad.actividadesEnProgreso,
+              proyecto.informeActividad.totalActividades)}}%</span>
+          </div>
+
+          <div class="my-3 p-2 barra EN_REVISION"
+            [ngStyle]="definirEstilos(proyecto.informeActividad.actividadesEnRevision, proyecto.informeActividad.totalActividades)">
+            Actividades En Revision: {{proyecto.informeActividad.actividadesEnRevision}}
+            <span fxFlex></span>
+            <span>{{calcularPorcentaje(proyecto.informeActividad.actividadesEnRevision,
+              proyecto.informeActividad.totalActividades)}}%</span>
+          </div>
+
+          <div class="my-3 p-2 barra COMPLETADA"
+            [ngStyle]="definirEstilos(proyecto.informeActividad.actividadesCompletas, proyecto.informeActividad.totalActividades)">
+            Actividades Completadas: {{proyecto.informeActividad.actividadesCompletas}}
+            <span fxFlex></span>
+            <span>{{calcularPorcentaje(proyecto.informeActividad.actividadesCompletas,
+              proyecto.informeActividad.totalActividades)}}%</span>
+          </div>
+
         </section>
 
+        <mat-action-row>
+          <button mat-button color="primary" [routerLink]="['/proyectos/',proyecto.idProyecto]">
+            <mat-icon>open_in_new</mat-icon>
+            <span>Ir al proyecto</span>
+          </button>
+        </mat-action-row>
 
       </mat-expansion-panel>
     </mat-accordion>

@@ -59,7 +59,7 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
   }
 
   mostrarClienteFn(cliente: Cliente): string {
-    return cliente && cliente.nombreComercial ? `${cliente.idCliente} - ${cliente.razonSocial} - ${cliente.nombreComercial}` : '';
+    return cliente?.nombreComercial ? `${cliente.idCliente} - ${cliente.razonSocial} - ${cliente.nombreComercial}` : '';
   }
 
   private _filter(value: string): Cliente[] {
@@ -71,7 +71,10 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
 
   private obtenerClientes() {
     this.subs.push(this.clienteService.obtenerClientes().subscribe({
-      next: (clientes) => clientes.length > 0 ? this.clientes = clientes : this.manejarError(),
+      next: (clientes) => {
+        this.clientes = clientes;
+        if (clientes.length === 0) this.manejarError();
+      },
       error: () => this.manejarError()
     }));
   }
@@ -96,7 +99,7 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
   private iniciarForm(): FormGroup {
     return new FormGroup({
       nombreProyecto: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-      descripcionProyecto: new FormControl('', Validators.maxLength(255)),
+      descripcionProyecto: new FormControl('', [Validators.required, Validators.maxLength(255)]),
       clienteProyecto: new FormControl('', Validators.required),
     });
   }
@@ -120,8 +123,14 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
     const result: string[] = [];
     controls.forEach(control => {
       if (this.proyectoForm.controls[control].errors !== null) {
-        const printable = control === 'nombreProyecto' ? 'Nombre Proyecto' :
-          (control === 'descripcionProyecto' ? 'Descripcion del proyecto' : 'Cliente');
+        let printable = "";
+        switch (control) {
+          case 'nombreProyecto': printable = 'Nombre Proyecto';
+            break;
+          case 'descripcionProyecto': printable = 'Descripción Proyeto';
+            break;
+          default: printable = 'Cliente';
+        }
         result.push(printable);
       }
     });

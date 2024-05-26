@@ -17,6 +17,13 @@ header {
   min-width: 25%;
 }
 
+mat-accordion {
+  width: 90%;
+}
+
+/*
+* CIRCULO EN INFO PROYECTO
+*/
 .mat-mdc-progress-spinner,
 .mdc-circular-progress__determinate-circle {
   stroke-linecap: round !important;
@@ -25,7 +32,41 @@ header {
 .progress-text-style {
   position: relative;
   top: -50px;
-  left: 46.5%;
+  left: 45.8%;
   font-weight: 500;
   font-size: 18px;
+}
+
+/*
+* BARRAS HORIZONTALES
+ */
+.contenedor-barras {
+  width: 75%;
+  max-width: 75%;
+}
+
+.barra {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.barra.POR_HACER {
+  background-color: var(--deep-blue);
+}
+
+.barra.EN_PROGRESO {
+  background-color: #91c232;
+}
+
+.barra.EN_REVISION {
+  background-color: #e8532c;
+}
+
+.barra.COMPLETADA {
+  background-color: #05a60dd1;
 }
