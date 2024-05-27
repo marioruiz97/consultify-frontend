@@ -42,3 +42,12 @@ mat-icon {
   font-weight: 400;
   color: #fff;
 }
+
+/*
+* estilos componentes hijos
+*/
+
+app-mis-proximas-actividades,
+app-mis-proyectos {
+  min-width: 90%;
+}

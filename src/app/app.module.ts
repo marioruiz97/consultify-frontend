@@ -18,6 +18,7 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { ActividadesModule } from './feature/actividades/actividades.module';
 
 
 registerLocaleData(localeEs);
@@ -38,6 +39,7 @@ const AppDateAdapter = { provide: DateAdapter, useClass: MomentDateAdapter, deps
     FontAwesomeModule,
     CoreModule,
     AutenticacionModule,
+    ActividadesModule,
     UsuariosModule,
     ClientesModule,
     ProyectosModule,
