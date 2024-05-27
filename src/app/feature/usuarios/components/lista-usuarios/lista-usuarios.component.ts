@@ -12,6 +12,7 @@ import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/c
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { RolMap } from 'src/app/core/model/usuario-sesion.model';
 import { UIService } from 'src/app/core/service/ui.service';
+import { RoleService } from 'src/app/core/service/role.service';
 
 
 @Component({
@@ -30,7 +31,10 @@ export class ListaUsuariosComponent implements OnInit, AfterViewInit, OnDestroy 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private service: UsuarioService, private dialog: MatDialog, private uiService: UIService
+    private service: UsuarioService,
+    private dialog: MatDialog,
+    private uiService: UIService,
+    public rolService: RoleService
   ) { }
 
   ngOnInit() {

@@ -19,7 +19,8 @@
       <mat-card-title class="pl-2">
         <span class="mat-h2">Detalles</span>
         <span fxFlex></span>
-        <button mat-icon-button type="button" class="py-0" (click)="habilitarGuardar()" *ngIf="!habilitarCampos">
+        <button mat-icon-button type="button" class="py-0" (click)="habilitarGuardar()"
+          *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR']) && !habilitarCampos">
           <mat-icon color="primary" matTooltip="Editar Actividad">edit</mat-icon>
         </button>
       </mat-card-title>
@@ -92,7 +93,8 @@
             <button type="button" mat-raised-button color="warn" (click)="deshabilitarGuardar()">
               <mat-icon>undo</mat-icon> Cancelar
             </button>
-            <button type="submit" mat-raised-button color="primary" [disabled]="!actividadForm.valid">
+            <button type="submit" mat-raised-button color="primary" [disabled]="!actividadForm.valid"
+              *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR'])">
               <mat-icon>save</mat-icon> Guardar Cambios
             </button>
           </mat-dialog-actions>

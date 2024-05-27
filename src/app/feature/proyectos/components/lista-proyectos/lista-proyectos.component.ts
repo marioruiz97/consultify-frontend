@@ -9,6 +9,7 @@ import { DIALOG_CONFIG, customConfig } from 'src/app/shared/app.constants';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { UIService } from 'src/app/core/service/ui.service';
+import { RoleService } from 'src/app/core/service/role.service';
 
 @Component({
   selector: 'app-lista-proyectos',
@@ -25,7 +26,8 @@ export class ListaProyectosComponent {
   constructor(
     private servicioProyecto: ProyectoService,
     private dialog: MatDialog,
-    private uiService: UIService
+    private uiService: UIService,
+    public rolService: RoleService
   ) {
     this.obtenerProyectos();
   }

@@ -16,6 +16,7 @@ import { ListaProyectosComponent } from './feature/proyectos/components/lista-pr
 import { TableroProyectoComponent } from './feature/proyectos/components/tablero-proyecto/tablero-proyecto.component';
 import { DetalleActividadComponent } from './feature/actividades/components/detalle-actividad/detalle-actividad.component';
 import { InformeProyectoComponent } from './feature/informes/components/informe-proyecto/informe-proyecto.component';
+import { RoleGuard } from './core/guard/role.guard';
 
 const routes: Routes = [
   // módulos generales
@@ -30,10 +31,10 @@ const routes: Routes = [
   { path: rutas.RUTA_CUENTA, component: MiPerfilComponent, canActivate: mapToCanActivate([AuthGuard]) },
 
   // usuarios y clientes
-  { path: rutas.RUTA_USUARIOS, component: ListaUsuariosComponent, canActivate: mapToCanActivate([AuthGuard]) },
-  { path: `${rutas.RUTA_USUARIOS}/:id`, component: FormularioUsuarioComponent, canActivate: mapToCanActivate([AuthGuard]) },
-  { path: rutas.RUTA_CLIENTES, component: ListaClientesComponent, canActivate: mapToCanActivate([AuthGuard]) },
-  { path: `${rutas.RUTA_CLIENTES}/:id`, component: FormularioClienteComponent, canActivate: mapToCanActivate([AuthGuard]) },
+  { path: rutas.RUTA_USUARIOS, component: ListaUsuariosComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) }, // rutas protegidas con RoleGuard ya que son solo para personal de asisge
+  { path: `${rutas.RUTA_USUARIOS}/:id`, component: FormularioUsuarioComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) },
+  { path: rutas.RUTA_CLIENTES, component: ListaClientesComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) },
+  { path: `${rutas.RUTA_CLIENTES}/:id`, component: FormularioClienteComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) },
 
   // proyectos
   { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent, canActivate: mapToCanActivate([AuthGuard]) },

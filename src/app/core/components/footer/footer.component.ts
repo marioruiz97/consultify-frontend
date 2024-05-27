@@ -17,7 +17,7 @@ export class FooterComponent {
   constructor() {
     this.proyectos = [
       { name: 'Proyectos', url: rutas.RUTA_PROYECTOS },
-      { name: 'Informes', url: '/' },
+      { name: 'Informes', url: rutas.RUTA_INFORMES },
       { name: 'Clientes', url: rutas.RUTA_CLIENTES },
     ];
     this.modulos = [

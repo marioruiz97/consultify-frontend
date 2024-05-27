@@ -60,8 +60,8 @@
                 <mat-icon class="mat-18">edit</mat-icon>
               </button>
               <button mat-icon-button color="warn" (click)="cambiarEstado(!doc.estado,doc.idUsuario, doc.nombreUsuario)"
-                [matTooltip]="doc.estado ? 'Desactivar' : 'Activar'">
-                <!-- TODO desactivar solo si tiene rol ADMIN -->
+                [matTooltip]="doc.estado ? 'Desactivar' : 'Activar'"
+                *ngIf="rolService.hasRole('ROLE_ADMIN')">
                 <mat-icon class="mat-18">{{doc.estado ? 'block' : 'person_add'}}</mat-icon>
               </button>
               <button mat-icon-button (click)="mostrarDetalles(doc)" matTooltip="Ver detalles">
@@ -74,7 +74,8 @@
               </button>
               <mat-menu #actions="matMenu">
                 <button mat-menu-item [routerLink]="['/usuarios/'+doc.idUsuario]">Editar</button>
-                <button mat-menu-item (click)="cambiarEstado(!doc.estado,doc.idUsuario, doc.nombreUsuario)">
+                <button mat-menu-item (click)="cambiarEstado(!doc.estado,doc.idUsuario, doc.nombreUsuario)"
+                *ngIf="rolService.hasRole('ROLE_ADMIN')">
                   {{doc.estado ? 'Desactivar' : 'Activar'}}</button>
                 <button mat-menu-item (click)="mostrarDetalles(doc)">Ver detalles</button>
               </mat-menu>
@@ -86,7 +87,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
       <!-- paginador de angular material-->
-      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 30, 50, 100]" class="mat-mdc-elevation-specific mat-elevation-z8">
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 30, 50, 100]"
+        class="mat-mdc-elevation-specific mat-elevation-z8">
       </mat-paginator>
     </div>
   </section>
