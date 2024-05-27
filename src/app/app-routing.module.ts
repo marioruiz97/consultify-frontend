@@ -27,21 +27,21 @@ const routes: Routes = [
   // autenticacion y cuenta
   { path: rutas.RUTA_LOGIN, component: InicioSesionComponent },
   { path: rutas.RUTA_RECUPERAR, component: RecuperarContrasenaComponent },
-  { path: rutas.RUTA_CUENTA, component: MiPerfilComponent },
+  { path: rutas.RUTA_CUENTA, component: MiPerfilComponent, canActivate: mapToCanActivate([AuthGuard]) },
 
   // usuarios y clientes
-  { path: rutas.RUTA_USUARIOS, component: ListaUsuariosComponent },
-  { path: `${rutas.RUTA_USUARIOS}/:id`, component: FormularioUsuarioComponent },
-  { path: rutas.RUTA_CLIENTES, component: ListaClientesComponent },
-  { path: `${rutas.RUTA_CLIENTES}/:id`, component: FormularioClienteComponent },
+  { path: rutas.RUTA_USUARIOS, component: ListaUsuariosComponent, canActivate: mapToCanActivate([AuthGuard]) },
+  { path: `${rutas.RUTA_USUARIOS}/:id`, component: FormularioUsuarioComponent, canActivate: mapToCanActivate([AuthGuard]) },
+  { path: rutas.RUTA_CLIENTES, component: ListaClientesComponent, canActivate: mapToCanActivate([AuthGuard]) },
+  { path: `${rutas.RUTA_CLIENTES}/:id`, component: FormularioClienteComponent, canActivate: mapToCanActivate([AuthGuard]) },
 
   // proyectos
-  { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent },
-  { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent },
-  { path: `${rutas.RUTA_PROYECTOS}/:idProyecto/actividades/:idActividad`, component: DetalleActividadComponent },
+  { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent, canActivate: mapToCanActivate([AuthGuard]) },
+  { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent, canActivate: mapToCanActivate([AuthGuard]) },
+  { path: `${rutas.RUTA_PROYECTOS}/:idProyecto/actividades/:idActividad`, component: DetalleActividadComponent, canActivate: mapToCanActivate([AuthGuard]) },
 
   // informes
-  { path: rutas.RUTA_INFORMES, component: InformeProyectoComponent },
+  { path: rutas.RUTA_INFORMES, component: InformeProyectoComponent, canActivate: mapToCanActivate([AuthGuard]) },
 ];
 
 @NgModule({
