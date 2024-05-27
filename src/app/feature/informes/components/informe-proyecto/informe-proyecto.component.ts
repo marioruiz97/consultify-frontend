@@ -4,6 +4,9 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { InformeService } from '../../service/informe.service';
 import { TipoDocumentoMap } from 'src/app/feature/usuarios/model/tipo-documento.model';
 import { NumberInput } from '@angular/cdk/coercion';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-informe-proyecto',
@@ -29,6 +32,29 @@ export class InformeProyectoComponent implements OnDestroy {
         this.proyectos.next(encabezados);
       })
     );
+  }
+
+  idContenedorAvance(idProyecto: number): string {
+    return 'contenedor-informe-avance-' + idProyecto;
+  }
+
+  exportarAPDF(informe: InformeProyecto) {
+    const dataElement = document.getElementById(`contenedor-informe-avance-${informe.idProyecto}`);
+    const fecha = moment().format("DD-MM-YYYY");
+    const nombreArchivo = `informe-avance-${informe.idProyecto}-${informe.nombreProyecto}-${fecha}.pdf`;
+
+    if (dataElement) {
+      html2canvas(dataElement, { useCORS: true, logging: true, backgroundColor: '#fff' }).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+        pdf.save(nombreArchivo);
+      });
+    }
   }
 
   cargarInformeProyecto(proyecto: InformeProyecto) {
