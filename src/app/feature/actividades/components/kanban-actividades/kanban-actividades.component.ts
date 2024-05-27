@@ -91,8 +91,11 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
   }
 
   cancelarFiltroFecha() {
-    this.rango.setValue({ inicio: null, fin: null });
-    this.aplicarFiltros(this.actividadesFiltradas.value.prev);
+    if (!this.rango.pristine) {
+      this.rango.setValue({ inicio: null, fin: null });
+      this.aplicarFiltros(this.actividadesFiltradas.value.prev);
+      this.rango.markAsPristine()
+    }
   }
 
   aplicarFiltroFecha() {

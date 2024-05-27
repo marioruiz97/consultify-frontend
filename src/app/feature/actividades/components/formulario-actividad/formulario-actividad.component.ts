@@ -2,7 +2,6 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subscription, map, of, startWith } from 'rxjs';
-import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { UIService } from 'src/app/core/service/ui.service';
 import { MiembroProyecto } from 'src/app/feature/proyectos/model/miembros/miembro-proyecto.model';
 import { TableroProyectoService } from 'src/app/feature/proyectos/service/tablero-proyecto.service';
@@ -137,17 +136,7 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
   }
 
   cancelar() {
-    const data: ConfirmDialogData = {
-      title: '¿Cancelar progreso?',
-      message: 'Si vuelves perderás los avances del formulario de ingreso',
-      confirm: 'Sí, deseo regresar',
-      errors: [],
-      showCancel: true
-    };
-    const dialogRef = this.uiService.mostrarConfirmDialog(data);
-    this.subs.push(dialogRef.afterClosed().subscribe(result => {
-      if (result) this.dialogRef.close();
-    }));
+    this.dialogRef.close();
   }
 
   ngOnDestroy(): void {

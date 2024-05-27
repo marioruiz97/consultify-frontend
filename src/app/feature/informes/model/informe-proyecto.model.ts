@@ -8,6 +8,7 @@ export interface InformeProyecto {
   miembros: MiembroInforme[];
   abierto: boolean;
   informeActividad: InformeActividad;
+  barras: BarraActividades[];
 }
 
 export interface ClienteInforme {
@@ -21,4 +22,10 @@ export interface ClienteInforme {
 export interface MiembroInforme {
   idUsuario: number;
   nombreCompleto: string;
+}
+
+export interface BarraActividades {
+  estilo: string;
+  titulo: string;
+  valor: number;
 }

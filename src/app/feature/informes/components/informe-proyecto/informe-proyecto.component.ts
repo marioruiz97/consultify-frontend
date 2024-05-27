@@ -18,11 +18,12 @@ export class InformeProyectoComponent implements OnDestroy {
 
 
   constructor(private servicioInformes: InformeService) {
+    this.cargarEncabezados();
+  }
+
+  private cargarEncabezados() {
     this.subs.push(
-      this.servicioInformes.obtenerProyectos().subscribe(encabezados => {
-        console.log('projects', encabezados)
-        this.proyectos.next(encabezados);
-      })
+      this.servicioInformes.obtenerProyectos().subscribe(encabezados => this.proyectos.next(encabezados))
     );
   }
 
@@ -30,16 +31,21 @@ export class InformeProyectoComponent implements OnDestroy {
 
     const informes = this.proyectos.value;
     if (!proyecto.abierto) {
-      console.log('Cargar Proyecto desde API');
+      console.log('Cargar Proyecto desde API. id proyecto:', proyecto.idProyecto);
 
       this.subs.push(
         this.servicioInformes.cargarInformeProyecto(proyecto.idProyecto).subscribe(informe => {
-          console.log('informe', informe);
 
           informes.map(proj => {
             if (proj.idProyecto === proyecto.idProyecto) {
               proj.abierto = true;
               proj.informeActividad = informe.informeActividad;
+              proj.barras = [
+                { estilo: 'POR_HACER', titulo: 'Actividades Por Hacer', valor: proj.informeActividad.actividadesPorHacer },
+                { estilo: 'EN_PROGRESO', titulo: 'Actividades En Progreso', valor: proj.informeActividad.actividadesEnProgreso },
+                { estilo: 'EN_REVISION', titulo: 'Actividades En Revisión', valor: proj.informeActividad.actividadesEnRevision },
+                { estilo: 'COMPLETADA', titulo: 'Actividades Completadas', valor: proj.informeActividad.actividadesCompletas }
+              ];
             }
             return proj;
           });
@@ -51,20 +57,15 @@ export class InformeProyectoComponent implements OnDestroy {
     }
   }
 
-  calcularPorcentaje(nActividades: number, totalActividades: number): NumberInput {
-    return (nActividades * 100) / totalActividades;
+  calcularPorcentaje(nActividades: number, totalActividades: number, min = 0): NumberInput {
+    const total = totalActividades != 0 ? totalActividades : 1;
+    return min + (nActividades * (100 - min)) / total;
   }
-
-  calcularCirculo(nActividades: number, totalActividades: number): NumberInput {
-    return 2 + (nActividades * 98) / totalActividades;
-  }
-
 
   definirEstilos(actividades: number, totalActividades: number): { [klass: string]: string; } {
-    const porcentaje = (actividades * 70) / totalActividades;
+    const porcentaje = this.calcularPorcentaje(actividades, totalActividades, 4);
     return {
-      'min-width': '30%',
-      'width': `${30 + porcentaje}%`
+      'width': `${porcentaje}%`
     }
   }
 

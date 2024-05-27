@@ -41,8 +41,12 @@ mat-accordion {
 * BARRAS HORIZONTALES
  */
 .contenedor-barras {
-  width: 75%;
-  max-width: 75%;
+  width: 90%;
+  max-width: 90%;
+}
+
+h3.barra {
+  min-width: 27%;
 }
 
 .barra {
@@ -51,8 +55,8 @@ mat-accordion {
   font-weight: 500;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .barra.POR_HACER {
@@ -69,4 +73,11 @@ mat-accordion {
 
 .barra.COMPLETADA {
   background-color: #05a60dd1;
+}
+
+.rounded {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }

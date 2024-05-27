@@ -50,7 +50,7 @@
 
             <div class="mx-3 width-30" fxflex>
               <mat-progress-spinner mode="determinate"
-                [value]="calcularCirculo(proyecto.informeActividad.actividadesCompletas, proyecto.informeActividad.totalActividades)"
+                [value]="calcularPorcentaje(proyecto.informeActividad.actividadesCompletas, proyecto.informeActividad.totalActividades, 2)"
                 diameter="80" class="mx-auto"></mat-progress-spinner>
               <div class="progress-text-style">
                 {{proyecto.informeActividad.actividadesCompletas}}
@@ -60,7 +60,7 @@
 
             <div class="mx-3 width-30" fxflex>
               <mat-progress-spinner mode="determinate"
-                [value]="calcularCirculo(proyecto.informeActividad.actividadesPorVencer, proyecto.informeActividad.totalActividades)"
+                [value]="calcularPorcentaje(proyecto.informeActividad.actividadesPorVencer, proyecto.informeActividad.totalActividades, 2)"
                 diameter="80" class="mx-auto" color="accent"></mat-progress-spinner>
               <div class="progress-text-style">
                 {{proyecto.informeActividad.actividadesPorVencer}}
@@ -80,38 +80,20 @@
 
         <mat-spinner *ngIf="!proyecto.informeActividad"></mat-spinner>
 
-        <section class="contenedor-barras" *ngIf="proyecto.informeActividad">
+        <section class="contenedor-barras" *ngIf="proyecto.informeActividad" fxLayout="column">
 
-          <div class="my-3 p-2 barra POR_HACER"
-            [ngStyle]="definirEstilos(proyecto.informeActividad.actividadesPorHacer, proyecto.informeActividad.totalActividades)">
-            Actividades Por Hacer: {{proyecto.informeActividad.actividadesPorHacer}}
-            <span fxFlex></span>
-            <span>{{calcularPorcentaje(proyecto.informeActividad.actividadesPorHacer,
-              proyecto.informeActividad.totalActividades)}}%</span>
-          </div>
+          <div class="linea" fxFlex fxLayout="row" *ngFor="let barra of proyecto.barras">
+            <h3 class="my-3 mr-1 p-2 barra {{barra.estilo}}">
+              {{barra.titulo}}: {{barra.valor}}
+            </h3>
 
-          <div class="my-3 p-2 barra EN_PROGRESO"
-            [ngStyle]="definirEstilos(proyecto.informeActividad.actividadesEnProgreso, proyecto.informeActividad.totalActividades)">
-            Actividades En Progreso: {{proyecto.informeActividad.actividadesEnProgreso}}
-            <span fxFlex></span>
-            <span>{{calcularPorcentaje(proyecto.informeActividad.actividadesEnProgreso,
-              proyecto.informeActividad.totalActividades)}}%</span>
-          </div>
-
-          <div class="my-3 p-2 barra EN_REVISION"
-            [ngStyle]="definirEstilos(proyecto.informeActividad.actividadesEnRevision, proyecto.informeActividad.totalActividades)">
-            Actividades En Revision: {{proyecto.informeActividad.actividadesEnRevision}}
-            <span fxFlex></span>
-            <span>{{calcularPorcentaje(proyecto.informeActividad.actividadesEnRevision,
-              proyecto.informeActividad.totalActividades)}}%</span>
-          </div>
-
-          <div class="my-3 p-2 barra COMPLETADA"
-            [ngStyle]="definirEstilos(proyecto.informeActividad.actividadesCompletas, proyecto.informeActividad.totalActividades)">
-            Actividades Completadas: {{proyecto.informeActividad.actividadesCompletas}}
-            <span fxFlex></span>
-            <span>{{calcularPorcentaje(proyecto.informeActividad.actividadesCompletas,
-              proyecto.informeActividad.totalActividades)}}%</span>
+            <div class="my-3 p-2 barra rounded {{barra.estilo}}"
+              [ngStyle]="definirEstilos(barra.valor, proyecto.informeActividad.totalActividades)">
+              <span fxFlex></span>
+              <span>
+                {{calcularPorcentaje(barra.valor, proyecto.informeActividad.totalActividades) | number:'1.0-2'}}%
+              </span>
+            </div>
           </div>
 
         </section>
