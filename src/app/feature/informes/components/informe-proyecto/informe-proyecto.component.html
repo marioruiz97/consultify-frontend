@@ -48,7 +48,7 @@
 
             <div class="mx-3 width-30" fxflex>
               <mat-progress-spinner mode="determinate" value="100" diameter="80" class="mx-auto"></mat-progress-spinner>
-              <div class="progress-text-style">
+              <div class="progress-text-style mx-auto">
                 {{proyecto.informeActividad.totalActividades}}
               </div>
               <p class="weight-500 text-center">Total de Actividades</p>
@@ -58,7 +58,7 @@
               <mat-progress-spinner mode="determinate"
                 [value]="calcularPorcentaje(proyecto.informeActividad.actividadesCompletas, proyecto.informeActividad.totalActividades, 2)"
                 diameter="80" class="mx-auto"></mat-progress-spinner>
-              <div class="progress-text-style">
+              <div class="progress-text-style mx-auto">
                 {{proyecto.informeActividad.actividadesCompletas}}
               </div>
               <p class="weight-500 text-center">Completadas</p>
@@ -68,7 +68,7 @@
               <mat-progress-spinner mode="determinate"
                 [value]="calcularPorcentaje(proyecto.informeActividad.actividadesPorVencer, proyecto.informeActividad.totalActividades, 2)"
                 diameter="80" class="mx-auto" color="accent"></mat-progress-spinner>
-              <div class="progress-text-style">
+              <div class="progress-text-style mx-auto">
                 {{proyecto.informeActividad.actividadesPorVencer}}
               </div>
               <p class="weight-500 text-center">Proximas a vencer</p>
@@ -89,14 +89,14 @@
         <section class="contenedor-barras" *ngIf="proyecto.informeActividad" fxLayout="column">
 
           <div class="linea my-2" fxFlex fxLayout="row" *ngFor="let barra of proyecto.barras">
-            <h3 class="mb-0 mr-1 p-2 barra {{barra.estilo}}">
+            <h3 class="mb-0 mr-1 p-1 barra {{barra.estilo}}">
               {{barra.titulo}}: {{barra.valor}}
             </h3>
 
-            <div class="p-2 barra rounded {{barra.estilo}}"
+            <div class="p-1 barra rounded {{barra.estilo}}"
               [ngStyle]="definirEstilos(barra.valor, proyecto.informeActividad.totalActividades)">
               <span fxFlex></span>
-              <span>
+              <span class="my-auto">
                 {{calcularPorcentaje(barra.valor, proyecto.informeActividad.totalActividades) | number:'1.0-2'}}%
               </span>
             </div>
