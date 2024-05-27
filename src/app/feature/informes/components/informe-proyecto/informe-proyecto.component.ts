@@ -13,6 +13,7 @@ import { NumberInput } from '@angular/cdk/coercion';
 export class InformeProyectoComponent implements OnDestroy {
 
   proyectos: BehaviorSubject<InformeProyecto[]> = new BehaviorSubject<InformeProyecto[]>([]);
+  noHayProyectos = true;
 
   private subs: Subscription[] = [];
 
@@ -23,7 +24,10 @@ export class InformeProyectoComponent implements OnDestroy {
 
   private cargarEncabezados() {
     this.subs.push(
-      this.servicioInformes.obtenerProyectos().subscribe(encabezados => this.proyectos.next(encabezados))
+      this.servicioInformes.obtenerProyectos().subscribe(encabezados => {
+        this.noHayProyectos = encabezados.length < 1;
+        this.proyectos.next(encabezados);
+      })
     );
   }
 

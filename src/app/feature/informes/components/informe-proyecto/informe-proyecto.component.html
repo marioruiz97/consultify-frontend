@@ -6,6 +6,11 @@
 
   <section gdArea="content" fxLayoutAlign="center" fxLayout="column">
 
+    <div class="text-center" *ngIf="noHayProyectos">
+      <h2 class="mt-4">No hay Proyectos en el sistema, empieza creándolos para poder ver los informes</h2>
+      <button mat-button [routerLink]="['/proyectos']" color="accent">Ir al módulo de proyectos</button>
+    </div>
+
     <mat-accordion fxFlex fxFlex.gt-xs="90" class="mat-mdc-elevation-specific mat-elevation-z8 mx-auto mb-5"
       *ngFor="let proyecto of proyectos | async">
 
@@ -82,12 +87,12 @@
 
         <section class="contenedor-barras" *ngIf="proyecto.informeActividad" fxLayout="column">
 
-          <div class="linea" fxFlex fxLayout="row" *ngFor="let barra of proyecto.barras">
-            <h3 class="my-3 mr-1 p-2 barra {{barra.estilo}}">
+          <div class="linea my-2" fxFlex fxLayout="row" *ngFor="let barra of proyecto.barras">
+            <h3 class="mb-0 mr-1 p-2 barra {{barra.estilo}}">
               {{barra.titulo}}: {{barra.valor}}
             </h3>
 
-            <div class="my-3 p-2 barra rounded {{barra.estilo}}"
+            <div class="p-2 barra rounded {{barra.estilo}}"
               [ngStyle]="definirEstilos(barra.valor, proyecto.informeActividad.totalActividades)">
               <span fxFlex></span>
               <span>
