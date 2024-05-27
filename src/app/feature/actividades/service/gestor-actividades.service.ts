@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TableroProyectoService } from '../../proyectos/service/tablero-proyecto.service';
 import { Actividad } from '../model/actividad.model';
 import { HttpService } from 'src/app/core/service/http.service';
-import { AppConstants } from 'src/app/shared/app.constants';
+import { AppConstants as rutas } from 'src/app/shared/app.constants';
 import { Observable } from 'rxjs';
 import { SeguimientoActividad } from '../model/seguimiento-actividad.model';
 
@@ -10,6 +10,7 @@ import { SeguimientoActividad } from '../model/seguimiento-actividad.model';
 export class GestorActividadesService {
 
   private idProyecto: number | undefined;
+  private actividadPath = rutas.API_BASE + rutas.RUTA_ACTIVIDADES;
 
   constructor(private tableroService: TableroProyectoService, private httpService: HttpService) {
     tableroService.tableroActual.subscribe(tablero => {
@@ -21,7 +22,7 @@ export class GestorActividadesService {
 
   get path() {
     const id = this.idProyecto ? this.idProyecto.toString() : "";
-    return AppConstants.RUTA_ACTIVIDADES.replace("{idProyecto}", id);
+    return this.actividadPath.replace("{idProyecto}", id);
   }
 
   verificarProyecto(idProyecto: string) {
@@ -33,7 +34,7 @@ export class GestorActividadesService {
    */
 
   obtenerActividadPorId(idProyecto: string, id: number): Observable<Actividad> {
-    const path = this.idProyecto ? this.path : AppConstants.RUTA_ACTIVIDADES.replace("{idProyecto}", idProyecto);
+    const path = this.idProyecto ? this.path : this.actividadPath.replace("{idProyecto}", idProyecto);
     return this.httpService.getRequest<Actividad>(`${path}/${id}`);
   }
 
@@ -58,7 +59,7 @@ export class GestorActividadesService {
    * GESTION DE SEGUIMIENTOS
    */
   private seguimientoPath(idActividad: number): string {
-    return AppConstants.RUTA_SEGUIMIENTOS.replace("{idActividad}", idActividad.toString());
+    return rutas.RUTA_SEGUIMIENTOS.replace("{idActividad}", idActividad.toString());
   }
 
   obtenerSeguimientoActividad(idActividad: number): Observable<SeguimientoActividad[]> {

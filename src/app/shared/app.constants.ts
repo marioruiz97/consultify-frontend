@@ -3,6 +3,8 @@ import { NavItem } from '../core/model/nav-item';
 
 export class AppConstants {
   // RUTAS
+  public static readonly API_BASE = 'api/v1/';
+
   public static readonly RUTA_HOME = 'home';
   public static readonly RUTA_LOGIN = 'login';
   public static readonly RUTA_RECUPERAR = 'recuperar';

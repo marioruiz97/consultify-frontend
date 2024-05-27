@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, lastValueFrom } from 'rxjs';
 import { UsuarioLista } from '../model/usuario-lista.model';
 import { HttpService } from 'src/app/core/service/http.service';
-import { AppConstants } from 'src/app/shared/app.constants';
+import { AppConstants as rutas } from 'src/app/shared/app.constants';
 import { UsuarioEditar } from '../model/usuario-editar.model';
 import { UsuarioFormulario } from '../model/usuario-formulario.model';
 
@@ -10,7 +10,7 @@ import { UsuarioFormulario } from '../model/usuario-formulario.model';
 @Injectable()
 export class UsuarioService {
 
-  private path: string = AppConstants.RUTA_USUARIOS;
+  private path: string = rutas.API_BASE + rutas.RUTA_USUARIOS;
 
   constructor(private httpService: HttpService) { }
 
