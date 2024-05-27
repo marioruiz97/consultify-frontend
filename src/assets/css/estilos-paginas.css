@@ -33,6 +33,15 @@ button.mat-darken-orange {
   font-weight: bold !important;
 }
 
+.weight-500 {
+  font-weight: 500 !important;
+}
+
+.middle,
+.middle * {
+  vertical-align: middle;
+}
+
 .light-weight {
   font-weight: 200 !important;
 }

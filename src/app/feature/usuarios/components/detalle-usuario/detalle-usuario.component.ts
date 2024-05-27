@@ -34,7 +34,7 @@ export class DetalleUsuarioComponent {
     this.infoCuenta.push({ property: 'Estado:', data: data.estado ? 'Activo' : 'Inactivo' });
     this.infoCuenta.push({ property: 'Rol:', data: this.mostrarRol(data.rol.toString()) });
     this.infoCuenta.push({ property: 'Creado Por:', data: data.creadoPor });
-    this.infoCuenta.push({ property: 'Último Inicio:', data: moment(data.ultimoInicio).format('DD/MMM/YYYY hh:mm:ss a') });
+    this.infoCuenta.push({ property: 'Último Inicio:', data: data.ultimoInicio ? moment(data.ultimoInicio).format('DD/MMM/YYYY hh:mm:ss a') : 'No ha iniciado sesión' });
   }
 
   private formatearTelefono(telefono: string) {

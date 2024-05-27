@@ -41,7 +41,7 @@ export class MiembrosProyectoComponent implements OnInit, OnDestroy {
    * @returns boolean soyMiembro
    */
   soyMiembro(): boolean {
-    return (this.miUsuario && this.$miembros && this.$miembros.find(miembro => miembro.nombreUsuario === this.miUsuario?.nombreUsuario)) !== undefined;
+    return (this.miUsuario && this.$miembros?.find(miembro => miembro.nombreUsuario === this.miUsuario?.nombreUsuario)) !== undefined;
   }
 
   getNombre() {

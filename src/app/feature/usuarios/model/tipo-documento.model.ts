@@ -1,9 +1,9 @@
 export enum TipoDocumento {
-  CC,
-  CE,
-  PA,
-  NIT,
-  TI,
+  CC = "CC",
+  CE = "CE",
+  PA = "PA",
+  NIT = "NIT",
+  TI = "TI",
 
 }
 

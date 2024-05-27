@@ -33,7 +33,7 @@ export class ListaProyectosComponent {
 
   private obtenerProyectos() {
     this.subs.push(this.servicioProyecto.obtenerProyectos().subscribe(res => {
-      this.proyectos = res as InfoProyecto[];
+      this.proyectos = res;
       this.proyectosFiltrados.next(this.proyectos);
     }));
   }

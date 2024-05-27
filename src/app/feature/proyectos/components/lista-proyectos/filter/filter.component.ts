@@ -39,14 +39,14 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   fetchClientes() {
-    this.subs.push(this.clienteService.obtenerClientes().subscribe(res => this.clientes = res as Cliente[]));
+    this.subs.push(this.clienteService.obtenerClientes().subscribe(res => this.clientes = res));
   }
 
   private initForm(): FormGroup {
     return new FormGroup({
       nombreProyecto: new FormControl(''),
       cliente: new FormControl(''),
-      desde: new FormControl(new Date())
+      desde: new FormControl('')
     });
   }
 

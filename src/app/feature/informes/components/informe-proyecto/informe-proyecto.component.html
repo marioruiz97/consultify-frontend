@@ -1,1 +1,120 @@
-<p>informe-proyecto works!</p>
+<div gdAreas="header | content" gdGap="1em" gdRows="auto auto auto">
+
+  <header class="mb-2" gdArea="header">
+    <h1> Informes de avance</h1>
+  </header>
+
+  <section gdArea="content" fxLayoutAlign="center" fxLayout="column">
+
+    <div class="text-center" *ngIf="noHayProyectos">
+      <h2 class="mt-4">No hay Proyectos en el sistema, empieza creándolos para poder ver los informes</h2>
+      <button mat-button [routerLink]="['/proyectos']" color="accent">Ir al módulo de proyectos</button>
+    </div>
+
+    <mat-accordion fxFlex fxFlex.gt-xs="90" class="mat-mdc-elevation-specific mat-elevation-z8 mx-auto mb-5"
+      *ngFor="let proyecto of proyectos | async">
+
+      <!-- expansion info personal-->
+      <mat-expansion-panel (afterExpand)="cargarInformeProyecto(proyecto)"
+        [id]="idContenedorAvance(proyecto.idProyecto)" class="contenedor-informe-avance">
+
+        <mat-expansion-panel-header class="py-2">
+          <mat-panel-title>
+            Proyecto: {{proyecto.nombreProyecto}},
+            Cliente: {{proyecto.cliente.nombreComercial}}
+          </mat-panel-title>
+          <mat-panel-description fxShow.gt-sm dir="auto">Informe de avances </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
+        <h3 class="weight-500 mb-1 middle header-h3">
+          <mat-icon class="material-symbols-outlined">info</mat-icon>
+          Informacion del proyecto
+        </h3>
+        <mat-divider class="mb-3"></mat-divider>
+
+        <section>
+          <div fxFlex>
+            <p>Nombre del Proyecto: {{proyecto.nombreProyecto}}</p>
+            <p>Cliente: {{infoCliente(proyecto.cliente)}}</p>
+            <p>Miembros:</p>
+            <div fxLayout="row">
+              <ngx-avatars [name]="miembro.nombreCompleto" [matTooltip]="miembro.nombreCompleto" size="40" class="mr-3"
+                *ngFor="let miembro of proyecto.miembros"></ngx-avatars>
+            </div>
+          </div>
+
+          <div fxFlex fxLayout="row wrap" fxLayoutAlign="space-evenly" *ngIf="proyecto.informeActividad">
+
+            <div class="mx-3 width-30" fxflex>
+              <mat-progress-spinner mode="determinate" value="100" diameter="80" class="mx-auto"></mat-progress-spinner>
+              <div class="progress-text-style">
+                {{proyecto.informeActividad.totalActividades}}
+              </div>
+              <p class="weight-500 text-center">Total de Actividades</p>
+            </div>
+
+            <div class="mx-3 width-30" fxflex>
+              <mat-progress-spinner mode="determinate"
+                [value]="calcularPorcentaje(proyecto.informeActividad.actividadesCompletas, proyecto.informeActividad.totalActividades, 2)"
+                diameter="80" class="mx-auto"></mat-progress-spinner>
+              <div class="progress-text-style">
+                {{proyecto.informeActividad.actividadesCompletas}}
+              </div>
+              <p class="weight-500 text-center">Completadas</p>
+            </div>
+
+            <div class="mx-3 width-30" fxflex>
+              <mat-progress-spinner mode="determinate"
+                [value]="calcularPorcentaje(proyecto.informeActividad.actividadesPorVencer, proyecto.informeActividad.totalActividades, 2)"
+                diameter="80" class="mx-auto" color="accent"></mat-progress-spinner>
+              <div class="progress-text-style">
+                {{proyecto.informeActividad.actividadesPorVencer}}
+              </div>
+              <p class="weight-500 text-center">Proximas a vencer</p>
+            </div>
+
+          </div>
+        </section>
+
+        <h3 class="weight-500 mt-3 mb-1 middle header-h3">
+          <mat-icon>bar_chart</mat-icon>
+          Avances
+        </h3>
+
+        <mat-divider class="mb-3"></mat-divider>
+
+        <mat-spinner *ngIf="!proyecto.informeActividad"></mat-spinner>
+
+        <section class="contenedor-barras" *ngIf="proyecto.informeActividad" fxLayout="column">
+
+          <div class="linea my-2" fxFlex fxLayout="row" *ngFor="let barra of proyecto.barras">
+            <h3 class="mb-0 mr-1 p-2 barra {{barra.estilo}}">
+              {{barra.titulo}}: {{barra.valor}}
+            </h3>
+
+            <div class="p-2 barra rounded {{barra.estilo}}"
+              [ngStyle]="definirEstilos(barra.valor, proyecto.informeActividad.totalActividades)">
+              <span fxFlex></span>
+              <span>
+                {{calcularPorcentaje(barra.valor, proyecto.informeActividad.totalActividades) | number:'1.0-2'}}%
+              </span>
+            </div>
+          </div>
+
+        </section>
+
+        <mat-action-row>
+          <button mat-button color="accent" (click)="exportarAPDF(proyecto)">
+            <mat-icon>system_update_alt</mat-icon>
+            <span>Exportar</span>
+          </button>
+          <button mat-button color="primary" [routerLink]="['/proyectos/',proyecto.idProyecto]">
+            <mat-icon>open_in_new</mat-icon>
+            <span>Ir al proyecto</span>
+          </button>
+        </mat-action-row>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </section>
