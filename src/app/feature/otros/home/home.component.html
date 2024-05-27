@@ -6,26 +6,38 @@
 
   <section class="my-1" gdArea="content">
 
-    <app-mis-proyectos></app-mis-proyectos>
+    <div fxLayout.gt-xs="column" fxLayoutAlign.gt-xs="start center" fxLayout.lt-sm="column" fxLayoutGap="15px">
+      <app-mis-proximas-actividades fxFlex *ngIf="tieneDatosActividades"
+        (datosDisponibles)="onDatosDisponiblesActividades($event)">
+      </app-mis-proximas-actividades>
+
+      <app-mis-proyectos fxFlex *ngIf="tieneDatosProyectos" (datosDisponibles)="onDatosDisponiblesProyectos($event)">
+      </app-mis-proyectos>
+    </div>
 
     <h3 class="mat-h1 mx-auto text-center mt-4">Utiliza los atajos</h3>
 
     <div fxLayout="row wrap" fxLayoutAlign="space-evenly">
       <mat-card class="mb-4" fxFlex="30" fxFlex.lt-sm="100" *ngFor="let card of cards">
+
         <mat-card-header>
           <mat-icon matCardAvatar class="my-auto">{{card.avatar}}</mat-icon>
           <mat-card-title matCardTitle>{{card.title}}</mat-card-title>
           <mat-card-subtitle matCardSubtitle>{{card.subtitle}}</mat-card-subtitle>
         </mat-card-header>
+
         <img class="home-img mt-2" matCardImage [src]="card.img" [alt]="card.title" />
+
         <mat-card-content>
           <p>
             {{card.content}}
           </p>
         </mat-card-content>
+
         <mat-card-actions fxLayoutAlign="end">
           <button class="card-button mb-3" mat-button [routerLink]="[card.urlTo]">{{card.button}}</button>
         </mat-card-actions>
+
       </mat-card>
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="space-evenly">

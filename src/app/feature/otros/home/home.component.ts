@@ -8,6 +8,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  tieneDatosActividades = true;
+  tieneDatosProyectos = true;
+
   cards = [
     {
       avatar: 'next_week', title: 'Proyectos', subtitle: 'Gestiona los proyectos de los clientes',
@@ -22,5 +25,15 @@ export class HomeComponent {
       img: '/assets/img/home-usuarios.jpeg', content: '', button: 'Ir a usuarios', urlTo: '/usuarios'
     }
   ];
+
+
+  onDatosDisponiblesActividades(event: boolean) {
+    this.tieneDatosActividades = event;
+  }
+
+
+  onDatosDisponiblesProyectos(event: boolean) {
+    this.tieneDatosProyectos = event;
+  }
 
 }

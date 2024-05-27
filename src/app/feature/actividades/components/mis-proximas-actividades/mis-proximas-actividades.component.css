@@ -1,0 +1,35 @@
+mat-card-title.mat-h3 {
+  font-weight: 500;
+}
+
+h4.descripcion {
+  margin-bottom: 0px;
+  font-weight: 500;
+}
+
+h4.titulo {
+  margin-bottom: 0px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #0000008a;
+}
+
+h4 .subtitulo {
+  font-weight: 400;
+}
+
+
+mat-card-content p {
+  max-width: 100%;
+  min-height: fit-content;
+}
+
+
+.darken-orange {
+  color: var(--darken-orange);
+  --mdc-text-button-label-text-color: var(--darken-orange);
+}
+
+mat-card.mat-elevation-z8 {
+  border: 1px solid var(--darken-orange);
+}

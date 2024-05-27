@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { InfoProyecto } from '../../model/info-proyecto.model';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { ProyectoService } from '../../service/proyecto.service';
@@ -14,6 +14,8 @@ export class MisProyectosComponent implements OnInit, OnDestroy {
   misProyectos: BehaviorSubject<InfoProyecto[]> = new BehaviorSubject<InfoProyecto[]>([]);
   mostrarTitulo: boolean;
 
+  @Output() datosDisponibles = new EventEmitter<boolean>();
+
   constructor(private servicioProyecto: ProyectoService) {
     this.mostrarTitulo = false;
   }
@@ -23,6 +25,7 @@ export class MisProyectosComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.misProyectos.next(res);
         this.mostrarTitulo = res.length > 0;
+        this.datosDisponibles.emit(this.mostrarTitulo);
       }));
 
 
