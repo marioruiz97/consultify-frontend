@@ -8,6 +8,7 @@ export class AppConstants {
   public static readonly RUTA_HOME = 'home';
   public static readonly RUTA_LOGIN = 'login';
   public static readonly RUTA_RECUPERAR = 'recuperar';
+  public static readonly RUTA_REINICIAR_CLAVE = 'reiniciar-contrasena';
   public static readonly RUTA_CUENTA = 'cuenta';
   public static readonly RUTA_USUARIOS = 'usuarios';
   public static readonly RUTA_CLIENTES = 'clientes';
@@ -27,8 +28,8 @@ export class AppConstants {
 }
 
 export const MENU_NAVEGACION: NavItem[] = [
-  { url: AppConstants.RUTA_USUARIOS, name: 'Usuarios', icon: 'people', roles: ['ROLE_ADMIN','ROLE_ASESOR'] },
-  { url: AppConstants.RUTA_CLIENTES, name: 'Empresas Clientes', icon: 'account_balance', roles: ['ROLE_ADMIN','ROLE_ASESOR'] },
+  { url: AppConstants.RUTA_USUARIOS, name: 'Usuarios', icon: 'people', roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] },
+  { url: AppConstants.RUTA_CLIENTES, name: 'Empresas Clientes', icon: 'account_balance', roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] },
   { url: AppConstants.RUTA_PROYECTOS, name: 'Proyectos', icon: 'dashboard', roles: [] },
   { url: AppConstants.RUTA_INFORMES, name: 'Informes', icon: 'pie_chart', roles: [] },
 ];

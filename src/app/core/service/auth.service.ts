@@ -106,10 +106,11 @@ export class AuthService {
     this.limpiarDatosSesion();
   }
 
-  recuperarContrasena() {
-    // TODO document why this method 'recuperarContrasena' is empty
-
-
+  recuperarContrasena(correo: string) {
+    const data = { correo };
+    this.httpService.postRequest<object, void>(`auth/${rutas.RUTA_RECUPERAR}`, data)
+      .then(() => this.uiService.mostrarSnackBar("Se ha iniciado el proceso de recuperacion", 2))
+      .catch(err => this.uiService.mostrarError(err));
   }
 
 

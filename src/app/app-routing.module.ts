@@ -17,6 +17,7 @@ import { TableroProyectoComponent } from './feature/proyectos/components/tablero
 import { DetalleActividadComponent } from './feature/actividades/components/detalle-actividad/detalle-actividad.component';
 import { InformeProyectoComponent } from './feature/informes/components/informe-proyecto/informe-proyecto.component';
 import { RoleGuard } from './core/guard/role.guard';
+import { NuevaContrasenaComponent } from './feature/autenticacion/components/nueva-contrasena/nueva-contrasena.component';
 
 const routes: Routes = [
   // módulos generales
@@ -28,6 +29,7 @@ const routes: Routes = [
   // autenticacion y cuenta
   { path: rutas.RUTA_LOGIN, component: InicioSesionComponent },
   { path: rutas.RUTA_RECUPERAR, component: RecuperarContrasenaComponent },
+  { path: rutas.RUTA_REINICIAR_CLAVE, component: NuevaContrasenaComponent },
   { path: rutas.RUTA_CUENTA, component: MiPerfilComponent, canActivate: mapToCanActivate([AuthGuard]) },
 
   // usuarios y clientes

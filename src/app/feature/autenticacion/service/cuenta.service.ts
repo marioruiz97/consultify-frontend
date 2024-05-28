@@ -34,4 +34,10 @@ export class CuentaService {
     return this.httpService.deleteRequest<boolean>(`${this.path}/${idUsuario}`);
   }
 
+  reiniciarContrasena(contrasena: string, token: string) {
+    const data = { contrasena, token };
+    return this.httpService.postRequest(`auth/${AppConstants.RUTA_REINICIAR_CLAVE}`, data)
+  }
+
+
 }
