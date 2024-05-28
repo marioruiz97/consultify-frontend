@@ -38,5 +38,12 @@ export class RoleService {
     return roleCount > 0;
   }
 
+  rolRequerido(roles: string[]) {
+    // return true si no se envia ningun rol
+    if (roles.length === 0) return true;
+
+    return this.hasAnyRole(roles);
+  }
+
 }
 

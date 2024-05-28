@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { AuthService } from './core/service/auth.service';
 import { MENU_NAVEGACION } from './shared/app.constants';
+import { RoleService } from './core/service/role.service';
 
 @Component({
   selector: 'app-root',
@@ -18,13 +19,14 @@ export class AppComponent implements OnDestroy {
   enSesion = false;
   private suscripciones: Subscription[] = [];
 
-  public menu: NavItem[] = MENU_NAVEGACION;
+  public menu: NavItem[] = MENU_NAVEGACION.filter(opcion => this.rolService.rolRequerido(opcion.roles));
 
 
   constructor(
     private breakPointObserver: BreakpointObserver,
     private changeDetectorRef: ChangeDetectorRef,
-    private authService: AuthService
+    private authService: AuthService,
+    private rolService: RoleService
   ) {
     this.$isHandset = this.breakPointObserver
       .observe([Breakpoints.Handset])

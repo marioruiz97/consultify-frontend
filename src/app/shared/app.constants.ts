@@ -27,10 +27,10 @@ export class AppConstants {
 }
 
 export const MENU_NAVEGACION: NavItem[] = [
-  { url: AppConstants.RUTA_USUARIOS, name: 'Usuarios', icon: 'people' },
-  { url: AppConstants.RUTA_CLIENTES, name: 'Empresas Clientes', icon: 'account_balance' },
-  { url: AppConstants.RUTA_PROYECTOS, name: 'Proyectos', icon: 'dashboard' },
-  { url: AppConstants.RUTA_INFORMES, name: 'Informes', icon: 'pie_chart' },
+  { url: AppConstants.RUTA_USUARIOS, name: 'Usuarios', icon: 'people', roles: ['ROLE_ADMIN','ROLE_ASESOR'] },
+  { url: AppConstants.RUTA_CLIENTES, name: 'Empresas Clientes', icon: 'account_balance', roles: ['ROLE_ADMIN','ROLE_ASESOR'] },
+  { url: AppConstants.RUTA_PROYECTOS, name: 'Proyectos', icon: 'dashboard', roles: [] },
+  { url: AppConstants.RUTA_INFORMES, name: 'Informes', icon: 'pie_chart', roles: [] },
 ];
 
 export const DIALOG_CONFIG: MatDialogConfig = {
