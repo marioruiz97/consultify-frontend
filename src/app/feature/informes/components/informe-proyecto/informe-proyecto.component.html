@@ -7,7 +7,8 @@
   <section gdArea="content" fxLayoutAlign="center" fxLayout="column">
 
     <div class="text-center" *ngIf="noHayProyectos">
-      <h2 class="mt-4">No hay Proyectos en el sistema, empieza creándolos para poder ver los informes</h2>
+      <h2 class="mt-4">No tienes permisos sobre ningun proyecto o no hay proyectos en el sistema, empieza creándolos
+        para poder ver los informes</h2>
       <button mat-button [routerLink]="['/proyectos']" color="accent">Ir al módulo de proyectos</button>
     </div>
 

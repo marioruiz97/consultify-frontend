@@ -34,7 +34,14 @@ export class AppComponent implements OnDestroy {
         map((result) => result.matches),
         tap(() => this.changeDetectorRef.detectChanges())
       );
-    this.suscripciones.push(this.authService.estaAutenticado.subscribe(estaAutenticado => this.enSesion = estaAutenticado));
+
+    this.suscripciones.push(
+      this.authService.estaAutenticado.subscribe(estaAutenticado => {
+        this.enSesion = estaAutenticado;
+        this.menu = MENU_NAVEGACION.filter(opcion => this.rolService.rolRequerido(opcion.roles));
+      })
+    );
+
     this.authService.verificarSesion();
   }
 

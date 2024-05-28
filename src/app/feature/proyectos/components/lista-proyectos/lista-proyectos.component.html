@@ -16,6 +16,9 @@
 
 
   <div class="cards" fxLayout="row wrap" fxLayoutAlign="space-evenly start">
+
+    <h3 class="mt-4 mat-h2 text-center" *ngIf="noHayProyectos && rolService.hasRole('ROLE_CLIENTE')">No tienes proyectos asignados</h3>
+
     <mat-card class="mat-mdc-elevation-specific mat-elevation-z2 add-card mb-4" fxFlex.gt-xs="20" fxLayout="column"
       fxLayoutAlign="center center" *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR'])">
       <button mat-fab color="primary" (click)="abrirFormulario()">

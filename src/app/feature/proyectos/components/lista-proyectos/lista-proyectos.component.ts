@@ -23,6 +23,10 @@ export class ListaProyectosComponent {
   proyectosFiltrados = new Subject<InfoProyecto[]>();
   mostrarFiltros = false;
 
+  get noHayProyectos() {
+    return this.proyectos.length === 0;
+  }
+
   constructor(
     private servicioProyecto: ProyectoService,
     private dialog: MatDialog,
