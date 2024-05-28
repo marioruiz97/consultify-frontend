@@ -10,6 +10,7 @@ import { CuentaService } from './service/cuenta.service';
 import { CambiarContrasenaComponent } from './components/cambiar-contrasena/cambiar-contrasena.component';
 import { CambiarCorreoComponent } from './components/cambiar-correo/cambiar-correo.component';
 import { NuevaContrasenaComponent } from './components/nueva-contrasena/nueva-contrasena.component';
+import { VerificarCuentaComponent } from './components/verificar-cuenta/verificar-cuenta.component';
 
 
 
@@ -20,7 +21,8 @@ import { NuevaContrasenaComponent } from './components/nueva-contrasena/nueva-co
     MiPerfilComponent,
     CambiarContrasenaComponent,
     CambiarCorreoComponent,
-    NuevaContrasenaComponent
+    NuevaContrasenaComponent,
+    VerificarCuentaComponent
   ],
   imports: [
     CommonModule,

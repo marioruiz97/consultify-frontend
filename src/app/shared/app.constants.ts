@@ -9,6 +9,7 @@ export class AppConstants {
   public static readonly RUTA_LOGIN = 'login';
   public static readonly RUTA_RECUPERAR = 'recuperar';
   public static readonly RUTA_REINICIAR_CLAVE = 'reiniciar-contrasena';
+  public static readonly RUTA_VERIFICAR_CUENTA = 'verificar-cuenta';
   public static readonly RUTA_CUENTA = 'cuenta';
   public static readonly RUTA_USUARIOS = 'usuarios';
   public static readonly RUTA_CLIENTES = 'clientes';

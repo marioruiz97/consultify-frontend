@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CuentaService } from '../../service/cuenta.service';
 import { UIService } from 'src/app/core/service/ui.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/core/service/auth.service';
   templateUrl: './nueva-contrasena.component.html',
   styleUrls: ['./nueva-contrasena.component.css']
 })
-export class NuevaContrasenaComponent {
+export class NuevaContrasenaComponent implements OnDestroy {
 
   private subs: Subscription[] = [];
   private token: string | undefined;
@@ -61,6 +61,10 @@ export class NuevaContrasenaComponent {
         })
         .catch(err => this.uiService.mostrarError(err));
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
 }
