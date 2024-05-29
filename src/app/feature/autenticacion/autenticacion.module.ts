@@ -11,6 +11,7 @@ import { CambiarContrasenaComponent } from './components/cambiar-contrasena/camb
 import { CambiarCorreoComponent } from './components/cambiar-correo/cambiar-correo.component';
 import { NuevaContrasenaComponent } from './components/nueva-contrasena/nueva-contrasena.component';
 import { VerificarCuentaComponent } from './components/verificar-cuenta/verificar-cuenta.component';
+import { VerificarCuentaNuevaComponent } from './components/verificar-cuenta-nueva/verificar-cuenta-nueva.component';
 
 
 
@@ -22,7 +23,8 @@ import { VerificarCuentaComponent } from './components/verificar-cuenta/verifica
     CambiarContrasenaComponent,
     CambiarCorreoComponent,
     NuevaContrasenaComponent,
-    VerificarCuentaComponent
+    VerificarCuentaComponent,
+    VerificarCuentaNuevaComponent
   ],
   imports: [
     CommonModule,

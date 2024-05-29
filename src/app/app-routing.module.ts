@@ -19,6 +19,7 @@ import { InformeProyectoComponent } from './feature/informes/components/informe-
 import { RoleGuard } from './core/guard/role.guard';
 import { NuevaContrasenaComponent } from './feature/autenticacion/components/nueva-contrasena/nueva-contrasena.component';
 import { VerificarCuentaComponent } from './feature/autenticacion/components/verificar-cuenta/verificar-cuenta.component';
+import { VerificarCuentaNuevaComponent } from './feature/autenticacion/components/verificar-cuenta-nueva/verificar-cuenta-nueva.component';
 
 const routes: Routes = [
   // módulos generales
@@ -30,8 +31,11 @@ const routes: Routes = [
   // autenticacion y cuenta
   { path: rutas.RUTA_LOGIN, component: InicioSesionComponent },
   { path: rutas.RUTA_RECUPERAR, component: RecuperarContrasenaComponent },
+
   { path: rutas.RUTA_REINICIAR_CLAVE, component: NuevaContrasenaComponent },
   { path: rutas.RUTA_VERIFICAR_CUENTA, component: VerificarCuentaComponent },
+  { path: `${rutas.RUTA_VERIFICAR_CUENTA}/:id`, component: VerificarCuentaNuevaComponent },
+
   { path: rutas.RUTA_CUENTA, component: MiPerfilComponent, canActivate: mapToCanActivate([AuthGuard]) },
 
   // usuarios y clientes
