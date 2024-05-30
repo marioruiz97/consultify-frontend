@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpService } from 'src/app/core/service/http.service';
 import { UIService } from 'src/app/core/service/ui.service';
-import { AppConstants } from 'src/app/shared/app.constants';
+import { AppConstants as rutas } from 'src/app/shared/app.constants';
 
 @Component({
   selector: 'app-verificar-cuenta',
@@ -13,7 +13,7 @@ import { AppConstants } from 'src/app/shared/app.constants';
 export class VerificarCuentaComponent implements OnInit, OnDestroy {
 
   private subs: Subscription[] = [];
-  private path = AppConstants.RUTA_VERIFICAR_CUENTA;
+  private path = `auth/${rutas.RUTA_VERIFICAR_CUENTA}`;
 
   procesando = true;
   confirmacionExitosa = false;
@@ -34,18 +34,18 @@ export class VerificarCuentaComponent implements OnInit, OnDestroy {
 
         if (token) {
           this.httpService.patchRequest<object, string>(this.path, { token })
-            .then(mensaje => {
-              this.uiService.mostrarSnackBar(mensaje, 1.5);
+            .then(() => {
+              this.uiService.mostrarSnackBar("Cuenta Verificada!", 1.5);
               this.procesando = false;
               this.confirmacionExitosa = true;
             })
-            .catch(mensaje => {
-              this.uiService.mostrarAlerta(mensaje)
+            .catch(err => {
+              this.uiService.mostrarError(err)
               this.procesando = false;
               this.confirmacionFallo = true;
             });
         }
-        else this.router.navigate([AppConstants.RUTA_LOGIN]);
+        else this.router.navigate([rutas.RUTA_LOGIN]);
       })
     );
 
