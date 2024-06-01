@@ -56,7 +56,7 @@
         <td mat-cell *matCellDef="let doc">
 
           <button mat-icon-button color="primary" (click)="abrirEditarActividad(doc)" matTooltip="Editar"
-            *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR'])">
+            *ngIf="rolService.puedeEditarActividad(doc)">
             <mat-icon class="mat-18">edit</mat-icon>
           </button>
           <button mat-icon-button [routerLink]="['actividades/'+doc.id]" matTooltip="Gestionar">

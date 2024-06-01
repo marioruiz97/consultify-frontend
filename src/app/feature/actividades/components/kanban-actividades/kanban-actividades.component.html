@@ -118,12 +118,12 @@
                 <span class="weight-500">Gestionar Actividad</span>
               </button>
               <button mat-menu-item type="button" (click)="abrirEditarActividad(activity)"
-                *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR'])">
+                *ngIf="rolService.puedeEditarActividad(activity)">
                 <mat-icon color="primary">edit</mat-icon>
                 <span class="weight-500">Editar Campos</span>
               </button>
               <button mat-menu-item type="button" (click)="eliminarActividad(activity)"
-                *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR'])">
+                *ngIf="rolService.puedeEliminarActividad(activity)">
                 <mat-icon color="warn">delete</mat-icon>
                 <span class="weight-500">Eliminar Actividad</span>
               </button>

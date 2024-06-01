@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Rol, UsuarioSesion } from "../model/usuario-sesion.model";
 import { AuthService } from "./auth.service";
+import { Actividad } from "src/app/feature/actividades/model/actividad.model";
 
 
 @Injectable({ providedIn: 'root' })
@@ -43,6 +44,16 @@ export class RoleService {
     if (roles.length === 0) return true;
 
     return this.hasAnyRole(roles);
+  }
+
+  puedeEditarActividad(actividad: Actividad): boolean {
+    const esResponsable = this.usuarioSesion?.idUsuario === actividad.responsable.idUsuario;
+    return this.hasRole("ROLE_ADMIN") || esResponsable;
+  }
+
+  puedeEliminarActividad(actividad: Actividad): boolean {
+    const esResponsable = this.usuarioSesion?.idUsuario === actividad.responsable.idUsuario;
+    return this.hasRole("ROLE_ADMIN") || esResponsable;
   }
 
 }
