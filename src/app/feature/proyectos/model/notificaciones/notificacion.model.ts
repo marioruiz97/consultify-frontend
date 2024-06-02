@@ -1,9 +1,9 @@
-import { InfoProyecto } from "../info-proyecto.model";
-
 export interface Notificacion {
   id: number;
-  proyecto: InfoProyecto;
-  color: string;
+  idProyecto: number;
+  idUsuario: number;
+  creadoEn: Date;
+  leida: boolean;
   mensaje: string;
-  fechaCreacion: Date;
+  tipoNotificacion: 'INFO' | 'WARN';
 }

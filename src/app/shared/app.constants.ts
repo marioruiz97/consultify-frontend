@@ -14,6 +14,7 @@ export class AppConstants {
   public static readonly RUTA_USUARIOS = 'usuarios';
   public static readonly RUTA_CLIENTES = 'clientes';
   public static readonly RUTA_PROYECTOS = 'proyectos';
+  public static readonly RUTA_NOTIFICACIONES = 'notificaciones';
   public static readonly RUTA_TABLEROS = 'tableros';
   public static readonly RUTA_CONTACTO = 'contactenos';
   public static readonly RUTA_ACERCA = 'acerca';

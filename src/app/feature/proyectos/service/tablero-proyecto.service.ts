@@ -7,12 +7,14 @@ import { AppConstants as rutas } from 'src/app/shared/app.constants';
 import { MiembroProyecto } from '../model/miembros/miembro-proyecto.model';
 import { Actividad } from '../../actividades/model/actividad.model';
 import { ResponsableActividad } from '../../actividades/model/responsable-actividad.model';
+import { Notificacion } from '../model/notificaciones/notificacion.model';
 
 @Injectable()
 export class TableroProyectoService {
 
   private $TableroActual: BehaviorSubject<TableroProyecto | undefined> = new BehaviorSubject<TableroProyecto | undefined>(undefined);
   private tableroPath = rutas.API_BASE + rutas.RUTA_TABLEROS;
+  notificacionPath = rutas.RUTA_NOTIFICACIONES;
 
   constructor(
     private httpService: HttpService,
@@ -34,6 +36,11 @@ export class TableroProyectoService {
     })
     return this.tableroActual;
   }
+
+  obtenerNotificaciones(idProyecto: number): Observable<Notificacion[]> {
+    return this.httpService.getRequest<Notificacion[]>(`${this.notificacionPath}/proyectos/${idProyecto}`);
+  }
+
 
   /**
    * GESTIÓN DE MIEMBROS

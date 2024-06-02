@@ -1,13 +1,10 @@
-.PRIMARY {
-  color: #007bff;
-}
-
-.SUCCESS {
-  color: #28a745;
+p.mat-mdc-list-item-line.mdc-list-item__secondary-text {
+  color: #000;
+  font-size: 14px;
 }
 
 .INFO {
-  color: #ffc107;
+  color: #007bff;
 }
 
 .WARN {

@@ -16,12 +16,16 @@ export class NotificacionesProyectoComponent implements OnInit, OnDestroy {
   constructor(private servicioTablero: TableroProyectoService, private detector: ChangeDetectorRef) { }
 
   ngOnInit() {
-    /*   this.subs.push(this.servicioTablero.notificaciones.subscribe(list => {
-        this.notificaciones = list;
-        this.detector.markForCheck();
-      }));
-      this.servicioTablero.fetchNotificaciones(); */
-    console.log('on init');
+    this.subs.push(
+      this.servicioTablero.tableroActual.subscribe(tablero => {
+        if (tablero) {
+          this.servicioTablero.obtenerNotificaciones(tablero.infoProyecto.idProyecto).subscribe(list => {
+            this.notificaciones = list;
+            this.detector.markForCheck();
+          })
+        }
+      })
+    );
 
   }
 
