@@ -1,22 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InformeProyectoComponent } from './components/informe-proyecto/informe-proyecto.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { InformeService } from './service/informe.service';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-
+import { TipoActividadesService } from './service/tipo-actividades.service';
 
 
 
 @NgModule({
-  declarations: [
-    InformeProyectoComponent
-  ],
+  declarations: [],
   imports: [
     AppRoutingModule,
     CommonModule,
     SharedModule
   ],
-  providers: [InformeService]
+  exports: [],
+  providers: [TipoActividadesService]
 })
-export class InformesModule { }
+export class TipoActividadesModule { }

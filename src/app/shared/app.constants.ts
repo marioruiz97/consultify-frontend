@@ -22,6 +22,7 @@ export class AppConstants {
   public static readonly RUTA_MIS_PROYECTOS = 'mis-proyectos';
   public static readonly RUTA_MIS_ACTIVIDADES = 'mis-actividades';
   public static readonly RUTA_ACTIVIDADES = 'proyectos/{idProyecto}/actividades';
+  public static readonly RUTA_TIPO_ACTIVIDAD = 'tipo-actividad';
   public static readonly RUTA_SEGUIMIENTOS = 'actividades/{idActividad}/seguimientos';
 
   // PATRONES

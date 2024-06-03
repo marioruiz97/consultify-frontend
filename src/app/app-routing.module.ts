@@ -49,6 +49,9 @@ const routes: Routes = [
   { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent, canActivate: mapToCanActivate([AuthGuard]) },
   { path: `${rutas.RUTA_PROYECTOS}/:idProyecto/actividades/:idActividad`, component: DetalleActividadComponent, canActivate: mapToCanActivate([AuthGuard]) },
 
+  // tipo actividades
+  /* { path: rutas.RUTA_TIPO_ACTIVIDAD, component: TipoActividadComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) }, */
+
   // informes
   { path: rutas.RUTA_INFORMES, component: InformeProyectoComponent, canActivate: mapToCanActivate([AuthGuard]) },
 ];
