@@ -1,7 +1,7 @@
 <div class="mt-4 botonera" fxLayoutGap="20px" fxLayoutAlign="center">
 
   <button class="py-4 mr-5" mat-raised-button color="primary" (click)="abrirCrearActividad()"
-    matTooltip="Crear nueva actividad">
+    matTooltip="Crear nueva actividad" *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR'])">
     <mat-icon class="mat-18">add</mat-icon> Nueva actividad
   </button>
 
@@ -117,11 +117,13 @@
                 <mat-icon>open_in_new</mat-icon>
                 <span class="weight-500">Gestionar Actividad</span>
               </button>
-              <button mat-menu-item type="button" (click)="abrirEditarActividad(activity)">
+              <button mat-menu-item type="button" (click)="abrirEditarActividad(activity)"
+                *ngIf="rolService.puedeEditarActividad(activity)">
                 <mat-icon color="primary">edit</mat-icon>
                 <span class="weight-500">Editar Campos</span>
               </button>
-              <button mat-menu-item type="button" (click)="eliminarActividad(activity)">
+              <button mat-menu-item type="button" (click)="eliminarActividad(activity)"
+                *ngIf="rolService.puedeEliminarActividad(activity)">
                 <mat-icon color="warn">delete</mat-icon>
                 <span class="weight-500">Eliminar Actividad</span>
               </button>

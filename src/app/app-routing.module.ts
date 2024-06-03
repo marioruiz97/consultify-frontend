@@ -16,6 +16,10 @@ import { ListaProyectosComponent } from './feature/proyectos/components/lista-pr
 import { TableroProyectoComponent } from './feature/proyectos/components/tablero-proyecto/tablero-proyecto.component';
 import { DetalleActividadComponent } from './feature/actividades/components/detalle-actividad/detalle-actividad.component';
 import { InformeProyectoComponent } from './feature/informes/components/informe-proyecto/informe-proyecto.component';
+import { RoleGuard } from './core/guard/role.guard';
+import { NuevaContrasenaComponent } from './feature/autenticacion/components/nueva-contrasena/nueva-contrasena.component';
+import { VerificarCuentaComponent } from './feature/autenticacion/components/verificar-cuenta/verificar-cuenta.component';
+import { VerificarCuentaNuevaComponent } from './feature/autenticacion/components/verificar-cuenta-nueva/verificar-cuenta-nueva.component';
 
 const routes: Routes = [
   // módulos generales
@@ -27,21 +31,26 @@ const routes: Routes = [
   // autenticacion y cuenta
   { path: rutas.RUTA_LOGIN, component: InicioSesionComponent },
   { path: rutas.RUTA_RECUPERAR, component: RecuperarContrasenaComponent },
-  { path: rutas.RUTA_CUENTA, component: MiPerfilComponent },
+
+  { path: rutas.RUTA_REINICIAR_CLAVE, component: NuevaContrasenaComponent },
+  { path: rutas.RUTA_VERIFICAR_CUENTA, component: VerificarCuentaComponent },
+  { path: `${rutas.RUTA_VERIFICAR_CUENTA}/:id`, component: VerificarCuentaNuevaComponent },
+
+  { path: rutas.RUTA_CUENTA, component: MiPerfilComponent, canActivate: mapToCanActivate([AuthGuard]) },
 
   // usuarios y clientes
-  { path: rutas.RUTA_USUARIOS, component: ListaUsuariosComponent },
-  { path: `${rutas.RUTA_USUARIOS}/:id`, component: FormularioUsuarioComponent },
-  { path: rutas.RUTA_CLIENTES, component: ListaClientesComponent },
-  { path: `${rutas.RUTA_CLIENTES}/:id`, component: FormularioClienteComponent },
+  { path: rutas.RUTA_USUARIOS, component: ListaUsuariosComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) }, // rutas protegidas con RoleGuard ya que son solo para personal de asisge
+  { path: `${rutas.RUTA_USUARIOS}/:id`, component: FormularioUsuarioComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) },
+  { path: rutas.RUTA_CLIENTES, component: ListaClientesComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) },
+  { path: `${rutas.RUTA_CLIENTES}/:id`, component: FormularioClienteComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) },
 
   // proyectos
-  { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent },
-  { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent },
-  { path: `${rutas.RUTA_PROYECTOS}/:idProyecto/actividades/:idActividad`, component: DetalleActividadComponent },
+  { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent, canActivate: mapToCanActivate([AuthGuard]) },
+  { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent, canActivate: mapToCanActivate([AuthGuard]) },
+  { path: `${rutas.RUTA_PROYECTOS}/:idProyecto/actividades/:idActividad`, component: DetalleActividadComponent, canActivate: mapToCanActivate([AuthGuard]) },
 
   // informes
-  { path: rutas.RUTA_INFORMES, component: InformeProyectoComponent },
+  { path: rutas.RUTA_INFORMES, component: InformeProyectoComponent, canActivate: mapToCanActivate([AuthGuard]) },
 ];
 
 @NgModule({

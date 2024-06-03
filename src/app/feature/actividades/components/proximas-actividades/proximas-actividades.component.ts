@@ -11,6 +11,7 @@ import { customConfig } from 'src/app/shared/app.constants';
 import { MatDialog } from '@angular/material/dialog';
 import { EstadoActividad, EstadoActividadMap } from '../../model/estado-actividad.model';
 import { DatePipe } from '@angular/common';
+import { RoleService } from 'src/app/core/service/role.service';
 
 
 @Component({
@@ -41,7 +42,8 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
     private tableroService: TableroProyectoService,
     private uiService: UIService,
     private dialog: MatDialog,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    public rolService: RoleService
   ) {
     this.fechaFutura.setDate(new Date().getDate() + 7);
   }

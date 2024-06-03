@@ -16,14 +16,19 @@
 
 
   <div class="cards" fxLayout="row wrap" fxLayoutAlign="space-evenly start">
-    <mat-card class="mat-mdc-elevation-specific mat-elevation-z2 add-card mb-4" fxFlex.gt-xs="20" fxLayout="column" fxLayoutAlign="center center">
+
+    <h3 class="mt-4 mat-h2 text-center" *ngIf="noHayProyectos && rolService.hasRole('ROLE_CLIENTE')">No tienes proyectos asignados</h3>
+
+    <mat-card class="mat-mdc-elevation-specific mat-elevation-z2 add-card mb-4" fxFlex.gt-xs="20" fxLayout="column"
+      fxLayoutAlign="center center" *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR'])">
       <button mat-fab color="primary" (click)="abrirFormulario()">
         <mat-icon class="mat-18">add</mat-icon>
       </button>
       <h3 class="mt-2 add-project">Crear Proyecto</h3>
     </mat-card>
 
-    <mat-card fxFlex.gt-xs="32" class="mb-4 mat-mdc-elevation-specific mat-elevation-z2" *ngFor="let pro of proyectosFiltrados | async">
+    <mat-card fxFlex.gt-xs="32" class="mb-4 mat-mdc-elevation-specific mat-elevation-z2"
+      *ngFor="let pro of proyectosFiltrados | async">
       <mat-card-header class="mb-2">
         <mat-card-title class="my-auto">Proyecto {{pro.idProyecto + ' - ' + pro.nombreProyecto}}</mat-card-title>
         <mat-card-subtitle>Fecha de Creacion: {{ pro.creadoEn | date: 'medium'}}</mat-card-subtitle>
@@ -61,7 +66,8 @@
         <button mat-icon-button matTooltip="Ir al dashboard" [routerLink]="['/proyectos/'+pro.idProyecto]">
           <mat-icon>dashboard</mat-icon>
         </button>
-        <button mat-icon-button color="warn" matTooltip="Eliminar proyecto" (click)="eliminarProyecto(pro)">
+        <button mat-icon-button color="warn" matTooltip="Eliminar proyecto" (click)="eliminarProyecto(pro)"
+          *ngIf="rolService.hasRole('ROLE_ADMIN')">
           <mat-icon>delete</mat-icon>
         </button>
       </mat-card-actions>

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/core/service/http.service';
-import { AppConstants } from 'src/app/shared/app.constants';
+import { AppConstants as rutas } from 'src/app/shared/app.constants';
 import { Cliente, Contacto } from '../model/cliente.model';
 import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class ClienteService {
 
-  private path: string = AppConstants.RUTA_CLIENTES;
+  private path: string = rutas.API_BASE + rutas.RUTA_CLIENTES;
 
   private listaContactos = new BehaviorSubject<Contacto[]>([]);
   contactos$ = this.listaContactos.asObservable();

@@ -1,0 +1,64 @@
+<section>
+  <mat-card class="m-auto p-4 mat-mdc-elevation-specific mat-elevation-z16" fxFlex fxFlex.gt-xs="60">
+
+    <div class="logo"></div>
+    <mat-card-header class="mx-auto mb-5">
+      <mat-card-title class="mat-h1">Crear Contraseña</mat-card-title>
+    </mat-card-header>
+
+
+    <form [formGroup]="formulario" (ngSubmit)="reiniciarContrasena()" autocomplete="off" fxLayout="column">
+
+      <!-- Nueva contrasena -->
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Nueva contraseña</mat-label>
+        <input matInput [type]="ocultarContrasenas ? 'password' : 'text'" formControlName="contrasena"
+          autocomplete="off">
+
+        <button type="button" mat-icon-button matSuffix (click)="ocultarContrasenas = !ocultarContrasenas"
+          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="ocultarContrasenas">
+          <mat-icon>{{ocultarContrasenas ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formulario.value.contrasena.length < 8">
+          La contraseña debe tener mínimo 8 caracteres
+        </mat-error>
+        <mat-error *ngIf="!formulario.value.contrasena">La contraseña es obligatoria</mat-error>
+        <mat-hint>
+          Ingrese nueva contraseña. Debe contener mínimo 1 Mayus, 1 Min, 1 Número y 1 Caracter especial
+        </mat-hint>
+      </mat-form-field>
+
+
+      <!-- Confirmar contrasena -->
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Confirme contraseña</mat-label>
+        <input matInput [type]="ocultarContrasenas ? 'password' : 'text'" formControlName="confirmar"
+          autocomplete="off">
+
+        <button type="button" mat-icon-button matSuffix (click)="ocultarContrasenas = !ocultarContrasenas"
+          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="ocultarContrasenas">
+          <mat-icon>{{ocultarContrasenas ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+
+        <mat-error *ngIf="formulario.value.confirmar?.length < 8">
+          La contraseña debe tener mínimo 8 caracteres
+        </mat-error>
+        <mat-error *ngIf="!formulario.value.confirmar">La contraseña es obligatoria</mat-error>
+        <mat-hint>Repita nueva contraseña</mat-hint>
+      </mat-form-field>
+
+
+      <!-- Botones -->
+      <div fxLayout="row" fxLayoutAlign="center" class="py-3">
+        <button mat-button type="submit" class="p-3" color="primary" [disabled]="formulario.invalid">
+          Crear Contraseña
+        </button>
+      </div>
+
+
+    </form>
+  </mat-card>
+
+
+</section>

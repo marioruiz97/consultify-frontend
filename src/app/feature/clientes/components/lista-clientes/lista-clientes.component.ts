@@ -11,6 +11,7 @@ import { TipoDocumentoMap } from 'src/app/feature/usuarios/model/tipo-documento.
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { DIALOG_CONFIG } from 'src/app/shared/app.constants';
+import { RoleService } from 'src/app/core/service/role.service';
 
 @Component({
   selector: 'app-lista-clientes',
@@ -28,7 +29,10 @@ export class ListaClientesComponent implements OnInit, AfterViewInit, OnDestroy 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
-    private service: ClienteService, private dialog: MatDialog, private uiService: UIService
+    private service: ClienteService,
+    private dialog: MatDialog,
+    private uiService: UIService,
+    public rolService: RoleService
   ) { }
 
   ngOnInit() {

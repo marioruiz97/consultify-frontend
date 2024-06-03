@@ -17,9 +17,10 @@ export class UsuarioSesion {
 }
 
 export enum Rol {
-  ROLE_ADMIN,
-  ROLE_ASESOR,
-  ROLE_CLIENTE,
+  ROLE_ADMIN = "ROLE_ADMIN",
+  ROLE_ASESOR = "ROLE_ASESOR",
+  ROLE_CLIENTE = "ROLE_CLIENTE",
+  SIN_ROL = "SIN_ROL"
 }
 
 export const RolMap = new Map([

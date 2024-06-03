@@ -13,9 +13,11 @@ export class SidenavComponent {
 
   @Input() menu!: NavItem[];
 
-  nombre = "Mario";
+  nombre = "";
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+    this.nombre = this.authService.obtenerUsuarioSesion()?.nombreCompleto ?? "";
+  }
 
 
   onToggle(): void {

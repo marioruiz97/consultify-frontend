@@ -30,7 +30,10 @@ export class InicioSesionComponent {
 
     this.loginForm = new FormGroup({
       nombreUsuario: new FormControl('', [Validators.required, Validators.maxLength(64), Validators.minLength(4)]),
-      contrasena: new FormControl('', [Validators.required, Validators.maxLength(16), Validators.minLength(8), Validators.pattern(AppConstants.PATRON_CONTRASENA)]),
+      contrasena: new FormControl('', [
+        Validators.required, Validators.pattern(AppConstants.PATRON_CONTRASENA),
+        Validators.maxLength(AppConstants.MAX_LONGITUD_CONTRASENA), Validators.minLength(AppConstants.MIN_LONGITUD_CONTRASENA)
+      ]),
     })
   }
 

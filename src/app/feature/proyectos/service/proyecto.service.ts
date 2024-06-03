@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpService } from 'src/app/core/service/http.service';
-import { AppConstants } from 'src/app/shared/app.constants';
+import { AppConstants as rutas } from 'src/app/shared/app.constants';
 import { InfoProyecto } from '../model/info-proyecto.model';
 import { NuevoProyecto } from '../model/nuevo-proyecto.model';
 
 @Injectable()
 export class ProyectoService {
 
-  private proyectoPath = AppConstants.RUTA_PROYECTOS;
-  private misProyectosPath = AppConstants.RUTA_MIS_PROYECTOS;
+  private proyectoPath = rutas.API_BASE + rutas.RUTA_PROYECTOS;
+  private misProyectosPath = rutas.API_BASE + rutas.RUTA_MIS_PROYECTOS;
 
   constructor(private httpService: HttpService) { }
 

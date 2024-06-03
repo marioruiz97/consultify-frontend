@@ -24,7 +24,7 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   mostrarUsuarioFn = (miembro: MiembroProyecto) => {
-    return miembro && miembro.usuario ? `${miembro.usuario.nombres} ${miembro.usuario.apellidos} - ${miembro.usuario.correo}` : '';
+    return miembro?.usuario ? `${miembro.usuario.nombres} ${miembro.usuario.apellidos} - ${miembro.usuario.correo}` : '';
   };
 
   constructor(
@@ -91,7 +91,7 @@ export class GestionarMiembrosProyectoComponent implements OnInit, OnDestroy {
       this.uiService.mostrarConfirmDialog(data).afterClosed().subscribe(respuesta => {
         if (respuesta) this.tableroService.quitarMiembro(miembro)
           .then(nuevaLista => {
-            if (nuevaLista && nuevaLista.length >= 0) this.miembros = nuevaLista;
+            if (nuevaLista) this.miembros = nuevaLista;
             this.obtenerPosiblesMiembros();
           })
       })

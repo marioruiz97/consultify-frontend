@@ -11,9 +11,10 @@
         <p matListItemLine>No hay notificaciones de actividades recientes</p>
       </mat-list-item>
 
-      <mat-list-item *ngFor="let item of notificaciones">
-        <mat-icon matListItemIcon [ngClass]="item.color">message</mat-icon>
+      <mat-list-item *ngFor="let item of notificaciones" [matTooltip]="item.mensaje">
+        <mat-icon matListItemIcon [ngClass]="item.tipoNotificacion">message</mat-icon>
         <p matListItemLine>{{item.mensaje}}</p>
+        <span matListItemMeta>{{item.creadoEn | date: 'medium'}}</span>
       </mat-list-item>
 
     </mat-list>

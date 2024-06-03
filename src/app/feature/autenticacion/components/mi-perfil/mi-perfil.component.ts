@@ -13,6 +13,7 @@ import { UIService } from 'src/app/core/service/ui.service';
 import { CambiarContrasenaComponent } from '../cambiar-contrasena/cambiar-contrasena.component';
 import { CambiarCorreoComponent } from '../cambiar-correo/cambiar-correo.component';
 import { Subscription } from 'rxjs';
+import { Notificacion } from 'src/app/feature/proyectos/model/notificaciones/notificacion.model';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -25,6 +26,7 @@ export class MiPerfilComponent implements OnDestroy {
 
   accountForm: FormGroup;
   habilitarCampos = false;
+  notificaciones: Notificacion[] = [];
 
   private miPerfil = new MiPerfil();
   private idUsuario = 0;
@@ -54,6 +56,10 @@ export class MiPerfilComponent implements OnDestroy {
         this.miPerfil = perfil;
         this.setForm(this.miPerfil);
       });
+
+    this.suscripciones.push(
+      this.cuentaService.cargarMisNotificaciones(this.idUsuario).subscribe(notificaciones => this.notificaciones = notificaciones)
+    );
   }
 
   private initForm() {
@@ -92,7 +98,7 @@ export class MiPerfilComponent implements OnDestroy {
     return RolMap.get(rol);
   }
 
-  mostrarUltimoInicioSesion(){
+  mostrarUltimoInicioSesion() {
     return this.miPerfil.ultimoInicio;
   }
 

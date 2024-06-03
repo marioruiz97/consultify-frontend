@@ -1,0 +1,22 @@
+<!-- en proceso -->
+<div class="text-center" *ngIf="procesando">
+  <h3 class="mat-h2 my-3">Estamos confirmando tu cuenta</h3>
+  <mat-spinner></mat-spinner>
+  <a [routerLink]="['/login']">Ir a iniciar Sesión</a>
+</div>
+
+<!-- confirmacion exitosa -->
+<div class="text-center" *ngIf="confirmacionExitosa">
+  <h3 class="mat-h2 my-3">Felicidades! Tu identidad ha sido confirmada</h3>
+  <p>Ahora puedes ingresar al sistema e iniciar sesión con el siguiente enlace
+    <a [routerLink]="['/login']">Ir a iniciar Sesión</a>
+  </p>
+</div>
+
+<!-- confirmacion no exitosa -->
+<div class="text-center" *ngIf="confirmacionFallo">
+  <h3 class="mat-h2 my-3">Lo sentimos! Tu cuenta no ha podido ser confirmada</h3>
+  <p>Inténtalo nuevamente, o usa la opción recuperar contraseña
+    <a [routerLink]="['/login']">Ir a iniciar Sesión</a>
+  </p>
+</div>

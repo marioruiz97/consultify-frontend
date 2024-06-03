@@ -17,6 +17,7 @@ import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/c
 import { ActividadFiltrada } from '../../model/actividad-filtrada.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { RoleService } from 'src/app/core/service/role.service';
 
 @Component({
   selector: 'app-kanban-actividades',
@@ -65,7 +66,8 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
     private tableroservice: TableroProyectoService,
     private authService: AuthService,
     private uiService: UIService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public rolService: RoleService
   ) {
     this.miUsuario = this.authService.obtenerUsuarioSesion();
   }

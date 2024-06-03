@@ -65,7 +65,7 @@
       <mat-drawer-container class="mt-3 h-50">
         <mat-drawer #aside class="sidenav" role="directory" mode="side">
           <!-- opciones del dashboard -->
-          <mat-action-list>
+          <mat-action-list *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR'])">
             <button class="boton-opciones" color="darken-orange" mat-list-item (click)="abrirGestionarMiembro()">
               <mat-icon>person_add</mat-icon><br />
               <span>Gestionar Miembros</span>
@@ -74,7 +74,7 @@
               <mat-icon>edit</mat-icon><br />
               <span>Editar Proyecto</span>
             </button>
-            <button class="boton-opciones" color="darken-orange" mat-list-item (click)="abrirCambiarEstado()">
+            <button class="boton-opciones" color="darken-orange" mat-list-item (click)="abrirCambiarEstado()" fxHide>
               <mat-icon>swap_horiz</mat-icon><br />
               <span>Cambiar Estado Proyecto</span>
             </button>
@@ -84,11 +84,14 @@
         <mat-drawer-content class="pl-2">
 
           <button mat-button (click)="aside.toggle()" [color]="aside.opened ? '' : 'darken-orange'"
-            [matTooltip]="aside.opened ? 'Cerrar' : 'Abrir'">
+            [matTooltip]="aside.opened ? 'Cerrar' : 'Abrir'"
+            *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR'])">
+
             <mat-icon matIconPrefix class="my-auto">
               {{ aside.opened ? 'keyboard_arrow_left' : 'keyboard_arrow_right'}}
             </mat-icon>
             <span class="my-auto">{{aside.opened ? 'Cerrar menú lateral' : 'Abrir menú lateral'}}</span>
+
           </button>
 
           <div class="row my-3" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px"

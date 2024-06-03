@@ -55,7 +55,8 @@
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let doc">
 
-          <button mat-icon-button color="primary" (click)="abrirEditarActividad(doc)" matTooltip="Editar">
+          <button mat-icon-button color="primary" (click)="abrirEditarActividad(doc)" matTooltip="Editar"
+            *ngIf="rolService.puedeEditarActividad(doc)">
             <mat-icon class="mat-18">edit</mat-icon>
           </button>
           <button mat-icon-button [routerLink]="['actividades/'+doc.id]" matTooltip="Gestionar">

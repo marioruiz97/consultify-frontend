@@ -10,6 +10,7 @@ import { MiembroProyecto } from 'src/app/feature/proyectos/model/miembros/miembr
 import { InfoUsuario } from 'src/app/feature/usuarios/model/usuario-info.model';
 import { UIService } from 'src/app/core/service/ui.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { RoleService } from 'src/app/core/service/role.service';
 
 @Component({
   selector: 'app-detalle-actividad',
@@ -42,7 +43,8 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
     private actividadService: GestorActividadesService,
     private uiService: UIService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public rolService: RoleService
   ) {
     this.actividadForm = this.iniciarFormulario();
 

@@ -4,21 +4,24 @@
   <section fxLayout="column" fxFlexAlign.lt-md="center" fxLayout.gt-sm="row">
     <mat-list dense fxFlex class="mx-2 seccion">
       <h3 class="m-0 mt-3 pb-1 text-center">Proyectos</h3>
-      <mat-list-item *ngFor="let item of proyectos" [routerLink]="[item.url]">
+      <mat-list-item *ngFor="let item of proyectos" [routerLink]="[item.url]"
+        [disabled]="!rolService.rolRequerido(item.roles)">
         {{item.name}}
       </mat-list-item>
     </mat-list>
 
     <mat-list dense fxFlex class="mx-2 seccion">
       <h3 class="m-0 mt-3 pb-1 text-center">Módulos</h3>
-      <mat-list-item *ngFor="let item of modulos" [routerLink]="[item.url]">
+      <mat-list-item *ngFor="let item of modulos" [routerLink]="[item.url]"
+        [disabled]="!rolService.rolRequerido(item.roles)">
         {{item.name}}
       </mat-list-item>
     </mat-list>
 
     <mat-list dense fxFlex class="mx-2 seccion">
       <h3 class="m-0 mt-3 pb-1 text-center"> Ponte en Contacto</h3>
-      <mat-list-item *ngFor="let item of contacto" [routerLink]="[item.url]">
+      <mat-list-item *ngFor="let item of contacto" [routerLink]="[item.url]"
+        [disabled]="!rolService.rolRequerido(item.roles)">
         {{item.name}}
       </mat-list-item>
       <mat-list-item>

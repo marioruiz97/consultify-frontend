@@ -30,11 +30,12 @@ mat-accordion {
 }
 
 .progress-text-style {
+  width: 80px;
   position: relative;
   top: -50px;
-  left: 45.8%;
   font-weight: 500;
   font-size: 18px;
+  text-align: center;
 }
 
 /*

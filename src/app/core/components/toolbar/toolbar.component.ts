@@ -14,9 +14,9 @@ export class ToolbarComponent {
   rutaHome = rutas.RUTA_HOME;
 
   ajustes: NavItem[] = [
-    { name: 'Mi cuenta', url: rutas.RUTA_CUENTA, icon: 'account_circle' },
-    { name: 'Acerca de', url: rutas.RUTA_ACERCA, icon: 'account_tree' },
-    { name: 'Contacto', url: rutas.RUTA_CONTACTO, icon: 'contacts' }
+    { name: 'Mi cuenta', url: rutas.RUTA_CUENTA, icon: 'account_circle', roles: [] },
+    { name: 'Acerca de', url: rutas.RUTA_ACERCA, icon: 'account_tree', roles: [] },
+    { name: 'Contacto', url: rutas.RUTA_CONTACTO, icon: 'contacts', roles: [] }
   ];
 
   @Output() openMenu = new EventEmitter();

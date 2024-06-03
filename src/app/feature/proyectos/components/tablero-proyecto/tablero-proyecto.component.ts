@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormularioProyectoComponent } from '../formulario-proyecto/formulario-proyecto.component';
 import { customConfig } from 'src/app/shared/app.constants';
 import { GestionarMiembrosProyectoComponent } from '../gestionar-miembros-proyecto/gestionar-miembros-proyecto.component';
+import { RoleService } from 'src/app/core/service/role.service';
 
 @Component({
   selector: 'app-tablero-proyecto',
@@ -29,7 +30,8 @@ export class TableroProyectoComponent {
   constructor(
     private servicioTablero: TableroProyectoService,
     private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public rolService: RoleService
   ) {
     this.subs.push(
       this.activatedRoute.queryParams.subscribe(params => {

@@ -9,6 +9,7 @@ import { DIALOG_CONFIG, customConfig } from 'src/app/shared/app.constants';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { UIService } from 'src/app/core/service/ui.service';
+import { RoleService } from 'src/app/core/service/role.service';
 
 @Component({
   selector: 'app-lista-proyectos',
@@ -22,10 +23,15 @@ export class ListaProyectosComponent {
   proyectosFiltrados = new Subject<InfoProyecto[]>();
   mostrarFiltros = false;
 
+  get noHayProyectos() {
+    return this.proyectos.length === 0;
+  }
+
   constructor(
     private servicioProyecto: ProyectoService,
     private dialog: MatDialog,
-    private uiService: UIService
+    private uiService: UIService,
+    public rolService: RoleService
   ) {
     this.obtenerProyectos();
   }

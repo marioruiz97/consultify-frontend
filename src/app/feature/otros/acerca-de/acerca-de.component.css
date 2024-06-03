@@ -19,7 +19,7 @@
 }
 
 .about-content div p {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .historia,
@@ -62,8 +62,8 @@ mat-card-title {
   background-image: url("/assets/img/mario-ruiz.png");
 }
 
-.juliana-photo {
-  background-image: url("/assets/img/juliana-correa.jpeg");
+.juan-photo {
+  background-image: url("/assets/img/juan-pablo.jpeg");
 }
 
 .fab-icon {

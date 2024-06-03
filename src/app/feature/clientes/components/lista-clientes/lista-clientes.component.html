@@ -51,7 +51,8 @@
               <button mat-icon-button color="primary" [routerLink]="['/clientes/'+doc.idCliente]" matTooltip="Editar">
                 <mat-icon class="mat-18">edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn" (click)="eliminarCliente(doc)" matTooltip="Eliminar">
+              <button mat-icon-button color="warn" (click)="eliminarCliente(doc)" matTooltip="Eliminar"
+                *ngIf="rolService.hasRole('ROLE_ADMIN')">
                 <mat-icon class="mat-18">delete</mat-icon>
               </button>
             </div>
@@ -61,7 +62,8 @@
               </button>
               <mat-menu #actions="matMenu">
                 <button mat-menu-item [routerLink]="['/clientes/'+doc.idCliente]">Editar</button>
-                <button mat-menu-item (click)="eliminarCliente(doc)">Eliminar</button>
+                <button mat-menu-item (click)="eliminarCliente(doc)"
+                  *ngIf="rolService.hasRole('ROLE_ADMIN')">Eliminar</button>
               </mat-menu>
             </div>
           </td>
@@ -71,7 +73,8 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
       <!-- paginador de angular material-->
-      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 30, 50, 100]" class="mat-mdc-elevation-specific mat-elevation-z8">
+      <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20, 30, 50, 100]"
+        class="mat-mdc-elevation-specific mat-elevation-z8">
       </mat-paginator>
     </div>
   </section>
