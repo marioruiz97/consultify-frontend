@@ -10,6 +10,7 @@ import { SeguimientoActividadComponent } from './components/seguimiento-activida
 import { ProximasActividadesComponent } from './components/proximas-actividades/proximas-actividades.component';
 import { MisProximasActividadesComponent } from './components/mis-proximas-actividades/mis-proximas-actividades.component';
 import { MisActividadesService } from './service/mis-actividades.service';
+import { TableroKanbanService } from './service/tablero-kanban.service';
 
 
 
@@ -28,6 +29,6 @@ import { MisActividadesService } from './service/mis-actividades.service';
     SharedModule
   ],
   exports: [KanbanActividadesComponent, ProximasActividadesComponent, MisProximasActividadesComponent],
-  providers: [GestorActividadesService, MisActividadesService]
+  providers: [GestorActividadesService, MisActividadesService, TableroKanbanService]
 })
 export class ActividadesModule { }
