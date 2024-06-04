@@ -84,7 +84,8 @@ div.column-title button {
   font-style: italic;
 }
 
-.fecha-completada {
+.fecha-completada,
+.tipo-actividad {
   font-size: 12px;
   letter-spacing: 0.001em;
   font-style: italic;

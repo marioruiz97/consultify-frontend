@@ -18,6 +18,8 @@ import { ActividadFiltrada } from '../../model/actividad-filtrada.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RoleService } from 'src/app/core/service/role.service';
+import { TipoActividad } from 'src/app/feature/tipo-actividades/model/tipo-actividad.model';
+import { TipoActividadesService } from 'src/app/feature/tipo-actividades/service/tipo-actividades.service';
 
 @Component({
   selector: 'app-kanban-actividades',
@@ -39,6 +41,9 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
     inicio: new FormControl<Date | null>(null),
     fin: new FormControl<Date | null>(null),
   });
+
+  tipoActividadControl: FormControl = new FormControl(null);
+  tipoActividades: TipoActividad[] = [];
 
   mostrarSoloMias = false;
   mostrarResetColumnas = false;
@@ -64,6 +69,7 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
   constructor(
     private actividadService: GestorActividadesService,
     private tableroservice: TableroProyectoService,
+    private tipoActividadService: TipoActividadesService,
     private authService: AuthService,
     private uiService: UIService,
     private dialog: MatDialog,
@@ -90,6 +96,27 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
         }
       })
     );
+
+    this.subs.push(
+      this.tipoActividadService.obtenerTiposActividad().subscribe(tipos => this.tipoActividades = tipos)
+    );
+
+    this.subs.push(
+      this.tipoActividadControl.valueChanges.subscribe(tipo => this.filtrarPorTipo(tipo))
+    );
+  }
+
+
+  filtrarPorTipo(tipo: TipoActividad | null | ''): void {
+
+    if (tipo && tipo.idTipo) {
+      console.log('hay tipo', tipo);
+      const filtradas = this.actividades.filter(actividad => actividad.tipoActividad?.idTipo === tipo.idTipo);
+      this.aplicarFiltros(filtradas);
+    } else {
+      this.aplicarFiltros(this.actividadesFiltradas.value.prev);
+    }
+
   }
 
   cancelarFiltroFecha() {

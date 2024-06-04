@@ -54,6 +54,18 @@
             </mat-form-field>
           </div>
 
+          <div class="form-group" fxLayoutAlign="center">
+            <mat-form-field appearance="outline" class="form-input" fxFlex>
+              <mat-label>Tipo de Actividad</mat-label>
+              <mat-select formControlName="tipoActividad">
+                <mat-option [value]="null">Seleccione una opción</mat-option>
+                <mat-option [value]="item" *ngFor="let item of tipoActividades">{{item.nombre}}</mat-option>
+              </mat-select>
+              <mat-hint>Seleccione un tipo de actividad</mat-hint>
+            </mat-form-field>
+          </div>
+
+
           <div class="form-group" fxLayoutAlign="space-evenly" fxLayout.lt-sm="column">
             <mat-form-field appearance="outline" class="form-input" fxFlex>
               <mat-label>Estado de Actividad</mat-label>
