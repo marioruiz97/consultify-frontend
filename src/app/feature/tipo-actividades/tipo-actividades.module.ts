@@ -3,11 +3,16 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { TipoActividadesService } from './service/tipo-actividades.service';
+import { ListaTipoActividadesComponent } from './components/lista-tipo-actividades/lista-tipo-actividades.component';
+import { FormularioTipoActividadesComponent } from './components/formulario-tipo-actividades/formulario-tipo-actividades.component';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    ListaTipoActividadesComponent,
+    FormularioTipoActividadesComponent
+  ],
   imports: [
     AppRoutingModule,
     CommonModule,

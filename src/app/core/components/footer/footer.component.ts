@@ -23,6 +23,7 @@ export class FooterComponent {
     ];
     this.modulos = [
       { name: 'Usuarios', url: rutas.RUTA_USUARIOS, roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] },
+      { name: 'Tipos de Actividad', url: rutas.RUTA_TIPO_ACTIVIDAD, roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] },
       { name: 'Mi Perfil', url: rutas.RUTA_CUENTA, roles: [] },
     ];
     this.contacto = [

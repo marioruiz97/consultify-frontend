@@ -1,0 +1,40 @@
+<section>
+  <div>
+    <h2 matDialogTitle>{{esEditar? 'Editar' : 'Agregar'}} Tipo Actividad</h2>
+    <div fxFlex></div>
+    <button mat-icon-button mat-dialog-close>
+      <mat-icon>clear</mat-icon>
+    </button>
+  </div>
+
+  <span mat-subheader>Los campos con * son obligatorios</span>
+
+  <form [formGroup]="tipoActividadForm" (ngSubmit)="onSubmit()">
+
+    <mat-dialog-content fxLayout="column">
+
+      <mat-form-field appearance="outline" class="mb-3">
+        <mat-label>Código Asignado</mat-label>
+        <input matInput formControlName="idTipo" autocomplete="off">
+        <mat-hint>El código es autoasignado por el sistema</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="mb-3">
+        <mat-label>Nombre tipo actividad</mat-label>
+        <input type="text" matInput formControlName="nombre">
+        <mat-hint>Ingrese nombre del tipo de actividad</mat-hint>
+        <mat-error>El tipo de actividad es obligatorio</mat-error>
+      </mat-form-field>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="my-4">
+      <button type="button" mat-button fxFlex mat-dialog-close>Cancelar</button>
+
+      <button type="submit" mat-button fxFlex [disabled]="tipoActividadForm.invalid" color="primary">
+        Guardar Contacto
+      </button>
+
+    </mat-dialog-actions>
+  </form>
+</section>
