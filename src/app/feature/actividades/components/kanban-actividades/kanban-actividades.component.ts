@@ -110,7 +110,6 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
   filtrarPorTipo(tipo: TipoActividad | null | ''): void {
 
     if (tipo && tipo.idTipo) {
-      console.log('hay tipo', tipo);
       const filtradas = this.actividades.filter(actividad => actividad.tipoActividad?.idTipo === tipo.idTipo);
       this.aplicarFiltros(filtradas);
     } else {

@@ -105,7 +105,7 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
       descripcion: actividad.descripcion,
       estado: actividad.estado,
       fechaCierreEsperado: actividad.fechaCierreEsperado,
-      tipoActividad: actividad.tipoActividad ?? null,
+      tipoActividad: actividad.tipoActividad?.idTipo ?? null,
       responsable: actividad.responsable
     });
 
@@ -137,6 +137,10 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
 
   guardarActividad() {
     const actividad: Actividad = { ...this.actividad, ...this.actividadForm.value };
+    const tipoActividad: TipoActividad | undefined = this.tipoActividades.find(tipo => tipo.idTipo == this.actividadForm.value.tipoActividad);
+
+    if (tipoActividad) actividad.tipoActividad = tipoActividad;
+
 
     if (this.esEditar) {
       this.manejarOperacion(this.servicioActividad.editarActividad(actividad), actividad.responsable);

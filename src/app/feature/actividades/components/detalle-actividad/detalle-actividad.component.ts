@@ -139,7 +139,7 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
       descripcion: actividad.descripcion,
       estado: actividad.estado,
       fechaCierreEsperado: actividad.fechaCierreEsperado,
-      tipoActividad: actividad.tipoActividad ?? null,
+      tipoActividad: actividad.tipoActividad?.idTipo ?? null,
       responsable: actividad.responsable
     });
 
@@ -160,6 +160,10 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
 
   guardarActividad() {
     const actividad: Actividad = { ...this.actividad, ...this.actividadForm.value };
+    const tipoActividad: TipoActividad | undefined = this.tipoActividades.find(tipo => tipo.idTipo == this.actividadForm.value.tipoActividad);
+
+    if (tipoActividad) actividad.tipoActividad = tipoActividad;
+
     this.actividadService.editarActividad(actividad)
       .then(guardada => {
         this.uiService.mostrarSnackBar(`La actividad ${guardada.nombre} se ha guardado con exito`, 1.5);

@@ -42,7 +42,7 @@
         <mat-label>Tipo de Actividad</mat-label>
         <mat-select formControlName="tipoActividad">
           <mat-option [value]="null">Seleccione una opción</mat-option>
-          <mat-option [value]="item" *ngFor="let item of tipoActividades">{{item.nombre}}</mat-option>
+          <mat-option [value]="item.idTipo" *ngFor="let item of tipoActividades">{{item.nombre}}</mat-option>
         </mat-select>
         <mat-hint>Seleccione un tipo de actividad</mat-hint>
       </mat-form-field>
