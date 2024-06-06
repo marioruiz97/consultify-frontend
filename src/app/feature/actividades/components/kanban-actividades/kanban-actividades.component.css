@@ -11,6 +11,10 @@ p.y-center span {
   font-size: 15px;
 }
 
+button.mis-actividades {
+  height: 56px;
+}
+
 .botonera mat-form-field.buscar {
   min-width: 350px;
 }
@@ -84,7 +88,8 @@ div.column-title button {
   font-style: italic;
 }
 
-.fecha-completada {
+.fecha-completada,
+.tipo-actividad {
   font-size: 12px;
   letter-spacing: 0.001em;
   font-style: italic;

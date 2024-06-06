@@ -20,6 +20,7 @@ import { RoleGuard } from './core/guard/role.guard';
 import { NuevaContrasenaComponent } from './feature/autenticacion/components/nueva-contrasena/nueva-contrasena.component';
 import { VerificarCuentaComponent } from './feature/autenticacion/components/verificar-cuenta/verificar-cuenta.component';
 import { VerificarCuentaNuevaComponent } from './feature/autenticacion/components/verificar-cuenta-nueva/verificar-cuenta-nueva.component';
+import { ListaTipoActividadesComponent } from './feature/tipo-actividades/components/lista-tipo-actividades/lista-tipo-actividades.component';
 
 const routes: Routes = [
   // módulos generales
@@ -44,6 +45,9 @@ const routes: Routes = [
   { path: rutas.RUTA_CLIENTES, component: ListaClientesComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) },
   { path: `${rutas.RUTA_CLIENTES}/:id`, component: FormularioClienteComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) },
 
+  // tipo actividades
+  { path: rutas.RUTA_TIPO_ACTIVIDAD, component: ListaTipoActividadesComponent, canActivate: mapToCanActivate([AuthGuard, RoleGuard]) },
+
   // proyectos
   { path: rutas.RUTA_PROYECTOS, component: ListaProyectosComponent, canActivate: mapToCanActivate([AuthGuard]) },
   { path: `${rutas.RUTA_PROYECTOS}/:id`, component: TableroProyectoComponent, canActivate: mapToCanActivate([AuthGuard]) },
@@ -51,6 +55,9 @@ const routes: Routes = [
 
   // informes
   { path: rutas.RUTA_INFORMES, component: InformeProyectoComponent, canActivate: mapToCanActivate([AuthGuard]) },
+
+  // usar rutas que no estan mapeadas
+  { path: '**', redirectTo: rutas.RUTA_HOME }
 ];
 
 @NgModule({

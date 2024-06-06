@@ -23,6 +23,7 @@ export class AppConstants {
   public static readonly RUTA_MIS_PROYECTOS = 'mis-proyectos';
   public static readonly RUTA_MIS_ACTIVIDADES = 'mis-actividades';
   public static readonly RUTA_ACTIVIDADES = 'proyectos/{idProyecto}/actividades';
+  public static readonly RUTA_TIPO_ACTIVIDAD = 'tipo-actividad';
   public static readonly RUTA_SEGUIMIENTOS = 'actividades/{idActividad}/seguimientos';
 
   // PATRONES
@@ -33,6 +34,7 @@ export class AppConstants {
 }
 
 export const MENU_NAVEGACION: NavItem[] = [
+  { url: AppConstants.RUTA_TIPO_ACTIVIDAD, name: 'Tipos de Actividad', icon: 'list_alt', roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] },
   { url: AppConstants.RUTA_USUARIOS, name: 'Usuarios', icon: 'people', roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] },
   { url: AppConstants.RUTA_CLIENTES, name: 'Empresas Clientes', icon: 'account_balance', roles: ['ROLE_ADMIN', 'ROLE_ASESOR'] },
   { url: AppConstants.RUTA_PROYECTOS, name: 'Proyectos', icon: 'dashboard', roles: [] },

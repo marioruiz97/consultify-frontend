@@ -11,6 +11,8 @@ import { InfoUsuario } from 'src/app/feature/usuarios/model/usuario-info.model';
 import { UIService } from 'src/app/core/service/ui.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoleService } from 'src/app/core/service/role.service';
+import { TipoActividad } from 'src/app/feature/tipo-actividades/model/tipo-actividad.model';
+import { TipoActividadesService } from 'src/app/feature/tipo-actividades/service/tipo-actividades.service';
 
 @Component({
   selector: 'app-detalle-actividad',
@@ -28,6 +30,7 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
   habilitarCampos = false;
 
   actividadForm: FormGroup;
+  tipoActividades: TipoActividad[] = [];
   estados = EstadoActividadMap;
   minDate = new Date();
   filteredMiembros: Observable<MiembroProyecto[]> = of(this.miembros);
@@ -41,6 +44,7 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
   constructor(
     private tableroService: TableroProyectoService,
     private actividadService: GestorActividadesService,
+    private tipoActividadService: TipoActividadesService,
     private uiService: UIService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -52,6 +56,10 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
       this.tableroService.tableroActual.subscribe(tablero => {
         if (tablero) this.miembros = tablero.infoProyecto.miembros;
       })
+    );
+
+    this.subs.push(
+      this.tipoActividadService.obtenerTiposActividad().subscribe(tipos => this.tipoActividades = tipos)
     );
 
     this.subs.push(
@@ -118,6 +126,7 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
       descripcion: new FormControl('', [Validators.required, Validators.maxLength(254)]),
       estado: new FormControl('', [Validators.required]),
       fechaCierreEsperado: new FormControl(''),
+      tipoActividad: new FormControl(null),
       responsable: new FormControl('', [Validators.required]),
     });
   }
@@ -130,6 +139,7 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
       descripcion: actividad.descripcion,
       estado: actividad.estado,
       fechaCierreEsperado: actividad.fechaCierreEsperado,
+      tipoActividad: actividad.tipoActividad?.idTipo ?? null,
       responsable: actividad.responsable
     });
 
@@ -150,6 +160,10 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
 
   guardarActividad() {
     const actividad: Actividad = { ...this.actividad, ...this.actividadForm.value };
+    const tipoActividad: TipoActividad | undefined = this.tipoActividades.find(tipo => tipo.idTipo == this.actividadForm.value.tipoActividad);
+
+    if (tipoActividad) actividad.tipoActividad = tipoActividad;
+
     this.actividadService.editarActividad(actividad)
       .then(guardada => {
         this.uiService.mostrarSnackBar(`La actividad ${guardada.nombre} se ha guardado con exito`, 1.5);

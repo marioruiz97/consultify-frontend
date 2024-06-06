@@ -10,6 +10,8 @@ import { Actividad } from '../../model/actividad.model';
 import { EstadoActividad, EstadoActividadMap } from '../../model/estado-actividad.model';
 import { InfoUsuario } from 'src/app/feature/usuarios/model/usuario-info.model';
 import { ResponsableActividad } from '../../model/responsable-actividad.model';
+import { TipoActividad } from 'src/app/feature/tipo-actividades/model/tipo-actividad.model';
+import { TipoActividadesService } from 'src/app/feature/tipo-actividades/service/tipo-actividades.service';
 
 @Component({
   selector: 'app-formulario-actividad',
@@ -24,7 +26,8 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
   private actividad: Actividad | undefined;
 
   actividadForm: FormGroup;
-  estados = EstadoActividadMap
+  estados = EstadoActividadMap;
+  tipoActividades: TipoActividad[] = [];
   minDate = new Date();
   esEditar = false;
   filteredMiembros: Observable<MiembroProyecto[]> = of(this.miembros);
@@ -38,6 +41,7 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: Actividad,
     private tableroService: TableroProyectoService,
     private servicioActividad: GestorActividadesService,
+    private tipoActividadService: TipoActividadesService,
     private uiService: UIService,
     private dialogRef: MatDialogRef<FormularioActividadComponent>
   ) {
@@ -47,6 +51,10 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
       this.tableroService.tableroActual.subscribe(tablero => {
         if (tablero) this.miembros = tablero.infoProyecto.miembros;
       })
+    );
+
+    this.subs.push(
+      this.tipoActividadService.obtenerTiposActividad().subscribe(tipos => this.tipoActividades = tipos)
     );
 
     if (this.data) {
@@ -81,6 +89,7 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
       descripcion: new FormControl('', [Validators.required, Validators.maxLength(254)]),
       estado: new FormControl({ value: 'POR_HACER', disabled: true }, [Validators.required]),
       fechaCierreEsperado: new FormControl(''),
+      tipoActividad: new FormControl(null),
       responsable: new FormControl('', [Validators.required]),
     });
   }
@@ -96,6 +105,7 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
       descripcion: actividad.descripcion,
       estado: actividad.estado,
       fechaCierreEsperado: actividad.fechaCierreEsperado,
+      tipoActividad: actividad.tipoActividad?.idTipo ?? null,
       responsable: actividad.responsable
     });
 
@@ -103,11 +113,22 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
 
 
   mostrarErrores(): string[] {
-    const controls = ['nombre', 'descripcion', 'responsable', 'estado', 'fechaCierreEsperado'];
+    const controls = ['nombre', 'descripcion', 'responsable', 'estado', 'tipoActividad', 'fechaCierreEsperado'];
     const result: string[] = [];
     controls.forEach(control => {
       if (this.actividadForm.controls[control].errors !== null) {
-        const printable = control === 'fechaCierreEsperado' ? 'fecha esperada de cierre' : control;
+        let printable: string;
+        switch (control) {
+          case 'fechaCierreEsperado':
+            printable = 'fecha esperada de cierre';
+            break;
+          case 'tipoActividad':
+            printable = 'tipo de actividad';
+            break;
+          default:
+            printable = control;
+            break;
+        }
         result.push(printable);
       }
     });
@@ -116,6 +137,10 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
 
   guardarActividad() {
     const actividad: Actividad = { ...this.actividad, ...this.actividadForm.value };
+    const tipoActividad: TipoActividad | undefined = this.tipoActividades.find(tipo => tipo.idTipo == this.actividadForm.value.tipoActividad);
+
+    if (tipoActividad) actividad.tipoActividad = tipoActividad;
+
 
     if (this.esEditar) {
       this.manejarOperacion(this.servicioActividad.editarActividad(actividad), actividad.responsable);

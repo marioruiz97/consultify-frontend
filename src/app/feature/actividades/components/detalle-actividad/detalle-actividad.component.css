@@ -35,11 +35,11 @@
 }
 
 mat-card.card-standard {
-  max-height: 440px;
+  max-height: 560px;
 }
 
 mat-card.card-expanded {
-  max-height: 505px;
+  max-height: 610px;
 }
 
 div.form-group {

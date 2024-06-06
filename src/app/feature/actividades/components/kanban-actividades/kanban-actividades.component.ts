@@ -1,23 +1,23 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Actividad } from '../../model/actividad.model';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { GestorActividadesService } from '../../service/gestor-actividades.service';
 import { Columna } from '../../model/columna-kanban.model';
 import { TableroProyectoService } from 'src/app/feature/proyectos/service/tablero-proyecto.service';
 import { EstadoActividad, EstadoActividadMap } from '../../model/estado-actividad.model';
 import { ResponsableActividad } from '../../model/responsable-actividad.model';
-import { AuthService } from 'src/app/core/service/auth.service';
-import { UsuarioSesion } from 'src/app/core/model/usuario-sesion.model';
 import { FormularioActividadComponent } from '../formulario-actividad/formulario-actividad.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DIALOG_CONFIG, customConfig } from 'src/app/shared/app.constants';
 import { UIService } from 'src/app/core/service/ui.service';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
-import { ActividadFiltrada } from '../../model/actividad-filtrada.model';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { RoleService } from 'src/app/core/service/role.service';
+import { TipoActividad } from 'src/app/feature/tipo-actividades/model/tipo-actividad.model';
+import { TipoActividadesService } from 'src/app/feature/tipo-actividades/service/tipo-actividades.service';
+import { TableroKanbanService } from '../../service/tablero-kanban.service';
 
 @Component({
   selector: 'app-kanban-actividades',
@@ -26,28 +26,17 @@ import { RoleService } from 'src/app/core/service/role.service';
 })
 export class KanbanActividadesComponent implements OnInit, OnDestroy {
 
-  private miUsuario: UsuarioSesion | null;
-  private actividades: Actividad[] = [];
-  private actividadesFiltradas: BehaviorSubject<ActividadFiltrada> = new BehaviorSubject<ActividadFiltrada>({ prev: [], current: [] });
-
-  actividadesPorHacer: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
-  actividadesEnProgreso: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
-  actividadesEnRevision: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
-  actividadesCompletadas: BehaviorSubject<Actividad[]> = new BehaviorSubject<Actividad[]>([]);
-
   rango: FormGroup = new FormGroup({
     inicio: new FormControl<Date | null>(null),
     fin: new FormControl<Date | null>(null),
   });
 
+  tipoActividadControl: FormControl = new FormControl(null);
+  tipoActividades: TipoActividad[] = [];
+
   mostrarSoloMias = false;
   mostrarResetColumnas = false;
-  columnas: Columna[] = [
-    { id: 'POR_HACER', titulo: 'Por Hacer', actividades: this.actividadesPorHacer, oculta: false, prev: false, isExpanded: false, claseCss: 'por-hacer' },
-    { id: 'EN_PROGRESO', titulo: 'En Progreso', actividades: this.actividadesEnProgreso, oculta: false, prev: false, isExpanded: false, claseCss: 'en-progreso' },
-    { id: 'EN_REVISION', titulo: 'En Revisión', actividades: this.actividadesEnRevision, oculta: false, prev: false, isExpanded: false, claseCss: 'en-revision' },
-    { id: 'COMPLETADA', titulo: 'Completada', actividades: this.actividadesCompletadas, oculta: false, prev: false, isExpanded: false, claseCss: 'completada' }
-  ];
+  columnas: Columna[];
 
   private subs: Subscription[] = [];
 
@@ -57,139 +46,83 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
   };
 
 
-  get hayActividades() {
-    return this.actividades.length > 0;
+  get hayActividades(): boolean {
+    return this.kanbanService.hayActividades;
   }
 
   constructor(
     private actividadService: GestorActividadesService,
     private tableroservice: TableroProyectoService,
-    private authService: AuthService,
+    private kanbanService: TableroKanbanService,
+    private tipoActividadService: TipoActividadesService,
     private uiService: UIService,
     private dialog: MatDialog,
     public rolService: RoleService
   ) {
-    this.miUsuario = this.authService.obtenerUsuarioSesion();
+    this.columnas = kanbanService.columnas;
   }
 
   ngOnInit(): void {
+
     this.subs.push(
-      this.actividadesFiltradas.subscribe(filtradas => {
-        this.actividadesPorHacer.next(filtradas.current.filter(actividad => actividad.estado == EstadoActividad.POR_HACER));
-        this.actividadesEnProgreso.next(filtradas.current.filter(actividad => actividad.estado == EstadoActividad.EN_PROGRESO));
-        this.actividadesEnRevision.next(filtradas.current.filter(actividad => actividad.estado == EstadoActividad.EN_REVISION));
-        this.actividadesCompletadas.next(filtradas.current.filter(actividad => actividad.estado == EstadoActividad.COMPLETADA));
-      })
+      this.tipoActividadService.obtenerTiposActividad().subscribe(tipos => this.tipoActividades = tipos)
     );
 
     this.subs.push(
-      this.tableroservice.tableroActual.subscribe(tablero => {
-        if (tablero) {
-          this.actividades = tablero.actividades;
-          this.actividadesFiltradas.next({ prev: this.actividades, current: this.actividades });
-        }
-      })
+      this.tipoActividadControl.valueChanges.subscribe(tipo => this.filtrarPorTipo(tipo))
     );
+  }
+
+
+  filtrarPorTipo(tipo: TipoActividad | null): void {
+    this.kanbanService.filtrarPorTipo(tipo);
   }
 
   cancelarFiltroFecha() {
     if (!this.rango.pristine) {
       this.rango.setValue({ inicio: null, fin: null });
-      this.aplicarFiltros(this.actividadesFiltradas.value.prev);
-      this.rango.markAsPristine()
+      this.kanbanService.filtrarPorFecha(null, null);
+      this.rango.markAsPristine();
     }
   }
 
   aplicarFiltroFecha() {
     const { inicio, fin } = this.rango.value;
-    if (inicio && fin) {
-      const filtradas: Actividad[] = this.actividades.filter(actividad => {
-        const cierre = new Date(actividad.fechaCierreEsperado);
-        return cierre >= new Date(inicio) && cierre <= new Date(fin);
-      });
-      this.aplicarFiltros(filtradas);
-    }
+    this.kanbanService.filtrarPorFecha(inicio, fin);
   }
 
   filtrarMisActividades() {
     this.mostrarSoloMias = !this.mostrarSoloMias;
-    const actividades = this.mostrarSoloMias ? this.actividadesFiltradas.value.current : this.actividadesFiltradas.value.prev;
-    this.aplicarFiltros(actividades);
+    this.kanbanService.filtrarMisActividades(this.mostrarSoloMias);
   }
 
   doFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-    const filtradas: Actividad[] = this.actividades.filter(actividad => {
-      if (!filterValue) return true;
-      const condicion1 = actividad.nombre.trim().toLowerCase().includes(filterValue);
-      const condicion2 = actividad.responsable.nombresCompletos.trim().toLowerCase().includes(filterValue);
-      return condicion1 || condicion2;
-    });
-    this.aplicarFiltros(filtradas);
+    this.kanbanService.filtrarPorCampo(filterValue);
   }
 
-  private aplicarFiltros(filtradas: Actividad[]) {
-    const prev = this.actividadesFiltradas.value.current;
-    if (this.mostrarSoloMias) {
-      const current: Actividad[] = filtradas.filter(actividad => actividad.responsable.idUsuario === this.miUsuario?.idUsuario);
-      this.actividadesFiltradas.next({ prev, current });
-    } else {
-      this.actividadesFiltradas.next({ prev, current: filtradas });
-    }
-  }
 
   /**
    * metodos para controlar columnas del kanban
    */
   resetColumnas() {
     this.mostrarResetColumnas = false;
-    this.columnas.forEach(col => {
-      col.isExpanded = false;
-      col.oculta = false;
-      col.prev = false;
-    });
-    this.updateColumnWidths();
+    this.kanbanService.resetColumnas();
   }
 
   toggleHide(column: Columna) {
-    column.prev = column.oculta;
-    column.oculta = !column.oculta;
-    this.updateColumnWidths();
+    this.kanbanService.toggleHide(column);
     this.mostrarResetColumnas = true;
   }
 
   toggleExpand(column: Columna) {
-    const expandir = !column.isExpanded;
-
-    if (expandir) {
-      this.columnas.forEach(col => {
-        col.prev = col.oculta;
-        if (col === column) col.isExpanded = true;
-        else {
-          col.isExpanded = false;
-          col.oculta = true;
-        }
-      });
-
-    } else {
-      this.columnas.forEach(col => {
-        col.oculta = col.prev;
-        col.isExpanded = false;
-      });
-      this.updateColumnWidths();
-    }
-  }
-
-  updateColumnWidths() {
-    const visibleColumns = this.columnas.filter(col => !col.oculta);
-
-    visibleColumns.forEach(col => {
-      if (visibleColumns.length === 1) this.toggleExpand(col);
-    });
+    this.kanbanService.toggleExpand(column);
   }
   /**
    * Fin metodos para controlar columnas
    */
+
+
 
   abrirCrearActividad() {
     this.dialog.open(FormularioActividadComponent, { ...customConfig('50vw', '60vh'), position: { right: '2px' } });

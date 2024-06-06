@@ -32,6 +32,12 @@
         <td mat-cell *matCellDef="let doc" [matTooltip]="doc.descripcion"> {{doc.nombre}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="tipoActividad">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Puedes buscar por nombre del tipo"
+          matTooltipPosition="above"> Tipo Actividad </th>
+        <td mat-cell *matCellDef="let doc"> {{doc.tipoActividad?.nombre}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="fechaCierreEsperado">
         <th mat-header-cell *matHeaderCellDef mat-sort-header
           matTooltip="Para buscar por fecha usa el formato aaaa-mm-dd" matTooltipPosition="above"> Fecha Vencimiento

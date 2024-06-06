@@ -17,6 +17,10 @@
     <mat-card-content class="pt-3">
       <h4 class="titulo">Estado: <span class="subtitulo">{{ obtenerEstado(actividad.estado)}}</span></h4>
 
+      <h4 class="descripcion mt-2" *ngIf="actividad.tipoActividad">Tipo Actividad:
+        <span>{{actividad.tipoActividad.nombre}}</span>
+      </h4>
+
 
       <h4 class="descripcion mt-2">Descripción</h4>
       <p>{{actividad.descripcion}}</p>

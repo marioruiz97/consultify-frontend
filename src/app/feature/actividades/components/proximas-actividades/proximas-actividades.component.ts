@@ -24,7 +24,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
   private subs: Subscription[] = [];
   private mostrarAlertaVencidas = true;
 
-  displayedColumns = ['nombre', 'fechaCierreEsperado', 'estado', 'responsable', 'accion'];
+  displayedColumns = ['nombre', 'fechaCierreEsperado', 'tipoActividad', 'estado', 'responsable', 'accion'];
   datasource = new MatTableDataSource<Actividad>();
 
   numeroActividades = 0;
@@ -89,6 +89,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
     this.datasource.sortingDataAccessor = (item, property) => {
       if (property == 'responsable') return `${item.responsable.nombres} ${item.responsable.apellidos}`;
       if (property == 'estado') return this.getVencida(item);
+      if (property == 'tipoActividad') return `${item.tipoActividad.nombre}`;
       return item[property];
     }
   }
