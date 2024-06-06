@@ -17,6 +17,7 @@ export class InformeProyectoComponent implements OnDestroy {
 
   proyectos: BehaviorSubject<InformeProyecto[]> = new BehaviorSubject<InformeProyecto[]>([]);
   noHayProyectos = true;
+  estaCargando = false;
 
   private subs: Subscription[] = [];
 
@@ -62,6 +63,7 @@ export class InformeProyectoComponent implements OnDestroy {
     const fecha = moment().format("DD-MM-YYYY");
     const nombreArchivo = `informe-avance-${informe.idProyecto}-${informe.nombreProyecto}-${fecha}.${format}`;
 
+    this.estaCargando = true;
     this.servicioInformes.exportarReporte(idProyecto, format).subscribe({
       next: (response: Blob) => {
 
@@ -73,8 +75,10 @@ export class InformeProyectoComponent implements OnDestroy {
         link.download = nombreArchivo;
         link.click();
         window.URL.revokeObjectURL(url);
+        this.estaCargando = false;
       },
       error: (error) => {
+        this.estaCargando = false;
         console.error('Error descargando el reporte', error);
       }
     });

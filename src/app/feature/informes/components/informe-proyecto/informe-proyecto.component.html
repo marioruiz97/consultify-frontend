@@ -85,7 +85,7 @@
 
         <mat-divider class="mb-3"></mat-divider>
 
-        <mat-spinner *ngIf="!proyecto.informeActividad"></mat-spinner>
+        <mat-spinner class="mx-auto" *ngIf="!proyecto.informeActividad"></mat-spinner>
 
         <section class="contenedor-barras" *ngIf="proyecto.informeActividad" fxLayout="column">
 
@@ -105,7 +105,7 @@
 
         </section>
 
-        <mat-action-row>
+        <mat-action-row *ngIf="!estaCargando">
 
           <button mat-button color="accent" (click)="descargarReporte(proyecto, 'xlsx')">
             <mat-icon>system_update_alt</mat-icon>
@@ -121,6 +121,10 @@
             <mat-icon>open_in_new</mat-icon>
             <span>Ir al proyecto</span>
           </button>
+        </mat-action-row>
+
+        <mat-action-row *ngIf="estaCargando">
+          <mat-spinner class="mx-auto"></mat-spinner>
         </mat-action-row>
 
       </mat-expansion-panel>
