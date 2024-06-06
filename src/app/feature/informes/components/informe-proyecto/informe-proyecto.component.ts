@@ -17,6 +17,7 @@ export class InformeProyectoComponent implements OnDestroy {
 
   proyectos: BehaviorSubject<InformeProyecto[]> = new BehaviorSubject<InformeProyecto[]>([]);
   noHayProyectos = true;
+  estaCargando = false;
 
   private subs: Subscription[] = [];
 
@@ -55,6 +56,32 @@ export class InformeProyectoComponent implements OnDestroy {
         pdf.save(nombreArchivo);
       });
     }
+  }
+
+  descargarReporte(informe: InformeProyecto, format: 'pdf' | 'xlsx') {
+    const idProyecto = informe.idProyecto;
+    const fecha = moment().format("DD-MM-YYYY");
+    const nombreArchivo = `informe-avance-${informe.idProyecto}-${informe.nombreProyecto}-${fecha}.${format}`;
+
+    this.estaCargando = true;
+    this.servicioInformes.exportarReporte(idProyecto, format).subscribe({
+      next: (response: Blob) => {
+
+        const blob = new Blob([response], { type: format === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = nombreArchivo;
+        link.click();
+        window.URL.revokeObjectURL(url);
+        this.estaCargando = false;
+      },
+      error: (error) => {
+        this.estaCargando = false;
+        console.error('Error descargando el reporte', error);
+      }
+    });
   }
 
   cargarInformeProyecto(proyecto: InformeProyecto) {

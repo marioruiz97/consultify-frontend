@@ -12,7 +12,7 @@ export interface Options {
 @Injectable({ providedIn: 'root' })
 export class HttpService {
 
-  private API_ENDPOINT = "http://localhost:8080";
+  private API_ENDPOINT = AppConstants.API_ENDPOINT;
   private LOGIN_PATH = `auth/${AppConstants.RUTA_LOGIN}`;
 
   constructor(protected httpClient: HttpClient) { }
