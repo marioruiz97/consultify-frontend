@@ -106,10 +106,17 @@
         </section>
 
         <mat-action-row>
-          <button mat-button color="accent" (click)="exportarAPDF(proyecto)">
+
+          <button mat-button color="accent" (click)="descargarReporte(proyecto, 'xlsx')">
             <mat-icon>system_update_alt</mat-icon>
-            <span>Exportar</span>
+            <span>Exportar a Excel</span>
           </button>
+
+          <button mat-button color="accent" (click)="descargarReporte(proyecto, 'pdf')">
+            <mat-icon>system_update_alt</mat-icon>
+            <span>Exportar a PDF</span>
+          </button>
+
           <button mat-button color="primary" [routerLink]="['/proyectos/',proyecto.idProyecto]">
             <mat-icon>open_in_new</mat-icon>
             <span>Ir al proyecto</span>

@@ -3,6 +3,7 @@ import { NavItem } from '../core/model/nav-item';
 
 export class AppConstants {
   // RUTAS
+  public static readonly API_ENDPOINT = 'http://localhost:8080';
   public static readonly API_BASE = 'api/v1/';
 
   public static readonly RUTA_HOME = 'home';
