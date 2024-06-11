@@ -5,7 +5,7 @@ import { FilterData } from './filter/model/filter-data.model';
 import { ProyectoService } from '../../service/proyecto.service';
 import { FormularioProyectoComponent } from '../formulario-proyecto/formulario-proyecto.component';
 import { MatDialog } from '@angular/material/dialog';
-import { DIALOG_CONFIG, customConfig } from 'src/app/shared/app.constants';
+import { customConfig } from 'src/app/shared/app.constants';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { UIService } from 'src/app/core/service/ui.service';
@@ -77,7 +77,7 @@ export class ListaProyectosComponent {
       confirm: "Sí, deseo eliminar el proyecto",
       showCancel: true
     }
-    this.subs.push(this.dialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(eliminado => {
+    this.subs.push(this.dialog.open(ConfirmDialogComponent, { ...customConfig('0vw'), data }).afterClosed().subscribe(eliminado => {
       if (eliminado) this.servicioProyecto.eliminarProyecto(proyecto.idProyecto)
         .then(res => {
           if (res) {

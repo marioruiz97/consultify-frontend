@@ -10,7 +10,7 @@ import { Cliente } from '../../model/cliente.model';
 import { TipoDocumentoMap } from 'src/app/feature/usuarios/model/tipo-documento.model';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
-import { DIALOG_CONFIG } from 'src/app/shared/app.constants';
+import { customConfig } from 'src/app/shared/app.constants';
 import { RoleService } from 'src/app/core/service/role.service';
 
 @Component({
@@ -65,7 +65,7 @@ export class ListaClientesComponent implements OnInit, AfterViewInit, OnDestroy 
       confirm: "Sí, deseo eliminar el cliente",
       showCancel: true
     }
-    this.listSub.push(this.dialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(eliminado => {
+    this.listSub.push(this.dialog.open(ConfirmDialogComponent, { ...customConfig('0vw'), data }).afterClosed().subscribe(eliminado => {
       if (eliminado) this.service.eliminarCliente(cliente.idCliente)
         .then(res => {
           if (res) {

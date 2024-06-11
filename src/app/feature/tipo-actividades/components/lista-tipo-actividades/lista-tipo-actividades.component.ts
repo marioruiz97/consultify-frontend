@@ -8,7 +8,7 @@ import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/c
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { RoleService } from 'src/app/core/service/role.service';
 import { UIService } from 'src/app/core/service/ui.service';
-import { DIALOG_CONFIG } from 'src/app/shared/app.constants';
+import { DIALOG_CONFIG, customConfig } from 'src/app/shared/app.constants';
 import { TipoActividad } from '../../model/tipo-actividad.model';
 import { TipoActividadesService } from '../../service/tipo-actividades.service';
 import { FormularioTipoActividadesComponent } from '../formulario-tipo-actividades/formulario-tipo-actividades.component';
@@ -93,7 +93,7 @@ export class ListaTipoActividadesComponent implements OnInit, AfterViewInit, OnD
     };
 
     this.subs.push(
-      this.dialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(eliminado => {
+      this.dialog.open(ConfirmDialogComponent, { ...customConfig('0vw'), data }).afterClosed().subscribe(eliminado => {
         if (eliminado) this.servicio.eliminarTipo(tipo)
           .then(() => {
             this.uiService.mostrarAlerta(`El tipo: ${tipo.nombre} ha sido eliminado con éxito`);
