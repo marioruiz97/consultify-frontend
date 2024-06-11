@@ -8,8 +8,9 @@ import { AppConstants, AppConstants as rutas } from 'src/app/shared/app.constant
 import { UIService } from 'src/app/core/service/ui.service';
 import { UsuarioEditar } from '../../model/usuario-editar.model';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
-import { RolMap } from 'src/app/core/model/usuario-sesion.model';
+import { Rol, RolMap } from 'src/app/core/model/usuario-sesion.model';
 import { UsuarioFormulario } from '../../model/usuario-formulario.model';
+import { RoleService } from 'src/app/core/service/role.service';
 
 @Component({
   selector: 'app-formulario-usuario',
@@ -20,7 +21,7 @@ export class FormularioUsuarioComponent implements OnDestroy {
 
   usuarioForm: FormGroup;
   tiposDocumentos = TipoDocumentoMap;
-  roles = RolMap;
+  roles: Map<string, string>;
 
   private idUsuario = 0;
   private $isEdit = false;
@@ -31,14 +32,26 @@ export class FormularioUsuarioComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute,
     private usuarioService: UsuarioService,
     private router: Router,
-    private uiService: UIService
+    private uiService: UIService,
+    private rolService: RoleService
   ) {
     this.usuarioForm = this.iniciarFormulario();
+
+    this.roles = this.setRoles(rolService.getRole());
 
     this.suscripciones.push(this.activatedRoute.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id && id !== '0') this.obtenerInfoUsuario(+id);
     }));
+  }
+
+  private setRoles(rol: Rol | undefined): Map<string, string> {
+    if (rol && rol == Rol.ROLE_ADMIN)
+      return RolMap;
+    else {
+      const roles = new Map([[Rol.ROLE_CLIENTE, "Cliente"]]);
+      return roles;
+    }
   }
 
   get isEdit() {

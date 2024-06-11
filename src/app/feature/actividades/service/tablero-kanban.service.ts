@@ -35,12 +35,7 @@ export class TableroKanbanService implements OnDestroy {
 
   private miUsuario: UsuarioSesion | null;
 
-  columnas: Columna[] = [
-    { id: 'POR_HACER', titulo: 'Por Hacer', actividades: this.actividadesPorHacer, oculta: false, prev: false, isExpanded: false, claseCss: 'por-hacer' },
-    { id: 'EN_PROGRESO', titulo: 'En Progreso', actividades: this.actividadesEnProgreso, oculta: false, prev: false, isExpanded: false, claseCss: 'en-progreso' },
-    { id: 'EN_REVISION', titulo: 'En Revisión', actividades: this.actividadesEnRevision, oculta: false, prev: false, isExpanded: false, claseCss: 'en-revision' },
-    { id: 'COMPLETADA', titulo: 'Completada', actividades: this.actividadesCompletadas, oculta: false, prev: false, isExpanded: false, claseCss: 'completada' }
-  ];
+  columnas: Columna[] = [];
 
 
 
@@ -48,6 +43,8 @@ export class TableroKanbanService implements OnDestroy {
     private tableroservice: TableroProyectoService,
     private authService: AuthService
   ) {
+    this.iniciarCampos();
+
     this.subs.push(
       this.actividadesFiltradas.subscribe(filtradas => {
         this.actividadesPorHacer.next(filtradas.current.filter(actividad => actividad.estado == EstadoActividad.POR_HACER));
@@ -67,6 +64,26 @@ export class TableroKanbanService implements OnDestroy {
     );
 
     this.miUsuario = this.authService.obtenerUsuarioSesion();
+
+    this.authService.estaAutenticado.subscribe(estaAutenticado => {
+      if (estaAutenticado) this.miUsuario = authService.obtenerUsuarioSesion();
+      if (!estaAutenticado) this.iniciarCampos();
+    })
+  }
+
+  private iniciarCampos() {
+
+    this.filtroMostrarMias = false;
+    this.filtroTipoActividad = null;
+    this.filtroFecha = { inicio: null, fin: null };
+    this.filtroCampo = "";
+
+    this.columnas = [
+      { id: 'POR_HACER', titulo: 'Por Hacer', actividades: this.actividadesPorHacer, oculta: false, prev: false, isExpanded: false, claseCss: 'por-hacer' },
+      { id: 'EN_PROGRESO', titulo: 'En Progreso', actividades: this.actividadesEnProgreso, oculta: false, prev: false, isExpanded: false, claseCss: 'en-progreso' },
+      { id: 'EN_REVISION', titulo: 'En Revisión', actividades: this.actividadesEnRevision, oculta: false, prev: false, isExpanded: false, claseCss: 'en-revision' },
+      { id: 'COMPLETADA', titulo: 'Completada', actividades: this.actividadesCompletadas, oculta: false, prev: false, isExpanded: false, claseCss: 'completada' }
+    ];
   }
 
   /**

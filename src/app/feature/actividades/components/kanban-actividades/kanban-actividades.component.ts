@@ -8,7 +8,7 @@ import { EstadoActividad, EstadoActividadMap } from '../../model/estado-activida
 import { ResponsableActividad } from '../../model/responsable-actividad.model';
 import { FormularioActividadComponent } from '../formulario-actividad/formulario-actividad.component';
 import { MatDialog } from '@angular/material/dialog';
-import { DIALOG_CONFIG, customConfig } from 'src/app/shared/app.constants';
+import { customConfig } from 'src/app/shared/app.constants';
 import { UIService } from 'src/app/core/service/ui.service';
 import { ConfirmDialogData } from 'src/app/core/model/confirm-dialog-data.model';
 import { ConfirmDialogComponent } from 'src/app/core/components/confirm-dialog/confirm-dialog.component';
@@ -60,6 +60,7 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
     public rolService: RoleService
   ) {
     this.columnas = kanbanService.columnas;
+    if (this.columnas.find(col => col.oculta === true)) this.mostrarResetColumnas = true;
   }
 
   ngOnInit(): void {
@@ -141,7 +142,7 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
       showCancel: true
     }
     this.subs.push(
-      this.dialog.open(ConfirmDialogComponent, { ...DIALOG_CONFIG, data }).afterClosed().subscribe(eliminado => {
+      this.dialog.open(ConfirmDialogComponent, { ...customConfig('0vw'), data }).afterClosed().subscribe(eliminado => {
         if (eliminado) this.actividadService.eliminarActividad(actividad.id)
           .then(() => {
             this.uiService.mostrarAlerta(`La actividad ${actividad.nombre} ha sido eliminada con éxito`);

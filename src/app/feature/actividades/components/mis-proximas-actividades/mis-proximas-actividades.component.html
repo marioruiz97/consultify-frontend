@@ -1,6 +1,6 @@
 <h3 class="mat-h1 mx-auto text-center mt-3 mb-4" *ngIf="mostrarTitulo">Actividades próximas a vencer</h3>
 
-<div class="cards" fxLayout="row wrap" fxLayoutAlign="space-evenly">
+<div class="cards" fxLayout="row wrap" fxLayoutAlign="space-evenly start">
   <mat-card fxFlex.lt-sm="100" fxFlex.gt-xs="48" fxFlex.gt-sm="30"
     class="mb-4 mat-mdc-elevation-specific mat-mdc-elevation-specific mat-elevation-z8"
     *ngFor="let actividad of misActividades | async">
@@ -10,6 +10,11 @@
       <mat-card-subtitle>
         Fecha de Vencimiento: {{ actividad.fechaCierreEsperado | date: 'MMM dd, yyyy'}}
       </mat-card-subtitle>
+      <mat-card-subtitle>
+        <a class="enlace-proyecto" [routerLink]="['/proyectos/', actividad.proyecto.idProyecto]" matTooltip="Ir al Proyecto">
+          Proyecto: {{ actividad.proyecto.idProyecto + ' - ' + actividad.proyecto.nombreProyecto }}
+        </a>
+      </mat-card-subtitle>
     </mat-card-header>
 
     <mat-divider></mat-divider>
@@ -17,8 +22,8 @@
     <mat-card-content class="pt-3">
       <h4 class="titulo">Estado: <span class="subtitulo">{{ obtenerEstado(actividad.estado)}}</span></h4>
 
-      <h4 class="descripcion mt-2" *ngIf="actividad.tipoActividad">Tipo Actividad:
-        <span>{{actividad.tipoActividad.nombre}}</span>
+      <h4 class="titulo mt-2" *ngIf="actividad.tipoActividad">Tipo Actividad:
+        <span class="subtitulo">{{actividad.tipoActividad.nombre}}</span>
       </h4>
 
 

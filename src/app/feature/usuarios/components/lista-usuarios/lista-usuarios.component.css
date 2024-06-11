@@ -19,3 +19,7 @@ header h1 {
 .list-button button {
   min-width: 30%;
 }
+
+div.container {
+  overflow-x: auto;
+}

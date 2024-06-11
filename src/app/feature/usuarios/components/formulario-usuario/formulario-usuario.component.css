@@ -1,17 +1,22 @@
 @import "../../../../../assets/css/header-styles.css";
 
 header {
-  background-image: url('/assets/img/home-usuarios.jpeg');
+  background-image: url("/assets/img/home-usuarios.jpeg");
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .form-input {
   padding: 10px 5px;
+  margin-bottom: 12.5px;
 }
-
-
 
 .form-action button {
   min-width: 30%;
+}
+
+@media screen and (min-width: 959px) {
+  .form-input {
+    margin-bottom: 5px;
+  }
 }

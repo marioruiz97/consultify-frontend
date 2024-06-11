@@ -14,7 +14,7 @@ export class TableroProyectoService {
 
   private $TableroActual: BehaviorSubject<TableroProyecto | undefined> = new BehaviorSubject<TableroProyecto | undefined>(undefined);
   private tableroPath = rutas.API_BASE + rutas.RUTA_TABLEROS;
-  notificacionPath = rutas.RUTA_NOTIFICACIONES;
+  private notificacionPath = rutas.RUTA_NOTIFICACIONES;
 
   constructor(
     private httpService: HttpService,
@@ -26,10 +26,12 @@ export class TableroProyectoService {
   }
 
   private get id() {
-    return this.$TableroActual.getValue()?.infoProyecto.idProyecto
+    return this.$TableroActual.getValue()?.infoProyecto.idProyecto;
   }
 
   obtenerTablero(idProyecto: number): Observable<TableroProyecto | undefined> {
+    this.$TableroActual.next(undefined);
+
     this.httpService.getRequest<TableroProyecto>(`${this.tableroPath}/${idProyecto}`).subscribe({
       next: (tablero) => this.$TableroActual.next(tablero),
       error: (err) => this.uiService.mostrarError(err)

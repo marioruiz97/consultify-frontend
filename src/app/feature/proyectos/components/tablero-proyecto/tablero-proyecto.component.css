@@ -1,4 +1,10 @@
-mat-card.info-card> :first-child {
+header,
+mat-tab-group,
+mat-tab {
+  max-width: 100vw;
+}
+
+mat-card.info-card > :first-child {
   margin-top: -20px;
   color: #fff;
 }
