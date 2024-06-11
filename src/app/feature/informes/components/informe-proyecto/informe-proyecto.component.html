@@ -13,11 +13,24 @@
     </div>
 
     <div class="text-center" fxHide fxShow.lt-md>
-      <h3 class="mt-4 darken-orange">Para una mejor visualización en dispositivos móviles, gire el dispositivo horizontalmente.</h3>
+      <h3 class="mt-4 darken-orange">
+        Para una mejor visualización en dispositivos móviles, gire el dispositivo horizontalmente.
+      </h3>
+    </div>
+
+
+    <div class="mt-2 botonera text-center">
+
+      <mat-form-field class="mx-2 mx-md-5" fxFlex>
+        <input matInput type="text" (keyup)="buscarPorNombreOClienteOMiembro($event)"
+          placeholder="Busca por nombre del proyecto, cliente o miembro..."
+          matTooltip="Busca por nombre del proyecto, cliente o miembro">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
     </div>
 
     <mat-accordion fxFlex fxFlex.gt-xs="90" class="mat-mdc-elevation-specific mat-elevation-z8 mx-auto mb-5"
-      *ngFor="let proyecto of proyectos | async">
+      *ngFor="let proyecto of proyectosFiltrados | async">
 
       <!-- expansion info personal-->
       <mat-expansion-panel (afterExpand)="cargarInformeProyecto(proyecto)"
