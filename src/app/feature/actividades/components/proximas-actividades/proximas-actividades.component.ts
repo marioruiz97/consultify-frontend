@@ -27,7 +27,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
   displayedColumns = ['nombre', 'fechaCierreEsperado', 'tipoActividad', 'estado', 'responsable', 'accion'];
   datasource = new MatTableDataSource<Actividad>();
 
-  numeroActividades = 0;
+  mostrarTabla = true;
   fechaFutura = new Date();
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -45,6 +45,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
     private datePipe: DatePipe,
     public rolService: RoleService
   ) {
+    this.fechaFutura.setHours(0, 0, 0, 0);
     this.fechaFutura.setDate(new Date().getDate() + 7);
   }
 
@@ -57,7 +58,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
 
           const actividades: Actividad[] = tablero.actividades;
           this.datasource.data = actividades.filter(actividad => new Date(actividad.fechaCierreEsperado).getTime() <= new Date(this.fechaFutura).getTime() && actividad.estado !== EstadoActividad.COMPLETADA);
-          this.numeroActividades = this.datasource.data.length;
+          this.mostrarTabla = this.datasource.data.length !== 0;
 
 
           const vencidas: Actividad[] = this.datasource.data.filter(actividad => new Date(actividad.fechaCierreEsperado).getTime() < new Date().getTime())

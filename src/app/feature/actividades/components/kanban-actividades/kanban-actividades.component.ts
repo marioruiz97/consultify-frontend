@@ -60,6 +60,7 @@ export class KanbanActividadesComponent implements OnInit, OnDestroy {
     public rolService: RoleService
   ) {
     this.columnas = kanbanService.columnas;
+    if (this.columnas.find(col => col.oculta === true)) this.mostrarResetColumnas = true;
   }
 
   ngOnInit(): void {

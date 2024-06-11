@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpService } from 'src/app/core/service/http.service';
 import { AppConstants as rutas } from 'src/app/shared/app.constants';
 import { Cliente, Contacto } from '../model/cliente.model';
 import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
 
 @Injectable()
-export class ClienteService {
+export class ClienteService implements OnDestroy {
 
   private path: string = rutas.API_BASE + rutas.RUTA_CLIENTES;
 
@@ -71,6 +71,10 @@ export class ClienteService {
   eliminarContacto(id: string) {
     const contactos = this.contactos.filter(c => c.id !== id);
     this.listaContactos.next(contactos);
+  }
+
+  ngOnDestroy(): void {
+    this.listaContactos.next([]);
   }
 
 }

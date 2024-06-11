@@ -34,18 +34,20 @@
   color: white;
 }
 
-mat-card.card-standard {
-  max-height: 560px;
-}
-
-mat-card.card-expanded {
-  max-height: 610px;
-}
-
 div.form-group {
   margin-bottom: 12px;
 }
 
 mat-form-field {
   padding: 10px 5px;
+}
+
+@media screen and (min-width: 959px) {
+  mat-card.card-standard {
+    max-height: 560px;
+  }
+
+  mat-card.card-expanded {
+    max-height: 610px;
+  }
 }

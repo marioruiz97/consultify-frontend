@@ -2,6 +2,10 @@ mat-card-title.mat-h3 {
   font-weight: 500;
 }
 
+a.enlace-proyecto {
+  color: #757575;
+}
+
 h4.descripcion {
   margin-bottom: 0px;
   font-weight: 500;
@@ -18,12 +22,10 @@ h4 .subtitulo {
   font-weight: 400;
 }
 
-
 mat-card-content p {
   max-width: 100%;
   min-height: fit-content;
 }
-
 
 .darken-orange {
   color: var(--darken-orange);

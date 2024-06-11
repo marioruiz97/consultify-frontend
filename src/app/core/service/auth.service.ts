@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnDestroy } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { TokenInfo } from "../model/token-info.model";
@@ -11,7 +11,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
+export class AuthService implements OnDestroy {
 
   private usuarioSesion: UsuarioSesion | null;
   private token: TokenInfo | null;
@@ -113,5 +113,8 @@ export class AuthService {
       .catch(err => this.uiService.mostrarError(err));
   }
 
+  ngOnDestroy(): void {
+    this.limpiarDatosSesion();
+  }
 
 }

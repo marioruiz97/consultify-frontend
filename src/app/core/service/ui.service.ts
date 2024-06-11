@@ -4,6 +4,7 @@ import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material
 import { ConfirmDialogData } from '../model/confirm-dialog-data.model';
 import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DIALOG_CONFIG } from 'src/app/shared/app.constants';
 
 
 
@@ -25,6 +26,7 @@ export class UIService {
 
   mostrarConfirmDialog(data: ConfirmDialogData): MatDialogRef<ConfirmDialogComponent> {
     return this.dialog.open(ConfirmDialogComponent, {
+      ...DIALOG_CONFIG,
       data: {
         title: data.title,
         message: data.message,

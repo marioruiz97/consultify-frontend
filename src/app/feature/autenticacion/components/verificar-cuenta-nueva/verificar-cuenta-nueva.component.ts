@@ -65,10 +65,7 @@ export class VerificarCuentaNuevaComponent implements OnDestroy {
           this.uiService.mostrarSnackBar("Se ha reiniciado la clave correctamente", 2);
           this.router.navigate([AppConstants.RUTA_LOGIN]);
         })
-        .catch(err => {
-          console.log('error', err);
-          this.uiService.mostrarError(err);
-        });
+        .catch(err => this.uiService.mostrarError(err));
     }
   }
 

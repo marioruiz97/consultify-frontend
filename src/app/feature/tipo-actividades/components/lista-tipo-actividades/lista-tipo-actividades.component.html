@@ -19,7 +19,7 @@
         </button>
       </div>
 
-      <table mat-table [dataSource]="datasource" matSort class="mat-mdc-elevation-specific mat-elevation-z8">
+      <table mat-table [dataSource]="datasource" matSort class="mat-mdc-elevation-specific mat-elevation-z8 mx-2 mx-sm-0">
 
         <ng-container matColumnDef="idTipo">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> ID Tipo Actividad</th>
@@ -53,7 +53,7 @@
 
       <!-- paginador de angular material-->
       <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 7, 10, 20]"
-        class="mat-mdc-elevation-specific mat-elevation-z8">
+        class="mat-mdc-elevation-specific mat-elevation-z8 mx-2 mx-sm-0">
       </mat-paginator>
 
     </div>

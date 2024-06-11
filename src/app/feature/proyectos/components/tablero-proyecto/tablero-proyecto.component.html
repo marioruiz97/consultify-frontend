@@ -33,9 +33,13 @@
           <mat-list-item *ngFor="let contacto of cliente.contactos" class="mb-3">
             <h4 matListItemLine class="mb-0">Nombre: {{contacto.nombreCompleto}}</h4>
             <p matListItemLine>
-              <span>Correo: {{contacto.correo}},</span> <span class="ml-3">Teléfono: {{contacto.telefono}}</span>
+              <span>Correo: {{contacto.correo}},</span>
+              <span class="ml-3" fxHide.lt-md>Teléfono: {{contacto.telefono}}</span>
             </p>
-            <span matListItemMeta class="my-auto">Cargo: {{contacto.cargo}}</span>
+            <p matListItemLine fxHide fxShow.lt-md>
+              <span>Teléfono: {{contacto.telefono}}</span>
+            </p>
+            <span matListItemMeta class="my-auto" *fxHide.lt-md>Cargo: {{contacto.cargo}}</span>
           </mat-list-item>
         </mat-list>
       </mat-card-content>
@@ -96,8 +100,8 @@
 
           <div class="row my-3" fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="10px"
             fxLayoutAlign.gt-sm="space-evenly">
-            <app-miembros-proyecto fxFlex.gt-sm="49"></app-miembros-proyecto>
-            <app-notificaciones-proyecto fxFlex.gt-sm="49"></app-notificaciones-proyecto>
+            <app-miembros-proyecto fxFlex.gt-sm="49" class="mb-3"></app-miembros-proyecto>
+            <app-notificaciones-proyecto fxFlex.gt-sm="49" class="mb-3"></app-notificaciones-proyecto>
           </div>
 
           <app-proximas-actividades class="row mb-3"></app-proximas-actividades>
