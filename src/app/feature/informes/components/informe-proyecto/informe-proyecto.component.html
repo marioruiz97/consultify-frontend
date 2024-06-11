@@ -12,6 +12,10 @@
       <button mat-button [routerLink]="['/proyectos']" color="accent">Ir al módulo de proyectos</button>
     </div>
 
+    <div class="text-center" fxHide fxShow.lt-md>
+      <h3 class="mt-4 darken-orange">Para una mejor visualización en dispositivos móviles, gire el dispositivo horizontalmente.</h3>
+    </div>
+
     <mat-accordion fxFlex fxFlex.gt-xs="90" class="mat-mdc-elevation-specific mat-elevation-z8 mx-auto mb-5"
       *ngFor="let proyecto of proyectos | async">
 

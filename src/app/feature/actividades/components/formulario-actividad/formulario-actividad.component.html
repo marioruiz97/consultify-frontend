@@ -25,7 +25,7 @@
       <mat-form-field appearance="outline" fxFlex>
         <mat-label>Asignado a</mat-label>
         <input type="text" matInput [matAutocomplete]="auto" formControlName="responsable">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="mostrarResponsableFn">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="mostrarResponsableFn">
           <mat-option *ngFor="let responsable of filteredMiembros | async" [value]="responsable.usuario">
             <span>
               {{responsable.usuario.nombres + ' ' + responsable.usuario.apellidos + ' - ' + responsable.usuario.correo}}
