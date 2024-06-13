@@ -21,6 +21,15 @@ mat-accordion {
   width: 90%;
 }
 
+mat-expansion-panel-header,
+mat-expansion-panel section {
+  overflow-x: auto;
+}
+
+.darken-orange {
+  color: var(--darken-orange);
+}
+
 /*
 * CIRCULO EN INFO PROYECTO
 */

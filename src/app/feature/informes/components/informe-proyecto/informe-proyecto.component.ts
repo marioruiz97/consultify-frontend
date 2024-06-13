@@ -8,6 +8,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import * as moment from 'moment';
 
+
 @Component({
   selector: 'app-informe-proyecto',
   templateUrl: './informe-proyecto.component.html',
@@ -15,22 +16,42 @@ import * as moment from 'moment';
 })
 export class InformeProyectoComponent implements OnDestroy {
 
-  proyectos: BehaviorSubject<InformeProyecto[]> = new BehaviorSubject<InformeProyecto[]>([]);
+  private subs: Subscription[] = [];
+  private proyectos: InformeProyecto[] = [];
+  proyectosFiltrados: BehaviorSubject<InformeProyecto[]> = new BehaviorSubject<InformeProyecto[]>([]);
+
   noHayProyectos = true;
   estaCargando = false;
-
-  private subs: Subscription[] = [];
 
 
   constructor(private servicioInformes: InformeService) {
     this.cargarEncabezados();
   }
 
+  buscarPorNombreOClienteOMiembro(event: KeyboardEvent) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+
+    const filtradas = this.proyectos.filter(proj => {
+      if (!filterValue) return true;
+
+      const porNombreProyecto = proj.nombreProyecto.trim().toLowerCase().includes(filterValue);
+      const porNombreCliente = proj.cliente.nombreComercial.trim().toLowerCase().includes(filterValue);
+      const porRazonSocialCliente = proj.cliente.razonSocial.trim().toLowerCase().includes(filterValue);
+      const porMiembroProyecto = proj.miembros.find(miembro => miembro.nombreCompleto.trim().toLowerCase().includes(filterValue));
+
+      return porNombreProyecto || porNombreCliente || porRazonSocialCliente || porMiembroProyecto;
+    });
+
+    this.proyectosFiltrados.next(filtradas);
+  }
+
+
   private cargarEncabezados() {
     this.subs.push(
       this.servicioInformes.obtenerProyectos().subscribe(encabezados => {
         this.noHayProyectos = encabezados.length < 1;
-        this.proyectos.next(encabezados);
+        this.proyectos = encabezados;
+        this.proyectosFiltrados.next(encabezados);
       })
     );
   }
@@ -86,7 +107,7 @@ export class InformeProyectoComponent implements OnDestroy {
 
   cargarInformeProyecto(proyecto: InformeProyecto) {
 
-    const informes = this.proyectos.value;
+    const informes = this.proyectosFiltrados.value;
     if (!proyecto.abierto) {
       console.log('Cargar Proyecto desde API. id proyecto:', proyecto.idProyecto);
 
@@ -107,7 +128,7 @@ export class InformeProyectoComponent implements OnDestroy {
             return proj;
           });
 
-          this.proyectos.next(informes);
+          this.proyectosFiltrados.next(informes);
         })
       );
 
