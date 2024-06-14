@@ -17,7 +17,8 @@ header {
   min-width: 25%;
 }
 
-mat-accordion {
+mat-accordion,
+.botonera {
   width: 90%;
 }
 
