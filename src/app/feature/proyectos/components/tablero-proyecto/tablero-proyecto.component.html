@@ -55,6 +55,8 @@
         <span class="text-bold mb-4">{{proyecto.nombreProyecto }}</span>
         <span>Fecha de Inicio:</span>
         <span class="text-bold mb-4">{{ proyecto.creadoEn | date: 'medium'}}</span>
+        <span *ngIf="proyecto.cierreEsperado">Fecha de Cierre:</span>
+        <span class="text-bold mb-4" *ngIf="proyecto.cierreEsperado">{{ proyecto.cierreEsperado | date: 'EE MMM dd, yyyy'}}</span>
         <span>Total de Actividades:</span>
         <span class="text-bold mb-4">{{actividades}} {{actividades !== 1 ? 'actividades' : 'actividad'}}</span>
         <span>Descripción:</span>

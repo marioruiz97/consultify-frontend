@@ -4,6 +4,7 @@ import { InformeActividad } from "./informe-actividad.model";
 export interface InformeProyecto {
   idProyecto: number;
   nombreProyecto: string;
+  cierreEsperado: Date;
   cliente: ClienteInforme;
   miembros: MiembroInforme[];
   abierto: boolean;

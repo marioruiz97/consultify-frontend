@@ -18,7 +18,6 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   filteredClientes: Observable<Cliente[]> = of(this.clientes);
   form: FormGroup;
-  maxDate = new Date();
 
   @Output() filtrar = new EventEmitter();
   @Output() eliminarFiltros = new EventEmitter();
@@ -46,7 +45,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     return new FormGroup({
       nombreProyecto: new FormControl(''),
       cliente: new FormControl(''),
-      desde: new FormControl('')
+      hasta: new FormControl('')
     });
   }
 

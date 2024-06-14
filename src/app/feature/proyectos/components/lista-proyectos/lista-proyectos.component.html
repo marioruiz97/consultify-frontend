@@ -15,12 +15,14 @@
   </mat-toolbar>
 
 
-  <div class="cards" fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="start center" fxLayout="row wrap" fxLayoutAlign="space-evenly start">
+  <div class="cards" fxLayout.lt-sm="column" fxLayoutAlign.lt-sm="start center" fxLayout="row wrap"
+    fxLayoutAlign="space-evenly start">
 
-    <h3 class="mt-4 mat-h2 text-center" *ngIf="noHayProyectos && rolService.hasRole('ROLE_CLIENTE')">No tienes proyectos asignados</h3>
+    <h3 class="mt-4 mat-h2 text-center" *ngIf="noHayProyectos && rolService.hasRole('ROLE_CLIENTE')">No tienes proyectos
+      asignados</h3>
 
-    <mat-card class="mat-mdc-elevation-specific mat-elevation-z2 add-card mb-4" fxFlex.lt-md="80" fxFlex.gt-sm="20" fxLayout="column"
-      fxLayoutAlign="center center" *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR'])">
+    <mat-card class="mat-mdc-elevation-specific mat-elevation-z2 add-card mb-4" fxFlex.lt-md="80" fxFlex.gt-sm="20"
+      fxLayout="column" fxLayoutAlign="center center" *ngIf="rolService.hasAnyRole(['ROLE_ADMIN','ROLE_ASESOR'])">
       <button mat-fab color="primary" (click)="abrirFormulario()">
         <mat-icon class="mat-18">add</mat-icon>
       </button>
@@ -32,6 +34,10 @@
       <mat-card-header class="mb-2">
         <mat-card-title class="my-auto">Proyecto {{pro.idProyecto + ' - ' + pro.nombreProyecto}}</mat-card-title>
         <mat-card-subtitle>Fecha de Creacion: {{ pro.creadoEn | date: 'medium'}}</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="pro.cierreEsperado">
+          Cierre Esperado: {{ pro.cierreEsperado | date: 'EE MMM dd, yyyy'}}
+        </mat-card-subtitle>
+        <mat-card-subtitle *ngIf="!pro.cierreEsperado">Cierre Esperado: Sin fecha de cierre esperado</mat-card-subtitle>
       </mat-card-header>
       <mat-divider></mat-divider>
 

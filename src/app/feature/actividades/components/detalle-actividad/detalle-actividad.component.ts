@@ -33,6 +33,7 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
   tipoActividades: TipoActividad[] = [];
   estados = EstadoActividadMap;
   minDate = new Date();
+  maxDate: Date | null = null;
   filteredMiembros: Observable<MiembroProyecto[]> = of(this.miembros);
 
   mostrarResponsableFn = (responsable: InfoUsuario): string => {
@@ -54,7 +55,10 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
 
     this.subs.push(
       this.tableroService.tableroActual.subscribe(tablero => {
-        if (tablero) this.miembros = tablero.infoProyecto.miembros;
+        if (tablero) {
+          this.miembros = tablero.infoProyecto.miembros;
+          this.maxDate = tablero.infoProyecto.cierreEsperado;
+        }
       })
     );
 

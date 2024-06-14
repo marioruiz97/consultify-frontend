@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ClienteInforme, InformeProyecto } from '../../model/informe-proyecto.model';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { InformeService } from '../../service/informe.service';
@@ -7,6 +7,7 @@ import { NumberInput } from '@angular/cdk/coercion';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import * as moment from 'moment';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -14,7 +15,7 @@ import * as moment from 'moment';
   templateUrl: './informe-proyecto.component.html',
   styleUrls: ['./informe-proyecto.component.css']
 })
-export class InformeProyectoComponent implements OnDestroy {
+export class InformeProyectoComponent implements OnInit, OnDestroy {
 
   private subs: Subscription[] = [];
   private proyectos: InformeProyecto[] = [];
@@ -23,28 +24,59 @@ export class InformeProyectoComponent implements OnDestroy {
   noHayProyectos = true;
   estaCargando = false;
 
+  meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  mesControl: FormControl = new FormControl(null);
+
+  private filtroMes: number | null = null;
+  private filtroCampo: string | undefined = "";
+
 
   constructor(private servicioInformes: InformeService) {
     this.cargarEncabezados();
   }
 
-  buscarPorNombreOClienteOMiembro(event: KeyboardEvent) {
-    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
-
-    const filtradas = this.proyectos.filter(proj => {
-      if (!filterValue) return true;
-
-      const porNombreProyecto = proj.nombreProyecto.trim().toLowerCase().includes(filterValue);
-      const porNombreCliente = proj.cliente.nombreComercial.trim().toLowerCase().includes(filterValue);
-      const porRazonSocialCliente = proj.cliente.razonSocial.trim().toLowerCase().includes(filterValue);
-      const porMiembroProyecto = proj.miembros.find(miembro => miembro.nombreCompleto.trim().toLowerCase().includes(filterValue));
-
-      return porNombreProyecto || porNombreCliente || porRazonSocialCliente || porMiembroProyecto;
-    });
-
-    this.proyectosFiltrados.next(filtradas);
+  ngOnInit(): void {
+    this.subs.push(
+      this.mesControl.valueChanges.subscribe(mes => {
+        this.filtroMes = mes;
+        this.aplicarFiltros();
+      })
+    );
   }
 
+
+  buscarPorNombreOClienteOMiembro(event: KeyboardEvent) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.filtroCampo = filterValue;
+    this.aplicarFiltros();
+  }
+
+  aplicarFiltros() {
+    let proyectosFiltrados = this.proyectos.slice();
+
+    if (this.filtroCampo) {
+      proyectosFiltrados = proyectosFiltrados.filter(proj => {
+        const filterValue = this.filtroCampo;
+        if (!filterValue) return true;
+
+        const porNombreProyecto = proj.nombreProyecto.trim().toLowerCase().includes(filterValue);
+        const porNombreCliente = proj.cliente.nombreComercial.trim().toLowerCase().includes(filterValue);
+        const porRazonSocialCliente = proj.cliente.razonSocial.trim().toLowerCase().includes(filterValue);
+        const porMiembroProyecto = proj.miembros.find(miembro => miembro.nombreCompleto.trim().toLowerCase().includes(filterValue));
+
+        return porNombreProyecto || porNombreCliente || porRazonSocialCliente || porMiembroProyecto;
+      });
+    }
+
+    if (this.filtroMes != null) {
+      proyectosFiltrados = proyectosFiltrados.filter(proj => {
+        const mesCierre = proj.cierreEsperado ? new Date(proj.cierreEsperado).getUTCMonth() : null;
+        return this.filtroMes === mesCierre;
+      });
+    }
+
+    this.proyectosFiltrados.next(proyectosFiltrados);
+  }
 
   private cargarEncabezados() {
     this.subs.push(

@@ -54,11 +54,11 @@ export class ListaProyectosComponent {
     const result = this.proyectos.filter(pr => {
       const filtroCliente = filtros.cliente ? filtros.cliente.trim().toLowerCase() : undefined;
       const filtroNombre = filtros.nombreProyecto ? filtros.nombreProyecto.trim().toLowerCase() : undefined;
-      const filtroFecha = filtros.desde ?? undefined;
+      const filtroFecha = filtros.hasta ?? undefined;
 
       const condicion1 = !(filtroNombre && !pr.nombreProyecto.trim().toLowerCase().includes(filtroNombre));
       const condicion2 = !(filtroCliente && !pr.clienteProyecto.razonSocial.trim().toLowerCase().includes(filtroCliente));
-      const condicion3 = !(filtroFecha && new Date(pr.creadoEn) < filtroFecha);
+      const condicion3 = !(filtroFecha && new Date(pr.cierreEsperado) >= filtroFecha);
       return condicion1 && condicion2 && condicion3;
     }).slice();
     this.proyectosFiltrados.next(result);

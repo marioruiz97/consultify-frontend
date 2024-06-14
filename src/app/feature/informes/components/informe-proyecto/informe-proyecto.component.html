@@ -19,9 +19,17 @@
     </div>
 
 
-    <div class="mt-2 botonera text-center" *ngIf="!noHayProyectos">
-
-      <mat-form-field class="mx-2 mx-md-5" fxFlex>
+    <div class="mt-2 mb-4 mx-auto botonera text-center" *ngIf="!noHayProyectos">
+      <mat-form-field>
+        <mat-label>Filtrar por mes</mat-label>
+        <mat-select [formControl]="mesControl">
+          <mat-option [value]="null">Ver todos</mat-option>
+          <mat-option [value]="i" *ngFor="let mes of meses; index as i">{{mes}}</mat-option>
+        </mat-select>
+        <mat-hint>Mes de cierre</mat-hint>
+      </mat-form-field>
+      <div fxFlex="2"></div>
+      <mat-form-field fxFlex>
         <input matInput type="text" (keyup)="buscarPorNombreOClienteOMiembro($event)"
           placeholder="Busca por nombre del proyecto, cliente o miembro..."
           matTooltip="Busca por nombre del proyecto, cliente o miembro">

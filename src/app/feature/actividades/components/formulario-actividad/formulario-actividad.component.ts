@@ -29,6 +29,7 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
   estados = EstadoActividadMap;
   tipoActividades: TipoActividad[] = [];
   minDate = new Date();
+  maxDate: Date | null = null;
   esEditar = false;
   filteredMiembros: Observable<MiembroProyecto[]> = of(this.miembros);
 
@@ -49,7 +50,10 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
 
     this.subs.push(
       this.tableroService.tableroActual.subscribe(tablero => {
-        if (tablero) this.miembros = tablero.infoProyecto.miembros;
+        if (tablero) {
+          this.miembros = tablero.infoProyecto.miembros;
+          this.maxDate = tablero.infoProyecto.cierreEsperado;
+        }
       })
     );
 
