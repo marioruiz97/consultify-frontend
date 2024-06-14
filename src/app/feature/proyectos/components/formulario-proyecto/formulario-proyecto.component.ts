@@ -24,6 +24,7 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
   private clientes: Cliente[] = [];
   filteredClientes: Observable<Cliente[]> = of(this.clientes);
 
+  minDate = new Date();
   esEditar = false;
 
   private idProyecto = 0;
@@ -52,7 +53,7 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
     if (clienteFormControl) {
       this.filteredClientes = clienteFormControl.valueChanges.pipe(
         startWith(''),
-        map(valorFormulario => typeof valorFormulario === 'string' ? valorFormulario : valorFormulario.nombreComercial),
+        map(clienteControl => typeof clienteControl === 'string' ? clienteControl : clienteControl.nombreComercial),
         map(cliente => cliente ? this._filter(cliente as string) : this.clientes.slice())
       );
     }
@@ -101,6 +102,7 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
       nombreProyecto: new FormControl('', [Validators.required, Validators.maxLength(50)]),
       descripcionProyecto: new FormControl('', [Validators.required, Validators.maxLength(255)]),
       clienteProyecto: new FormControl('', Validators.required),
+      cierreEsperado: new FormControl(''),
     });
   }
 
@@ -112,7 +114,8 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
     this.proyectoForm.setValue({
       nombreProyecto: proyecto.nombreProyecto,
       descripcionProyecto: proyecto.descripcionProyecto,
-      clienteProyecto: proyecto.clienteProyecto
+      clienteProyecto: proyecto.clienteProyecto,
+      cierreEsperado: proyecto.cierreEsperado ?? ''
     });
     this.proyectoForm.get('clienteProyecto')?.disable();
   }

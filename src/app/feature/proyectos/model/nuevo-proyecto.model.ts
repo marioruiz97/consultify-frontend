@@ -3,5 +3,6 @@ export interface NuevoProyecto {
   nombreProyecto: string;
   idClienteProyecto: number;
   descripcionProyecto: string;
-  creadoPor:string;
+  creadoPor: string;
+  cierreEsperado: Date;
 }

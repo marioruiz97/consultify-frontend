@@ -20,6 +20,17 @@
         </mat-hint>
         <mat-error>Ingrese un nombre válido</mat-error>
       </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Fecha esperada para el cierre</mat-label>
+        <input matInput [min]="minDate" [matDatepicker]="cierreEsperado" formControlName="cierreEsperado">
+        <mat-datepicker-toggle matSuffix [for]="cierreEsperado"></mat-datepicker-toggle>
+        <mat-datepicker #cierreEsperado></mat-datepicker>
+        <mat-hint>Selecciona la fecha deseada para el cierre del proyecto</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div class="form-group" fxLayoutAlign="center">
       <mat-form-field appearance="outline" fxFlex>
         <mat-label>Cliente</mat-label>
         <input type="text" matInput [matAutocomplete]="auto" formControlName="clienteProyecto">

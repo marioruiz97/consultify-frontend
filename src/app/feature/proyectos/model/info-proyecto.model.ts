@@ -8,4 +8,5 @@ export interface InfoProyecto {
   descripcionProyecto: string;
   miembros: MiembroProyecto[];
   creadoEn: Date;
+  cierreEsperado: Date;
 }

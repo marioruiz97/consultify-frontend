@@ -46,7 +46,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
     public rolService: RoleService
   ) {
     this.fechaFutura.setHours(0, 0, 0, 0);
-    this.fechaFutura.setDate(new Date().getDate() + 7);
+    this.fechaFutura.setDate(this.fechaFutura.getDate() + 7);
   }
 
   ngOnInit(): void {
@@ -64,7 +64,7 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
           const vencidas: Actividad[] = this.datasource.data.filter(actividad => new Date(actividad.fechaCierreEsperado).getTime() < new Date().getTime())
           if (vencidas && vencidas.length > 0 && this.mostrarAlertaVencidas) {
             this.mostrarAlertaVencidas = false;
-            const message = `Hay ${vencidas.length} ${vencidas.length != 1 ? 'actividades' : 'actividad'} cuya fecha de cierre ya ha pasado`;
+            const message = `Hay ${vencidas.length} ${vencidas.length != 1 ? 'actividades' : 'actividad'} cuya fecha de cierre es hoy o ya ha pasado`;
             const errors: string[] = vencidas.map((actividad, i) => `${i + 1} - ${actividad.nombre}, responsable: ${actividad.responsable.nombres} ${actividad.responsable.apellidos}`);
             this.uiService.mostrarConfirmDialog({
               title: 'Alerta: Actividades Vencidas',
@@ -96,9 +96,15 @@ export class ProximasActividadesComponent implements OnInit, AfterViewInit, OnDe
   }
 
   getVencida(actividad: Actividad): string {
-    const date = new Date();
-    const vence = date.getTime() > new Date(actividad.fechaCierreEsperado).getTime() ? 'Vencida' : 'Por vencer';
-    return `${vence} (${EstadoActividadMap.get(actividad.estado)})`;
+    const hoy = new Date().getUTCDate();
+    const vence = new Date(actividad.fechaCierreEsperado).getUTCDate();
+
+    let mensaje = "";
+    if (vence < hoy) mensaje = "Vencida";
+    if (vence == hoy) mensaje = "Vence hoy";
+    if (vence > hoy) mensaje = "Por vencer";
+
+    return `${mensaje} (${EstadoActividadMap.get(actividad.estado)})`;
   }
 
   doFilter(event: Event) {

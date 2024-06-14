@@ -16,8 +16,8 @@
     </mat-autocomplete>
   </mat-form-field>
   <mat-form-field appearance="outline" fxFlex>
-    <mat-label>Fecha Creación</mat-label>
-    <input matInput [max]="maxDate" [matDatepicker]="myDatepicker" formControlName="desde">
+    <mat-label>Fecha de Cierre Esperado</mat-label>
+    <input matInput [matDatepicker]="myDatepicker" formControlName="hasta">
     <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
     <mat-datepicker #myDatepicker></mat-datepicker>
   </mat-form-field>
