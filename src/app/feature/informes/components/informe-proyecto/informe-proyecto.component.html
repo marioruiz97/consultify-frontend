@@ -19,7 +19,7 @@
     </div>
 
 
-    <div class="mt-2 botonera text-center">
+    <div class="mt-2 botonera text-center" *ngIf="!noHayProyectos">
 
       <mat-form-field class="mx-2 mx-md-5" fxFlex>
         <input matInput type="text" (keyup)="buscarPorNombreOClienteOMiembro($event)"
