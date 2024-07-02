@@ -58,7 +58,7 @@ export class FormularioActividadComponent implements OnInit, OnDestroy {
     );
 
     this.subs.push(
-      this.tipoActividadService.obtenerTiposActividad().subscribe(tipos => this.tipoActividades = tipos)
+      this.tipoActividadService.obtenerTiposActividadDropdown().subscribe(tipos => this.tipoActividades = tipos)
     );
 
     if (this.data) {

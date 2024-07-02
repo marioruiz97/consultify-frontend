@@ -39,7 +39,7 @@ export class InicioSesionComponent {
 
   iniciarSesion() {
     const authRequest: AuthRequest = this.loginForm.value as AuthRequest;
-    authRequest.nombreUsuario = authRequest.nombreUsuario.trim();
+    authRequest.nombreUsuario = authRequest.nombreUsuario.toLowerCase().trim();
 
     this.authService.iniciarSesion(authRequest);
   }
