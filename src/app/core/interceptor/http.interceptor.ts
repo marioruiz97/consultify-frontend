@@ -26,17 +26,11 @@ export class AppHttpInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
     if (this.rutasExcentas.filter(ruta => req.url.includes(ruta)).length == 0) this.uiService.estaCargando(true);
-    console.log('esta cargando');
-    console.log('req', req);
-    console.log('next', next);
 
 
     return next.handle(req).pipe(
       finalize(() => {
-        setTimeout(() => {
-          this.uiService.estaCargando(false);
-          console.log('termina carga');
-        }, 700);
+        this.uiService.estaCargando(false);
       })
     );
   }
