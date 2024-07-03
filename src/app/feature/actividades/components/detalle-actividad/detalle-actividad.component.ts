@@ -63,7 +63,7 @@ export class DetalleActividadComponent implements OnInit, OnDestroy {
     );
 
     this.subs.push(
-      this.tipoActividadService.obtenerTiposActividad().subscribe(tipos => this.tipoActividades = tipos)
+      this.tipoActividadService.obtenerTiposActividadDropdown().subscribe(tipos => this.tipoActividades = tipos)
     );
 
     this.subs.push(

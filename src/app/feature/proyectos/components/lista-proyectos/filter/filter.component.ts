@@ -38,7 +38,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   fetchClientes() {
-    this.subs.push(this.clienteService.obtenerClientes().subscribe(res => this.clientes = res));
+    this.subs.push(this.clienteService.obtenerClientesDropdown().subscribe(res => this.clientes = res));
   }
 
   private initForm(): FormGroup {

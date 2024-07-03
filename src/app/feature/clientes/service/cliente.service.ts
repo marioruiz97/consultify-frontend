@@ -23,6 +23,10 @@ export class ClienteService implements OnDestroy {
     return this.httpService.getRequest(this.path);
   }
 
+  obtenerClientesDropdown(): Observable<Cliente[]> {
+    return this.httpService.getRequest(this.path + '?recargar=false');
+  }
+
   obtenerClientePorId(idCliente: number): Promise<Cliente> {
     return lastValueFrom(this.httpService.getRequest(`${this.path}/${idCliente}`));
   }

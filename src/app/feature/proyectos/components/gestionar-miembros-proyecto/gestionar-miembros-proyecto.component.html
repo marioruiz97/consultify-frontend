@@ -13,6 +13,7 @@
       <mat-list class="my-4">
         <h4 matListItemTitle class="text-bold mb-1">Miembros Actuales</h4>
         <mat-divider></mat-divider>
+        <mat-spinner class="mx-auto my-3" *ngIf="cargandoDatos"></mat-spinner>
         <mat-list-item *ngFor="let miembro of miembros">
           <ngx-avatars [name]="getMiembroName(miembro)" matListItemAvatar class="my-auto"></ngx-avatars>
           <h3 matListItemTitle>{{getMiembroName(miembro)}}</h3>

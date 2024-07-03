@@ -5,6 +5,8 @@ import { ConfirmDialogData } from '../model/confirm-dialog-data.model';
 import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dialog.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { customConfig } from 'src/app/shared/app.constants';
+import { BehaviorSubject } from 'rxjs';
+import { ApiError } from '../model/api-error.model';
 
 
 
@@ -13,8 +15,16 @@ import { customConfig } from 'src/app/shared/app.constants';
 })
 export class UIService {
 
+  private loadingSubject = new BehaviorSubject<boolean>(false);
+  loading$ = this.loadingSubject.asObservable();
+
 
   constructor(private snackBar: MatSnackBar, private dialog: MatDialog) { }
+
+  estaCargando(cargando: boolean) {
+    this.loadingSubject.next(cargando);
+  }
+
 
   mostrarSnackBar(message: string, durationInSec: number, action = 'Ok'): MatSnackBarRef<TextOnlySnackBar> {
     return this.snackBar.open(message, action, {
@@ -49,12 +59,15 @@ export class UIService {
   }
 
   mostrarError(err: HttpErrorResponse): MatDialogRef<ConfirmDialogComponent> {
+    let error: ApiError = { ...err.error };
+    if (err.error && err.status == 0) error = { status: 500, error: 'Fallo del lado del servidor', message: 'Hay un fallo del lado del servidor, por favor verifica con soporte técnico.' }
+
     return this.dialog.open(ConfirmDialogComponent, {
       data: {
-        title: `Error: ${err.error.status} ${err.error.error}`,
+        title: `Error: ${error.status} ${error.error}`,
         message:
           `Hubo un error en la operación. <br/>
-          ${err.error.message}`,
+          ${error.message}`,
         errors: [],
         confirm: 'OK'
       }

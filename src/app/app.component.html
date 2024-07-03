@@ -5,6 +5,7 @@
 
   <mat-sidenav-content>
     <app-toolbar (openMenu)="sidenav.toggle()" [menu]="menu" *ngIf="enSesion"></app-toolbar>
+    <app-loading></app-loading>
     <main [class]="enSesion ? 'mt-5 pt-3' : ''"><router-outlet></router-outlet></main>
     <app-footer *ngIf="enSesion"></app-footer>
   </mat-sidenav-content>

@@ -71,7 +71,7 @@ export class FormularioProyectoComponent implements OnInit, OnDestroy {
   }
 
   private obtenerClientes() {
-    this.subs.push(this.clienteService.obtenerClientes().subscribe({
+    this.subs.push(this.clienteService.obtenerClientesDropdown().subscribe({
       next: (clientes) => {
         this.clientes = clientes;
         if (clientes.length === 0) this.manejarError();

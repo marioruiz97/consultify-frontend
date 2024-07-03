@@ -16,6 +16,10 @@ export class TipoActividadesService {
     return this.httpService.getRequest<TipoActividad[]>(this.path);
   }
 
+  obtenerTiposActividadDropdown(): Observable<TipoActividad[]> {
+    return this.httpService.getRequest<TipoActividad[]>(`${this.path}?recargar=false`);
+  }
+
   agregarTipoActividad(tipo: TipoActividad): Promise<TipoActividad> {
     return this.httpService.postRequest<TipoActividad, TipoActividad>(this.path, tipo);
   }
