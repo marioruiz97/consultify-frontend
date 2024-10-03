@@ -70,5 +70,15 @@ export class GestorActividadesService {
     return this.httpService.postRequest(this.seguimientoPath(actividad.id), { comentarios, actividad });
   }
 
+  editarSeguimientoActividad(comentarios: string, actividad: Actividad, seguimiento: SeguimientoActividad): Promise<SeguimientoActividad> {
+    seguimiento = { ...seguimiento, comentarios };
+
+    return this.httpService.patchRequest(`${this.seguimientoPath(actividad.id)}/${seguimiento.idSeguimiento}`, seguimiento);
+  }
+
+  eliminarSeguimiento(idActividad: number, idSeguimiento: number) {
+    return this.httpService.deleteRequest(`${this.seguimientoPath(idActividad)}/${idSeguimiento}`);
+  }
+
 
 }

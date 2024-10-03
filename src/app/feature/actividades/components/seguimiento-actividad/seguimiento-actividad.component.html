@@ -2,16 +2,62 @@
 
   <mat-card class="seguimiento-card mb-3 mat-mdc-elevation-specific mat-elevation-z5"
     *ngFor="let seguimiento of seguimientos">
+
     <mat-card-header class="line mb-3">
+
       <ngx-avatars [name]="nombreCompleto(seguimiento.usuario)" size="32"
         [matTooltip]="nombreCompleto(seguimiento.usuario)"></ngx-avatars>
       <h3 class="ml-2 my-auto mat-title">{{nombreCompleto(seguimiento.usuario)}}</h3>
       <span fxFlex></span>
       <span class="fecha-seguimiento my-auto">{{seguimiento.fechaSeguimiento | date: 'medium'}}</span>
+
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu Actividad" matTooltip="Abrir menú de opciones"
+        [disabled]="seguimiento.editable"
+        *ngIf="rolService.esDuenoSeguimiento(seguimiento)"><!-- verifica si es el dueño del seguimiento -->
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu" xPosition="before" yPosition="above">
+        <button mat-menu-item type="button" (click)="habilitarEditar(seguimiento)"
+          *ngIf="rolService.esDuenoSeguimiento(seguimiento)">
+          <mat-icon color="primary">edit</mat-icon>
+          <span class="weight-500">Editar</span>
+        </button>
+        <button mat-menu-item type="button" (click)="eliminarSeguimiento(seguimiento)"
+          *ngIf="rolService.esDuenoSeguimiento(seguimiento)">
+          <mat-icon color="warn">delete</mat-icon>
+          <span class="weight-500">Eliminar</span>
+        </button>
+      </mat-menu>
+
     </mat-card-header>
-    <mat-card-content class="comentario">
+
+
+    <!-- contenido seguimiento -->
+    <mat-card-content class="comentario" *ngIf="!seguimiento.editable">
       {{seguimiento.comentarios}}
     </mat-card-content>
+
+    <!-- formulario para editar el seguimiento/comentario -->
+    <mat-card-content fxLayout class="pb-0" *ngIf="seguimiento.editable">
+
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Agrega un comentario</mat-label>
+        <textarea matInput [formControl]="editarComentario"></textarea>
+        <mat-icon matPrefix>message</mat-icon>
+      </mat-form-field>
+
+      <button type="button" class="ml-3 my-auto" mat-raised-button color="primary" [disabled]="editarComentario.invalid"
+        (click)="editarSeguimiento(seguimiento)">
+        <span>Publicar</span>
+      </button>
+      <button mat-icon-button class="ml-1 my-auto" aria-label="Descartar" matTooltip="Descartar cambios"
+        (click)="descartarCambios(seguimiento)">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+    </mat-card-content>
+
   </mat-card>
 
   <mat-card class="form mt-4 mat-mdc-elevation-specific mat-elevation-z5">
