@@ -78,7 +78,8 @@
 
             <mat-form-field appearance="outline" fxFlex>
               <mat-label>Fecha esperada para el cierre</mat-label>
-              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fechaCierre" formControlName="fechaCierreEsperado">
+              <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="fechaCierre"
+                formControlName="fechaCierreEsperado">
               <mat-datepicker-toggle matSuffix [for]="fechaCierre"></mat-datepicker-toggle>
               <mat-datepicker #fechaCierre></mat-datepicker>
             </mat-form-field>
